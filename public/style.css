@@ -1,6 +1,16 @@
 @import url('https://googleapis.com');
 
-body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Montserrat', sans-serif; overflow: hidden; }
+/* Изменено: добавлен масштаб 50% */
+body, html { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+    height: 100%; 
+    font-family: 'Montserrat', sans-serif; 
+    overflow: hidden; 
+    zoom: 50%; /* Весь сайт открывается на 50% */
+}
+
 #map { width: 100vw; height: 100vh; background: #e5e3de; }
 
 .premium-card {
@@ -19,7 +29,7 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Mon
 .eco-content label {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Это заменяет float: right */
+    justify-content: space-between; 
     font-size: 14px;
     font-weight: 800;
     color: #222;
@@ -46,5 +56,6 @@ input:checked + .slider:before { transform: translateX(20px); }
 .modal-win { width: 800px; background: #fff; border-radius: 50px; padding: 50px; border-top: 20px solid #008000; position: relative; max-height: 85vh; overflow-y: auto; animation: popUp 0.5s; }
 
 .loader-spin { border: 6px solid #f3f3f3; border-top: 6px solid #008000; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 20px auto; }
+
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes popUp { from { transform: scale(0.9) translateY(40px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
