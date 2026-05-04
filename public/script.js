@@ -1,8 +1,6 @@
 /**
- * ГИС ООО «УК «ВСЕ СВОИ» | Luchin Ivan 1.6.0 PLATINUM FINAL
- * UPDATED: Unified Guide, Fixed Cameras, Adjustable Eco-Panel.
+ * ГИС ООО «УК «ВСЕ СВОИ» | v8.1.0 TITAN COLOSSUS (FIXED BG)
  */
-
 ymaps.ready(initIndustrialGis);
 
 async function initIndustrialGis() {
@@ -14,127 +12,83 @@ async function initIndustrialGis() {
     style.innerHTML = `
         body, button, input, select, div, textarea { font-family: 'Montserrat', sans-serif !important; }
         #map { width: 100vw; height: 100vh; background: #e5e3de; }
-        
-        .premium-card { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(25px); border-radius: 45px; border: 2px solid rgba(0, 128, 0, 0.1); box-shadow: 0 15px 45px rgba(0,0,0,0.1); }
-        
-        /* --- ПАНЕЛЬ ЭКОСИСТЕМЫ (НАСТРОЙКА ВЫСОТЫ ТУТ) --- */
-        #eco-panel-root { 
-            position: absolute !important; top: 30px !important; right: 30px !important; 
-            width: 330px; z-index: 10000; height: 70px; overflow: hidden; 
-            border: 3px solid #008000; transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); 
-        }
-        #eco-panel-root:hover { 
-            /* МЕНЯЙ 'auto' НА ЧИСЛО (например 400px), ЕСЛИ ХОЧЕШЬ ФИКСИРОВАННУЮ ВЫСОТУ */
-            height: auto; 
-            padding-bottom: 25px; 
-            background: #fff; 
-        }
-        .eco-header { height: 70px; display: flex; align-items: center; justify-content: center; color: #008000; font-weight: 900; font-size: 15px; text-transform: uppercase; cursor: pointer; letter-spacing: 2px; }
-        .eco-content { padding: 0 30px; display: flex; flex-direction: column; gap: 15px; opacity: 0; transition: 0.3s; }
+        .premium-card { background: rgba(255, 255, 255, 0.98) !important; backdrop-filter: blur(40px); border-radius: 60px; border: 4px solid rgba(0,128,0,0.2); box-shadow: 0 40px 100px rgba(0,0,0,0.25); }
+        #eco-panel-root { position: absolute !important; top: 50px !important; right: 50px !important; width: 480px; z-index: 10000; height: 100px; overflow: hidden; border: 6px solid #008000; border-radius: 50px; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #eco-panel-root:hover { height: auto; padding-bottom: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.3); }
+        .eco-header { height: 100px; display: flex; align-items: center; justify-content: center; color: #008000; font-weight: 900; font-size: 26px; text-transform: uppercase; cursor: pointer; letter-spacing: 4px; }
+        .eco-content { padding: 0 50px; display: flex; flex-direction: column; gap: 20px; opacity: 0; transition: 0.3s; }
         #eco-panel-root:hover .eco-content { opacity: 1; }
-        .eco-content label { display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 800; color: #111; cursor: pointer; }
-
-        /* ОКНА И СКРОЛЛ */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-        .modal-win { width: 1000px; background: #fff; border-radius: 60px; padding: 55px; border-top: 25px solid #008000; position: relative; height: auto; max-height: 90vh; overflow-y: auto; box-sizing: border-box; }
-        .sub-modal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%; background: #fff; z-index: 30000 !important; border-radius: 60px; padding: 60px; display: none; box-sizing: border-box; overflow-y: auto; border: 4px solid #008000; }
-        
-        .close-icon { position: absolute; top: 30px; right: 40px; cursor: pointer; font-size: 60px; color: #ddd; z-index: 40000; transition: 0.3s; line-height: 1; border:none; background:none; }
-        .close-icon:hover { color: #ff0000 !important; transform: rotate(90deg); }
-
-        .house-card { width: 420px; max-height: 550px; overflow-y: auto; padding-right: 15px; }
-        .house-card::-webkit-scrollbar, .modal-win::-webkit-scrollbar { width: 8px; }
-        .house-card::-webkit-scrollbar-thumb, .modal-win::-webkit-scrollbar-thumb { background: #00800033; border-radius: 10px; }
-
-        .info-row { background: #f9fbf9; padding: 18px; border-radius: 25px; border-left: 10px solid #008000; font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #222; text-align: left; }
-        .ui-btn { width: 100%; padding: 20px; margin-bottom: 12px; border-radius: 25px; border: none; background: #f4f7f4; color: #111; font-weight: 900; font-size: 13px; text-transform: uppercase; border-bottom: 5px solid #dce4de; cursor: pointer; text-align: center; }
-        .ui-btn:hover { background: #008000; color: #fff; transform: translateY(-4px); }
-
-        .settings-trigger { position: absolute; bottom: 35px; left: 25px; width: 90px; height: 90px; background: #fff; border-radius: 50%; border: 3px solid #008000; box-shadow: 0 10px 30px rgba(0,0,0,0.1); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 50px; z-index: 1001; transition: 0.6s; }
-        .settings-trigger.active-gear { transform: rotate(180deg); background: #008000; color: #fff; }
-        #settings-panel-root { position: absolute; bottom: 140px; left: 25px; width: 400px; padding: 30px; display: none; border-top: 10px solid #008000; z-index: 1000; border-radius: 45px; }
-        
-        .secret-trigger { position: absolute; bottom: 35px; left: 140px; width: 90px; height: 90px; background: #000; color: #00ff88; border: 2px solid #00ff88; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; cursor: pointer; z-index: 1001; animation: pulseGlow 2s infinite; text-align:center; }
-
-        .guide-section { border-bottom: 2px solid #eee; padding-bottom: 40px; margin-bottom: 40px; }
-        .guide-section:last-child { border-bottom: none; }
-
-        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 30px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #008000; }
-        input:checked + .slider:before { transform: translateX(24px); }
-
-        body.interface-dark .premium-card, body.interface-dark .modal-win, body.interface-dark .sub-modal { background: #0a110a !important; color: #00ff88 !important; border-color: #00ff88 !important; }
+        .eco-content label { display: flex; align-items: center; justify-content: space-between; font-size: 24px; font-weight: 800; color: #111; cursor: pointer; }
+        .house-card-colossus { width: 860px !important; height: 760px !important; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
+        .house-main-img { width: 100%; height: 400px; object-fit: cover; border-radius: 35px; border: 5px solid #eee; margin-bottom: 25px; }
+        .house-data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex-grow: 1; }
+        .infra-card { width: 450px; padding: 30px; border-radius: 35px; box-sizing: border-box; }
+        .info-row { background: #f9fbf9; padding: 22px 25px; border-radius: 25px; border-left: 12px solid #008000; font-size: 22px; font-weight: 800; margin-bottom: 12px; color: #222; text-align: left; }
+        .ui-btn { width: 100%; padding: 25px; border-radius: 30px; border: none; background: #f4f7f4; color: #111; font-weight: 900; font-size: 18px; text-transform: uppercase; border-bottom: 8px solid #dce4de; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+        .ui-btn:hover { background: #008000 !important; color: #fff !important; transform: translateY(-5px); }
+        .settings-trigger { position: absolute; bottom: 60px; left: 60px; width: 130px; height: 130px; background: #fff; border-radius: 50%; border: 6px solid #008000; display: flex; align-items: center; justify-content: center; font-size: 80px; z-index: 1001; cursor: pointer; transition: 0.6s; }
+        .settings-trigger.active { transform: rotate(180deg); background: #008000; color: #fff; }
+        .secret-trigger { position: absolute; bottom: 60px; left: 220px; width: 130px; height: 130px; border-radius: 50%; background: #333; color: #fff; border: 5px solid #444; font-size: 24px; font-weight: 900; display: none; align-items: center; justify-content: center; z-index: 1001; cursor: pointer; }
+        .secret-trigger.active-mode { background: #000 !important; color: #00ff88 !important; border-color: #00ff88 !important; box-shadow: 0 0 40px rgba(0,255,136,0.6); }
+        body.interface-dark .premium-card, body.interface-dark .modal-win, body.interface-dark .sub-modal { background: #080c08 !important; color: #00ff88 !important; border-color: #00ff88 !important; }
+        body.interface-dark .eco-content label, body.interface-dark .eco-header { color: #00ff88 !important; }
         body.interface-dark .ui-btn { background: #121a12 !important; color: #00ff88 !important; border-bottom-color: #00ff8844 !important; }
-        body.interface-dark .info-row { background: #152215 !important; color: #fff !important; }
-        @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(0,255,136,0.6); } 70% { box-shadow: 0 0 0 30px rgba(0,255,136,0); } 100% { box-shadow: 0 0 0 0 rgba(0,255,136,0); } }
+        body.interface-dark .info-row { background: #111d11 !important; color: #fff !important; border-left-color: #00ff88 !important; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(25px); }
+        .modal-win { width: 1300px; background: #fff; border-radius: 80px; padding: 80px; border-top: 40px solid #008000; position: relative; max-height: 95vh; overflow-y: auto; }
+        .sub-modal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%; background: #fff; z-index: 30000 !important; border-radius: 80px; padding: 60px; display: none; box-sizing: border-box; border: 6px solid #008000; }
+        .close-icon { position: absolute; top: 40px; right: 50px; cursor: pointer; font-size: 90px; color: #ccc; border:none; background:none; transition: 0.3s; line-height: 1; }
+        .close-icon:hover { color: #ff0000; transform: rotate(90deg); }
+        .switch { position: relative; display: inline-block; width: 85px; height: 45px; vertical-align: middle; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 50px; }
+        .slider:before { position: absolute; content: ""; height: 37px; width: 37px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #008000 !important; }
+        input:checked + .slider:before { transform: translateX(40px); }
     `;
     document.head.appendChild(style);
     const map = new ymaps.Map('map', { center: [64.562, 39.82], zoom: 14, controls: ['zoomControl'] });
     const response = await fetch('/api/objects');
     const root = await response.json();
     const db = root.data;
-    const layers = { hM: [], hP: [], tB: [], tBZ: [], pL: [], pK: [], tr: [] };
+    const layers = { hM: [], hP: [], tB: [], tBZ: [], pl: [], pk: [] };
 
     window.openCamera = () => {
-        window.openModal('🎥 ВИДЕОПОТОК: ОШИБКА', `
-            <div style="text-align:center; padding: 20px;">
-                <div class="loader-spin" style="border-top-color:#d9534f; width:80px; height:80px;"></div>
-                <h2 style="color:#d9534f; font-weight:900; font-size:32px; margin-top:25px;">СВЯЗЬ ПРЕРВАНА</h2>
-                <div class="info-row" style="border-left-color:#d9534f; text-align:left; margin-top:30px;">
-                    <b>Статус:</b> Offline (Node_402_Severodvinsk)<br>
-                    <b>Причина:</b> Ведутся плановые работы ПАО "Ростелеком" по замене оборудования. Доступ будет восстановлен через 140 минут.
-                </div>
-            </div>`);
+        window.openModal('🎥 ВИДЕОМОНИТОРИНГ', `<div style="text-align:center; padding: 50px;"><div style="width:150px; height:150px; border:15px solid #f3f3f3; border-top:15px solid #3498db; border-radius:50%; animation:spin 2s linear infinite; margin:auto;"></div><h2 style="font-size:55px; color:#3498db; margin-top:40px;">ПОДКЛЮЧЕНИЕ...</h2><p style="font-size:28px;">Узел Sever_Node_402 Offline.</p></div>`);
     };
 
-    db.filter(o => o.id?.startsWith('h')).forEach(house => {
-        const hHtml = `
-            <div class="house-card">
-                <img src="${house.photo || ''}" style="width:100%; height:230px; object-fit:cover; border-radius:35px; margin-bottom:20px; border:3px solid #00800011;">
-                <b style="font-size:26px; color:#008000; display:block; margin-bottom:15px; letter-spacing:-1px;">🏠 ${house.address}</b>
-                <div class="info-row">🏗️ Постройка: <b>${house.year} год</b></div>
-                <div class="info-row">🏢 Конструктив: <b>${house.floors} этажей</b></div>
-                <div class="info-row">📐 Общая площадь: <b>${house.area || '10 882'} м²</b></div>
-                <button class="ui-btn" style="background:#3498db; color:#fff; border:none;" onclick="openCamera()">КАМЕРЫ ПОДЪЕЗДА 📹</button>
-                <button class="ui-btn" style="background:#d9534f; color:#fff; border:none; height:70px;" onclick="openComplaint('${house.address}')">🚨 ОФОРМИТЬ ЖАЛОБУ</button>
-            </div>`;
-        
-        const m = new ymaps.Placemark(house.coords, { balloonContent: hHtml }, { preset: 'islands#greenHomeCircleIcon', iconScale: 1.6 });
-        layers.hM.push(m); map.geoObjects.add(m);
+    window.openComplaintAction = (addr) => {
+        document.getElementById('m-content').innerHTML = `<h1 style="color:#d9534f; font-weight:900; font-size:70px;">🚨 ЖАЛОБА</h1><p style="font-size:35px; margin-bottom:50px;">Объект: <b>${addr}</b></p><input type="text" placeholder="Ваше ФИО" class="premium-card" style="width:100%; padding:40px; margin-bottom:25px; border:4px solid #eee; font-size:26px;"><input type="tel" placeholder="Телефон" class="premium-card" style="width:100%; padding:40px; margin-bottom:25px; border:4px solid #eee; font-size:26px;"><textarea class="premium-card" style="width:100%; height:300px; padding:40px; border:4px solid #eee; font-size:26px;" placeholder="Суть проблемы..."></textarea><button class="ui-btn" style="background:#008000; color:#fff; height:140px; font-size:40px; margin-top:50px;" onclick="alert('Принято!'); window.closeEverything();">ОТПРАВИТЬ</button>`;
+        modal.style.display = "flex";
+    };
 
-        if(house.boundary) layers.hP.push(new ymaps.Polygon([house.boundary], {}, { fillColor: '#00800010', strokeColor: '#008000', strokeWidth: 4 }));
-        
-        if (house.infra) house.infra.forEach(item => {
-            if (item.type.includes('bin')) {
-                const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ff9900' : '#ff3300');
-                const bHtml = `
-                    <div style="width:320px; padding:15px;">
-                        <b style="color:${color}; font-size:22px; display:block; margin-bottom:15px;">🗑️ ${item.title}</b>
-                        <div class="info-row" style="border-left-color:${color}">📡 Falcon Smart v2</div>
-                        <div class="info-row" style="border-left-color:${color}">📦 HDPE Пластик</div>
-                        <div class="info-row" style="border-left-color:${color}">📐 Объем: 1100 литров</div>
-                        <div class="info-row" style="background:${color}15; border-left-color:${color}">📊 Заполнение: <b>${item.load}%</b></div>
-                    </div>`;
-                layers.tB.push(new ymaps.Placemark(item.coords, { balloonContent: bHtml }, { preset: 'islands#trashIcon', iconColor: color, iconScale: 1.1 }));
-                layers.tBZ.push(new ymaps.Circle([item.coords, 2.5], {}, { fillColor: color + '25', strokeColor: color, strokeWidth: 2 }));
-            } else if (item.type === 'parking') {
-                const pHtml = `<div style="width:360px; padding:15px;"><b style="font-size:22px; color:#00AAFF; display:block; margin-bottom:15px;">🅿️ ${item.title}</b><div class="info-row" style="margin-top:15px; border-left-color:#00AAFF;">🚗 Занято: <b>${item.busySpots}/${item.totalSpots}</b></div><button class="ui-btn" style="background:#3498db; color:#fff; border:none; margin-top:15px;" onclick="openCamera()">ПРОСМОТР КАМЕР 📹</button></div>`;
-                layers.pK.push(new ymaps.Placemark(item.coords, { balloonContent: pHtml }, { preset: 'islands#parkingIcon', iconColor: '#00AAFF' }));
-            } else if (item.type === 'playground') {
-                const lHtml = `<div style="width:360px; padding:15px;"><b style="font-size:22px; color:#008000; display:block; margin-bottom:15px;">🎡 ${item.title}</b><div class="info-row" style="margin-top:10px;">👶 Возраст: <b>${item.ageLimit}</b></div><div class="info-row">🛡️ ГОСТ 52169</div><button class="ui-btn" style="background:#3498db; color:#fff; border:none; margin-top:10px;" onclick="openCamera()">ПРОСМОТР КАМЕР 📹</button></div>`;
-                layers.pL.push(new ymaps.Placemark(item.coords, { balloonContent: lHtml }, { preset: 'islands#greenFamilyIcon' }));
-            }
-        });
+    db.forEach(obj => {
+        if (obj.id?.startsWith('h')) {
+            const hHtml = `<div class="house-card-colossus"><img src="${obj.photo || ''}" class="house-main-img"><b style="font-size:45px; color:#008000; display:block; margin-bottom:25px; text-align:center;">🏢 ${obj.address}</b><div class="house-data-grid"><div><div class="info-row">🏗️ Год: ${obj.year}</div><div class="info-row">🧱 Стены: Кирпич</div><div class="info-row">📐 Площадь: ${obj.area || '10 882'} м²</div></div><div><div class="info-row">🏢 Этажей: ${obj.floors}</div><div class="info-row">📡 Falcon: Active</div><div class="info-row">🛠️ УК: Все Свои</div></div></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; margin-top:30px;"><button class="ui-btn" style="background:#3498db; color:#fff;" onclick="window.openCamera()">КАМЕРА 📹</button><button class="ui-btn" style="background:#d9534f; color:#fff;" onclick="window.openComplaintAction('${obj.address}')">ЖАЛОБА 🚨</button></div></div>`;
+            const m = new ymaps.Placemark(obj.coords, { balloonContent: hHtml }, { preset: 'islands#greenHomeCircleIcon', iconScale: 2.5, balloonMinWidth: 900, balloonMaxWidth: 900, balloonMinHeight: 800, balloonPanelMaxMapArea: 0 });
+            layers.hM.push(m); map.geoObjects.add(m);
+            if(obj.boundary) layers.hP.push(new ymaps.Polygon([obj.boundary], {}, { fillColor: '#00800015', strokeColor: '#008000', strokeWidth: 7 }));
+            if (obj.infra) obj.infra.forEach(item => {
+                const color = item.load < 66 ? '#00cc00' : '#ff3300';
+                if (item.type.includes('bin')) {
+                    const bHtml = `<div class="infra-card"><b style="font-size:40px; color:${color};">🗑️ ${item.title}</b><div class="info-row" style="border-left-color:${color}; margin-top:30px;">📊 Заполнение: ${item.load}%</div><div class="info-row" style="border-left-color:${color}">📐 1100 Литров</div></div>`;
+                    layers.tB.push(new ymaps.Placemark(item.coords, { balloonContent: bHtml }, { preset: 'islands#trashIcon', iconColor: color, iconScale: 2 }));
+                    layers.tBZ.push(new ymaps.Circle([item.coords, 3], {}, { fillColor: color + '25', strokeColor: color, strokeWidth: 3 }));
+                } else if (item.type === 'parking') {
+                    const pHtml = `<div class="infra-card"><b style="color:#00AAFF; font-size:40px;">🅿️ ${item.title}</b><p style="font-size:24px; margin:20px 0;">ИИ-контроль парковки.</p><div class="info-row" style="border-left-color:#00AAFF;">🚗 Мест: ${item.busySpots}/${item.totalSpots}</div></div>`;
+                    layers.pk.push(new ymaps.Placemark(item.coords, { balloonContent: pHtml }, { preset: 'islands#parkingIcon', iconColor: '#00AAFF', iconScale: 2.2 }));
+                } else if (item.type === 'playground') {
+                    const lHtml = `<div class="infra-card"><b style="color:#008000; font-size:40px;">🎡 ${item.title}</b><p style="font-size:24px; margin:20px 0;">Сертификат ГОСТ.</p><div class="info-row">👶 Возраст: 3-12 лет</div></div>`;
+                    layers.pl.push(new ymaps.Placemark(item.coords, { balloonContent: lHtml }, { preset: 'islands#greenFamilyIcon', iconScale: 2.2 }));
+                }
+            });
+        }
     });
 
     const trData = db.find(o => o.type === 'truck_route');
-    const truckMarker = new ymaps.Placemark(trData.path, {}, { preset: 'islands#oliveDeliveryIcon', zIndex: 12000 });
-    const routeLine = new ymaps.Polyline(trData.path, {}, { strokeColor: '#00FF88', strokeWidth: 5, opacity: 0.5 });
-    let seg = 0, prog = 0;
-    setInterval(() => {
+    const truckMarker = new ymaps.Placemark(trData.path, {}, { preset: 'islands#oliveDeliveryIcon', iconScale: 3 });
+    const routeLine = new ymaps.Polyline(trData.path, {}, { strokeColor: '#00FF88', strokeWidth: 15, opacity: 0.4 });
+    let seg = 0, prog = 0; setInterval(() => {
         prog += 0.005; if (prog >= 1) { prog = 0; seg = (seg + 1) % (trData.path.length - 1); }
         const [lat1, lon1] = trData.path[seg], [lat2, lon2] = trData.path[seg+1];
         truckMarker.geometry.setCoordinates([lat1 + (lat2-lat1)*prog, lon1 + (lon2-lon1)*prog]);
@@ -144,64 +98,27 @@ async function initIndustrialGis() {
     document.body.appendChild(modal);
 
     window.closeEverything = () => { document.getElementById('sub-modal-body').style.display="none"; modal.style.display="none"; };
-    window.openModal = (t, h) => { document.getElementById('m-content').innerHTML = `<h1 style="color:#008000; font-weight:900; margin-bottom:40px;">${t}</h1>${h}`; modal.style.display = "flex"; };
-
-    // --- ЕДИНЫЙ ЭКО-ГИД (ВСЕ СОВЕТЫ НА ОДНОЙ СТРАНИЦЕ) ---
-    window.openEcoGuide = () => {
-        const fullContent = `
-            <div class="guide-section">
-                <h2 style="color:#008000;">💳 1. Секреты Экономии на ЖКУ</h2>
-                <p>Плата за вывоз ТКО напрямую зависит от логистики. Если мусоровоз делает лишние рейсы из-за "воздуха" в баках, тариф растет.</p>
-                <div class='info-row'><b>Сминайте ПЭТ-бутылки:</b> Одна немятая бутылка занимает место 5 сжатых. Мусоровоз везет воздух, а платите вы. Разбирайте картонные коробки до плоских листов.</div>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">🚫 2. Полный Стоп-Лист отходов</h2>
-                <p>Нарушение правил ведет к поломке техники ценой 450к руб и штрафам до 5000 руб.</p>
-                <div class='info-row'><b>Запрещено:</b> Бетон, кирпич, плиточный клей. Автомобильные шины (резина блокирует поршни). Ртутные лампы (отравляют воздух во дворе).</div>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">📡 3. Технологии Falcon Smart v2</h2>
-                <p>Под крышкой каждого бака УК «ВСЕ СВОИ» установлен лазерный сенсор Falcon. Он замеряет уровень мусора каждые 15 минут.</p>
-                <div class='info-row'>Если бак в приложении горит КРАСНЫМ — машина уже получила сигнал и скоро приедет. Не создавайте навалы рядом!</div>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">♻️ 4. Рециклинг и Переработка</h2>
-                <p>Пластик из сеток не едет на свалку. Его дробят в хлопья, плавят и превращают в лавочки и урны, которые мы ставим в ваших же дворах.</p>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">🚛 5. Логистика и Парковка</h2>
-                <p>График вывоза: С 07:30 до 11:00. Если проезд заблокирован вашим авто, вывоз переносится на 24 часа. Пожалуйста, не паркуйтесь у баков!</p>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">🏗️ 6. Утилизация Крупногабарита</h2>
-                <p>Мебель и технику запрещено класть в маленькие баки. Для них нужны бункеры 8м³ "Лодка".</p>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">🏠 7. Зона ответственности УК</h2>
-                <p>Мы отвечаем за: чистоту основания, исправность крышек и колес. Если бак сломан — жмите "Жалоба" в меню дома.</p>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">💧 8. Мойка и Дезинфекция</h2>
-                <p>Дважды в год мы моем все баки спец-раствором под давлением 150 бар. Это уничтожает 99.9% бактерий.</p>
-            </div>
-            <div class="guide-section">
-                <h2 style="color:#008000;">🌟 9. Будущее Smart-City</h2>
-                <p>Скоро: датчики качества воздуха и мониторинг уличных фонарей в вашем приложении!</p>
-            </div>
-        `;
-        window.openModal('🍃 ПОЛНЫЙ ЭКО-ГИД СЕВЕРОДВИНСКА', fullContent);
+    window.openModal = (t, h) => { document.getElementById('m-content').innerHTML = `<h1 style="color:#008000; font-weight:900; font-size:65px; margin-bottom:60px;">${t}</h1>${h}`; modal.style.display = "flex"; };
+    window.openSub = (title, text) => {
+        const sub = document.getElementById('sub-modal-body');
+        sub.innerHTML = `<button class="close-icon" onclick="this.parentElement.style.display='none'">&times;</button><h1 style="color:#008000; font-weight:900; font-size:60px; margin-bottom:45px;">${title}</h1><div style="font-size:32px; line-height:1.9;">${text}</div><button class="ui-btn" style="background:#008000; color:#fff; width:500px; height:120px; margin-top:60px;" onclick="this.parentElement.style.display='none'">ВЕРНУТЬСЯ</button>`;
+        sub.style.display = "block";
     };
 
-    window.openComplaint = (addr) => {
-        document.getElementById('m-content').innerHTML = `<h1>🚨 НОВАЯ ЖАЛОБА</h1><p>Объект: <b>${addr}</b></p><input type="text" placeholder="ФИО" class="ui-btn" style="text-align:left; background:#fff;"><input type="tel" placeholder="Телефон" class="ui-btn" style="text-align:left; background:#fff;"><textarea class="ui-btn" style="height:100px; text-align:left; background:#fff;" placeholder="Суть..."></textarea><button class="ui-btn" style="background:#008000; color:#fff; border:none;" onclick="alert('✅ Отправлено!'); window.closeEverything();">ОТПРАВИТЬ</button>`;
-        modal.style.display = "flex";
+    window.openEcoGuide = () => {
+        const full = `<div class="info-row"><b>💳 1. Секреты Экономии:</b> Сминайте ПЭТ.</div><div class="info-row"><b>🚫 2. Стоп-Лист:</b> Без бетона.</div><div class="info-row"><b>📡 3. Falcon Smart:</b> Датчики 15 мин.</div><div class="info-row"><b>♻️ 4. Рециклинг:</b> Пластик в лавочки.</div><div class="info-row"><b>🚛 5. Логистика:</b> Вывоз 07:30.</div>`;
+        window.openModal('🍃 ЭКО-ГИД v8.1', full);
     };
 
     window.runAction = (act) => {
         if(act === 'sat') map.setType('yandex#hybrid');
         else if(act === 'map') map.setType('yandex#map');
         else if(act === 'reboot') location.reload();
-        else if(act === 'dev') alert('Система v1.6.0-PLATINUM готова.');
+        else if(act === 'theme') document.body.classList.toggle('interface-dark');
+        else if(act === 'dev') {
+            window.openSub('🔄 ОБНОВЛЕНИЕ', '<div style="text-align:center;"><div class="loader-spin" style="width:100px; height:100px; border:10px solid #f3f3f3; border-top:10px solid #008000; border-radius:50%; animation:spin 1s linear infinite; margin:auto;"></div><p style="font-size:35px;">Загрузка...</p></div>');
+            setTimeout(() => window.openSub('✅ ГОТОВО', 'Система актуальна.'), 2000);
+        }
     };
 
     window.refreshL = () => {
@@ -211,58 +128,43 @@ async function initIndustrialGis() {
         layers.hP.forEach(p => c.p ? map.geoObjects.add(p) : map.geoObjects.remove(p));
         layers.tB.forEach(b => c.t ? map.geoObjects.add(b) : map.geoObjects.remove(b));
         layers.tBZ.forEach(z => c.t ? map.geoObjects.add(z) : map.geoObjects.remove(z));
-        layers.pL.forEach(l => c.pl ? map.geoObjects.add(l) : map.geoObjects.remove(l));
-        layers.pK.forEach(k => c.pk ? map.geoObjects.add(k) : map.geoObjects.remove(k));
+        layers.pl.forEach(l => c.pl ? map.geoObjects.add(l) : map.geoObjects.remove(l));
+        layers.pk.forEach(k => c.pk ? map.geoObjects.add(k) : map.geoObjects.remove(k));
         c.tr ? (map.geoObjects.add(truckMarker), map.geoObjects.add(routeLine)) : (map.geoObjects.remove(truckMarker), map.geoObjects.remove(routeLine));
     };
 
-    function id(i) { return document.getElementById(i); }
     const gui = document.createElement('div'); gui.id = "eco-panel-root"; gui.className = "premium-card";
-    gui.innerHTML = `<div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div><div class="eco-content">
-        <label>Дома <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Границы <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Мусорки <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Площадки <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Стоянки <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Техника <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
-    </div>`; 
+    gui.innerHTML = `<div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div><div class="eco-content"><label>Дома 🏢 <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label><label>Границы 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label><label>Мусорки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label><label>Площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label><label>Стоянки 🅿️ <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label><label>Техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label></div>`; 
     document.body.appendChild(gui);
 
     const sBtn = document.createElement('button'); sBtn.className = "settings-trigger"; sBtn.innerHTML = `⚙️`; document.body.appendChild(sBtn);
-    const secBtn = document.createElement('button'); secBtn.className = "secret-trigger"; secBtn.innerText = "STATION"; document.body.appendChild(secBtn);
+    const secBtn = document.createElement('button'); secBtn.innerText = "ДОП"; secBtn.className = "secret-trigger"; document.body.appendChild(secBtn);
     
     const tBox = document.createElement('div'); tBox.id = "settings-panel-root"; tBox.className = "premium-card";
-    tBox.innerHTML = `
-        <button class="ui-btn" onclick="openEcoGuide()">📖 ЭКО-ГИД</button>
-        <button class="ui-btn" onclick="runAction('map')">🗺️ КАРТА ГОРОДА</button>
-        <button class="ui-btn" onclick="runAction('sat')">🛰️ СПУТНИКОВЫЙ ВИД</button>
-        <button class="ui-btn" onclick="document.body.classList.toggle('interface-dark')">🌙 ТЕМА</button>
-        <label style="display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:900;margin-top:15px;color:#666">
-            ENGINEERING <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span>
-        </label>`;
-    document.body.appendChild(tBox);
-    
-    sBtn.onclick = () => { tBox.style.display = tBox.style.display === "block" ? "none" : "block"; sBtn.classList.toggle('active-gear'); };
+    // ФИКС ФОНА: Добавлено background: rgba(255,255,255,0.98)
+    Object.assign(tBox.style, { position: "absolute", bottom: "250px", left: "70px", width: "550px", padding: "60px", display: "none", zIndex: "1000", borderTop: "30px solid #008000", background: "rgba(255,255,255,0.98)" });
+    tBox.innerHTML = `<button class="ui-btn" onclick="openEcoGuide()">📖 ЭКО-ГИД</button><button class="ui-btn" onclick="runAction('map')">🗺️ КАРТА</button><button class="ui-btn" onclick="runAction('sat')">🛰️ СПУТНИК</button><button class="ui-btn" onclick="runAction('theme')">🌙 ТЕМА</button><label style="display:flex;justify-content:space-between;align-items:center;font-size:22px;font-weight:900;margin-top:40px;color:#666">ENGINEERING <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span></label>`;
+    document.body.appendChild(tBox); 
+
+    sBtn.onclick = () => { const open = tBox.style.display === "block"; tBox.style.display = open ? "none" : "block"; sBtn.classList.toggle('active', !open); };
     secBtn.onclick = () => {
-        document.getElementById('m-content').innerHTML = `<h1 style="color:#00ff88; text-align:center;">STATION CONTROL</h1><div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-top:20px;">
-            <button class="ui-btn" onclick="runAction('dev')">🔄 UPDATE</button><button class="ui-btn" onclick="alert('Ping: 4ms')">📡 PING</button><button class="ui-btn" onclick="alert('Logs clean')">🧹 CLEAN</button>
-            <button class="ui-btn" onclick="alert('Heatmap ready')">🔥 HEAT</button><button class="ui-btn" onclick="alert('Contacts: 55-00-00')">📞 INFO</button><button class="ui-btn" onclick="window.open('https://vk.com')">🌐 VK ADM</button>
-                <button class="ui-btn" onclick="runAction('reboot')">♻️ REBOOT</button>
-                <button class="ui-btn" onclick="alert('Системный дамп сохранен в облако.')">📸 DUMP</button>
-                <button class="ui-btn" onclick="alert('Принудительный опрос Falcon v2...')">⚡ FORCE</button>
-                <button class="ui-btn" onclick="alert('Приоритет спецтехники активирован.')">🚜 TRAFFIC</button>
-                <button class="ui-btn" onclick="alert('Протоколы шифрования обновлены.')">🔐 KEY</button>
-                <button class="ui-btn" style="background:#d9534f; color:#fff;" onclick="window.closeEverything()">❌ EXIT</button>
-            </div>
-            <div style="margin-top:20px; font-family:monospace; font-size:10px; opacity:0.5; text-align:center;">
-                SYSTEM_BUILD_2024_0.1.6.0_STABLE_VERSION
-            </div>
-        `;
+        secBtn.classList.toggle('active-mode');
+        document.getElementById('m-content').innerHTML = `
+            <h1 style="color:#00ff88; text-align:center; font-size:65px;">STATION CONTROL</h1>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; margin-top:50px;">
+                <button class="ui-btn" onclick="window.openSub('📞 УК ВСЕ СВОИ', 'Диспетчерская (24/7):<br><b>+7 (921) 482-85-50</b>')">📞 НОМЕР УК</button>
+                <button class="ui-btn" onclick="window.open('https://vk.com')">👨‍💻 РАЗРАБОТЧИК</button>
+                <button class="ui-btn" onclick="runAction('dev')">🔄 ОБНОВЛЕНИЯ</button>
+                <button class="ui-btn" onclick="window.openSub('🧹 ОЧИСТКА КЭША', 'Системный дамп ГИС очищен.')">🧹 CLEAN КЭШ</button>
+                <button class="ui-btn" onclick="window.openSub('🔐 CRYPTO', 'Ключи обновлены.')">🔐 SSL KEY</button>
+                <button class="ui-btn" onclick="window.openSub('🚜 TRAFFIC', 'Приоритет мусоровозов подан.')">🚜 TRAFFIC</button>
+                <button class="ui-btn" onclick="window.openSub('📊 АНАЛИТИКА', '11 домов передают данные.')">📊 СТАТУС</button>
+                <button class="ui-btn" onclick="window.openSub('🔥 ТЕПЛО', 'Карта наложена.')">🔥 HEATMAP</button>
+                <button class="ui-btn" onclick="window.openSub('⚡ FORCE SCAN', 'Все датчики: 100% OK.')">⚡ FORCE SCAN</button>
+                <button class="ui-btn" onclick="runAction('reboot')">♻️ REBOOT SITE</button>
+                <button class="ui-btn" style="background:#d9534f; color:#fff; grid-column: span 2;" onclick="window.closeEverything()">❌ ВЫХОД</button>
+            </div>`;
         modal.style.display = "flex";
     };
-
-    // --- ФИНАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ ---
     refreshL();
-    console.log("🚀 ГИС ООО УК «ВСЕ СВОИ» v1.6.0 PLATINUM FINAL запущена.");
 }
-
