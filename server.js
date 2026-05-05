@@ -99,18 +99,17 @@ const fullPath = [
   [64.595725, 39.818873], [64.595536, 39.822719]
 ];
 
-// 2. БАЗА ДАННЫХ 
 const objects = [
     { 
         id: "h1", address: "пр-кт Беломорский, 56", coords: [64.5624, 39.8495], floors: 9, year: 2023,
         photo: "/dom56.jpg",
         boundary: [[64.56726971,39.83932947], [64.56731815,39.83959769], [64.56693294,39.83989810], [64.56689142,39.83962988], [64.56726971,39.83932947]],
         infra: [
-            { type: "trash_bin", title: "Бак №1", coords: [64.5626, 39.8498], load: 15, volume: "1.1 м³", material: "Оцинков. сталь", lastEmpty: "08:15" },
-            { type: "trash_bin", title: "Бак №2", coords: [64.5627, 39.8499], load: 85, volume: "1.1 м³", material: "Пластик HD-PE", lastEmpty: "08:15" },
-            { type: "tko_bin", title: "Бункер ТКО", coords: [64.5623, 39.8502], load: 40, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 16:40" },
-            { type: "parking", title: "Стоянка", coords: [64.5627, 39.8485], totalSpots: 45, busySpots: 32, boundary: [[64.5626,39.8484], [64.5628,39.8486], [64.5629, 39.8485]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5621, 39.8490], boundary: [[64.5620,39.8489], [64.5622,39.8491], [64.5623, 39.8490]] }
+            { type: "trash_bin", title: "№1", coords: [64.56231, 39.84896], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:15", photo: "/img/bins/h1_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.56220, 39.84906], load: 85, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:15", photo: "/img/bins/h1_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.56196, 39.84912], load: 40, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 16:40", photo: "/img/bins/h1_tko.jpg" },
+            { type: "parking", title: "Стоянка Беломорский", coords: [64.56236, 39.84986], totalSpots: 45, busySpots: 32 },
+            { type: "playground", title: "Детская площадка", coords: [64.56270, 39.84869] }
         ]
     },
     { 
@@ -118,115 +117,110 @@ const objects = [
         photo: "/dom2.jpg",
         boundary: [[64.55702953,39.75432192], [64.55716105,39.75527678], [64.55664417,39.75568448], [64.55652187,39.75568984], [64.55648265,39.75532506], [64.55684723,39.75500588], [64.55676416,39.75445066], [64.55691877,39.75433265], [64.55702953,39.75432192]],
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5566, 39.7561], load: 95, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5567, 39.7562], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30" },
-            { type: "tko_bin", title: "ТКО Крым", coords: [64.5568, 39.7563], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 12:00" },
-            { type: "parking", title: "Стоянка", coords: [64.5569, 39.7558], totalSpots: 20, busySpots: 18, boundary: [[64.5568,39.7557], [64.5570,39.7559]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5565, 39.7540], boundary: [[64.5564,39.7539], [64.5566,39.7541]] }
+            { type: "trash_bin", title: "№1", coords: [64.55683, 39.75615], load: 95, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30", photo: "/img/bins/h2_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.55678, 39.75619], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30", photo: "/img/bins/h2_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.55686, 39.75613], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 12:00", photo: "/img/bins/h2_tko.jpg" },
+            { type: "parking", title: "Парковка Крымская 2", coords: [64.55686, 39.75575], totalSpots: 20, busySpots: 18 },
+            { type: "playground", title: "Детская зона", coords: [64.55651, 39.75404] }
         ]
     },
     { 
         id: "h3", address: "ул. Крымская, 6", coords: [64.5554, 39.7564], floors: 9, year: 2022,
         photo: "/dom6.jpg",
-        boundary: [[64.55571653,39.75607072], [64.55577192,39.75641672], [64.55520756,39.75687773], [64.55509737,39.75687706], [64.55504776,39.75654178], [64.55560620,39.75608044], [64.55571653,39.75607072]],
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5556, 39.7569], load: 10, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5557, 39.7570], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00" },
-            { type: "tko_bin", title: "ТКО Север", coords: [64.5558, 39.7571], load: 60, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 10:20" },
-            { type: "parking", title: "Парковка", coords: [64.5552, 39.7568], totalSpots: 30, busySpots: 5, boundary: [[64.5551,39.7567], [64.5553,39.7569]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5551, 39.7556], boundary: [[64.5550,39.7555], [64.5552,39.7557]] }
+            { type: "trash_bin", title: "№1", coords: [64.55552, 39.75727], load: 10, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00", photo: "/img/bins/h3_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.55548, 39.75730], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00", photo: "/img/bins/h3_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.55539, 39.75737], load: 60, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 10:20", photo: "/img/bins/h3_tko.jpg" },
+            { type: "parking", title: "Стоянка Крымская 6", coords: [64.55543, 39.75687], totalSpots: 30, busySpots: 5 },
+            { type: "playground", title: "Детская площадка", coords: [64.55523, 39.75533] }
         ]
     },
     { 
         id: "h4", address: "ул. Крымская, 8", coords: [64.5548, 39.7576], floors: 9, year: 2024,
         photo: "/dom8.jpg",
-        boundary: [[64.55514721,39.75722529], [64.55520490,39.75759275], [64.55466952,39.75806214], [64.55456914,39.75805946], [64.55450337,39.75768395], [64.55501683,39.75722529], [64.55514721,39.75722529]],
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5547, 39.7564], load: 82, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5548, 39.7563], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45" },
-            { type: "tko_bin", title: "ТКО Центр", coords: [64.5546, 39.7565], load: 33, volume: "8 м³", material: "Металл", lastEmpty: "Ср, 14:15" },
-            { type: "parking", title: "Парковка", coords: [64.5546, 39.7571], totalSpots: 25, busySpots: 12, boundary: [[64.5545,39.7570], [64.5547,39.7572]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5542, 39.7561], boundary: [[64.5541,39.7560], [64.5543,39.7562]] }
+            { type: "trash_bin", title: "№1", coords: [64.55480, 39.75634], load: 82, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45", photo: "/img/bins/h4_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.55475, 39.75639], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45", photo: "/img/bins/h4_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.55472, 39.75642], load: 33, volume: "8 м³", material: "Металл", lastEmpty: "Ср, 14:15", photo: "/img/bins/h4_tko.jpg" },
+            { type: "parking", title: "Парковка Крымская 8", coords: [64.55469, 39.75708], totalSpots: 25, busySpots: 12 },
+            { type: "playground", title: "Игровой городок", coords: [64.55442, 39.75583] }
         ]
     },
     { 
         id: "h5", address: "ул. Малая Кудьма, 7", coords: [64.5360, 39.7870], floors: 9, year: 2021,
         photo: "/dom7.jpg",
-        boundary: [[64.53638303,39.78687577], [64.53638534,39.78700183], [64.53634954,39.78699647], [64.53634723,39.78707157], [64.53634146,39.78732638], [64.53603664,39.78731297], [64.53603895,39.78719495], [64.53602278,39.78719227], [64.53602625,39.78704475], [64.53604126,39.78704475], [64.53604010,39.78701256], [64.53600200,39.78700183], [64.53600431,39.78687309], [64.53638303,39.78687577]],
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5361, 39.7877], load: 12, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5362, 39.7878], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50" },
-            { type: "tko_bin", title: "ТКО Малая", coords: [64.5363, 39.7879], load: 90, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 19:00" },
-            { type: "parking", title: "Стоянка Юг", coords: [64.5364, 39.7881], totalSpots: 50, busySpots: 48, boundary: [[64.5363,39.7880], [64.5365,39.7882]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5358, 39.7874], boundary: [[64.5357,39.7873], [64.5359,39.7875]] }
+            { type: "trash_bin", title: "№1", coords: [64.5361, 39.7877], load: 12, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50", photo: "/img/bins/h5_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5362, 39.7878], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50", photo: "/img/bins/h5_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5363, 39.7879], load: 90, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 19:00", photo: "/img/bins/h5_tko.jpg" },
+            { type: "parking", title: "Парковка Кудьма", coords: [64.5364, 39.7881], totalSpots: 50, busySpots: 48 },
+            { type: "playground", title: "Детская площадка", coords: [64.5358, 39.7874] }
         ]
     },
     { 
         id: "h6", address: "ул. Октябрьская, 63", coords: [64.6087, 39.8135], floors: 9, year: 2025,
         photo: "/dom63.jpg",
-        boundary:  [[64.6088180243599,39.81338253477745], [64.60882032679395,39.813666848932314], [64.60883644808665,39.813661484514085], [64.60884105397712,39.813747315202306], [64.60885487212961,39.81375267962015], [64.6088732959331,39.81481483438877], [64.60862686334517,39.814836292060875], [64.60862686321198,39.814771919044404], [64.60861304452045,39.81476655462633], [64.60860843792533,39.81446614721604], [64.6086245595867,39.81445541837986], [64.60862225498198,39.814273028164564], [64.60860613316261,39.814278392582594], [64.6086038297864,39.81398334959035], [64.60861764820844,39.81397798517192], [64.60861534476308,39.8137580440321], [64.60862686028274,39.8137580440321], [64.60861995087905,39.81370976426976], [64.6078967633045,39.813752679612826], [64.6078944596412,39.81347909429244], [64.60791749124076,39.81347372987441], [64.60791749120942,39.813441543366096]],
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.60887059977199,39.81459211679911], load: 10, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.60888441801904,39.81471549841351], load: 20, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15" },
-            { type: "tko_bin", title: "64.60904563324304,39.814972990478346", coords: [64.6090, 39.8149], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 09:30" },
-            { type: "parking", title: "Паркинг ЖК", coords: [64.60828376602979,39.81315445276618], totalSpots: 60, busySpots: 20, boundary: [[64.60856935253042,39.81281113001111], [64.60857856458169,39.8133583006497], [64.60790144054317,39.813401215993665], [64.60789683384303,39.81292914720673]] },
-            { type: "playground", title: "Детская площадка", coords: [64.6083505573514,39.81439899774993], boundary: [[64.60846571389865,39.81400739523387], [64.60846110705133,39.81497835489615], [64.60821006461266,39.81500517698513], [64.60819624510573,39.81399666639449]] }
+            { type: "trash_bin", title: "№1", coords: [64.60887, 39.81459], load: 10, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.60888, 39.81471], load: 20, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15", photo: "xueta.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.60904, 39.81497], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 09:30", photo: "xueta.jpg" },
+            { type: "parking", title: "Стоянка Октябрьская", coords: [64.60828, 39.81315], totalSpots: 60, busySpots: 20 },
+            { type: "playground", title: "Спорт-площадка", coords: [64.60835, 39.81439] }
         ]
     },
     { 
         id: "h7", address: "ул. Пионерская, 8", coords: [64.5671, 39.8396], floors: 5, year: 2024,
         photo: "/img/h7.jpg",
-        boundary: [[64.56246955,39.84908436], [64.56252722,39.84909509], [64.56260566,39.84954034], [64.56223885,39.84983002], [64.56217194,39.84984611], [64.56211426,39.84939550], [64.56224807,39.84934185], [64.56228037,39.84951352], [64.56243494,39.84932576], [64.56239803,39.84917019], [64.56246955,39.84908436]],
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5673, 39.8405], load: 55, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5674, 39.8406], load: 88, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10" },
-            { type: "tko_bin", title: "ТКО Пионер", coords: [64.5675, 39.8407], load: 5, volume: "8 м³", material: "Металл", lastEmpty: "Пт, 11:45" },
-            { type: "parking", title: "Мини-стоянка", coords: [64.5665, 39.8402], totalSpots: 15, busySpots: 10, boundary: [[64.5664,39.8401], [64.5666,39.8403]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5675, 39.8410], boundary: [[64.5674,39.8409], [64.5676,39.8411]] }
+            { type: "trash_bin", title: "№1", coords: [64.56723, 39.83920], load: 55, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "/img/bins/h7_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.56721, 39.83912], load: 88, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "/img/bins/h7_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.56738, 39.83876], load: 5, volume: "8 м³", material: "Металл", lastEmpty: "Пт, 11:45", photo: "/img/bins/h7_tko.jpg" },
+            { type: "parking", title: "Мини-стоянка", coords: [64.56742, 39.83898], totalSpots: 15, busySpots: 10 },
+            { type: "playground", title: "Детская площадка", coords: [64.56713, 39.83925] }
         ]
     },
     { 
         id: "h8", address: "пр-кт Ленинградский, 105", coords: [64.5100, 40.6358], floors: 12, year: 2023,
         photo: "/img/h8.jpg",
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5102, 40.6360], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5103, 40.6361], load: 45, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30" },
-            { type: "tko_bin", title: "ТКО Ленингр", coords: [64.5104, 40.6362], load: 92, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 13:20" },
-            { type: "parking", title: "Гостевая А", coords: [64.5106, 40.6365], totalSpots: 40, busySpots: 35, boundary: [[64.5105,40.6364], [64.5107,40.6366]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5098, 40.6362], boundary: [[64.5097,40.6361], [64.5099,40.6363]] }
+            { type: "trash_bin", title: "№1", coords: [64.5102, 40.6360], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "/img/bins/h8_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5103, 40.6361], load: 45, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "/img/bins/h8_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5104, 40.6362], load: 92, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 13:20", photo: "/img/bins/h8_tko.jpg" },
+            { type: "parking", title: "Гостевая А", coords: [64.5106, 40.6365], totalSpots: 40, busySpots: 35 },
+            { type: "playground", title: "Спорт-городок", coords: [64.5098, 40.6362] }
         ]
     },
     { 
         id: "h9", address: "ул. Ломоносова, 171", coords: [64.5421, 40.5217], floors: 9, year: 1976,
         photo: "/img/h9.jpg",
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5422, 40.5218], load: 65, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5423, 40.5219], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50" },
-            { type: "tko_bin", title: "ТКО Ломон", coords: [64.5424, 40.5220], load: 50, volume: "8 м³", material: "Металл", lastEmpty: "Сб, 10:00" },
-            { type: "parking", title: "Стоянка", coords: [64.5425, 40.5225], totalSpots: 25, busySpots: 20, boundary: [[64.5424,40.5224], [64.5426,40.5226]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5420, 40.5210], boundary: [[64.5419,40.5209], [64.5421,40.5211]] }
+            { type: "trash_bin", title: "№1", coords: [64.5422, 40.5218], load: 65, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "/img/bins/h9_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5423, 40.5219], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "/img/bins/h9_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5424, 40.5220], load: 50, volume: "8 м³", material: "Металл", lastEmpty: "Сб, 10:00", photo: "/img/bins/h9_tko.jpg" },
+            { type: "parking", title: "Парковка", coords: [64.5425, 40.5225], totalSpots: 25, busySpots: 20 },
+            { type: "playground", title: "Игровая площадка", coords: [64.5420, 40.5210] }
         ]
     },
     { 
         id: "h10", address: "ул. Октябрят, 30", coords: [64.5314, 40.5991], floors: 9, year: 2020,
         photo: "/img/h10.jpg",
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5315, 40.5992], load: 40, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5316, 40.5993], load: 72, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10" },
-            { type: "tko_bin", title: "ТКО Октябрят", coords: [64.5317, 40.5994], load: 12, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 09:00" },
-            { type: "parking", title: "Парковка 10", coords: [64.5319, 40.5999], totalSpots: 35, busySpots: 10, boundary: [[64.5318,40.5998], [64.5320,40.6000]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5310, 40.5990], boundary: [[64.5309,40.5989], [64.5311,40.5991]] }
+            { type: "trash_bin", title: "№1", coords: [64.5315, 40.5992], load: 40, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "/img/bins/h10_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5316, 40.5993], load: 72, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "/img/bins/h10_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5317, 40.5994], load: 12, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 09:00", photo: "/img/bins/h10_tko.jpg" },
+            { type: "parking", title: "Парковка 10", coords: [64.5319, 40.5999], totalSpots: 35, busySpots: 10 },
+            { type: "playground", title: "Детский уголок", coords: [64.5310, 40.5990] }
         ]
     },
     { 
         id: "h11", address: "ул. Северная, 1", coords: [64.5962, 39.8011], floors: 9, year: 2025,
         photo: "/img/h11.jpg",
         infra: [
-            { type: "trash_bin", title: "Бак 1", coords: [64.5965, 39.8015], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10" },
-            { type: "trash_bin", title: "Бак 2", coords: [64.5966, 39.8016], load: 99, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10" },
-            { type: "tko_bin", title: "ТКО Север", coords: [64.5967, 39.8017], load: 0, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 15:30" },
-            { type: "parking", title: "Северная-П", coords: [64.5969, 39.8019], totalSpots: 50, busySpots: 45, boundary: [[64.5968,39.8018], [64.5970,39.8020]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5961, 39.8012], boundary: [[64.5960,39.8011], [64.5962,39.8013]] }
+            { type: "trash_bin", title: "№1", coords: [64.59625, 39.79989], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "/img/bins/h11_b1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.59628, 39.79979], load: 99, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "/img/bins/h11_b2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.59579, 39.80006], load: 0, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 15:30", photo: "/img/bins/h11_tko.jpg" },
+            { type: "parking", title: "Северная-П", coords: [64.5969, 39.8019], totalSpots: 50, busySpots: 45 },
+            { type: "playground", title: "Детская площадка", coords: [64.5961, 39.8012] }
         ]
     },
     { id: "truck_route", type: "truck_route", path: fullPath }
