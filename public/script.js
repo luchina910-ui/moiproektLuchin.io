@@ -166,12 +166,34 @@ window.sendComplaintConfirm = () => {
             
             if (obj.infra) obj.infra.forEach(item => {
                 const color = item.load < 66 ? '#00cc00' : '#ff3300';
+                
                 if (item.type.includes('bin')) {
-                    const bHtml = `<div style="width:400px; padding:30px;"><b style="font-size:32px; color:${color};">🗑️ ${item.title}</b><div class="info-row" style="border-left-color:${color}; margin-top:20px;">📊 Заполнение: ${item.load}%</div></div>`;
-                    layers.tB.push(new ymaps.Placemark(item.coords, { balloonContent: bHtml }, { preset: 'islands#trashIcon', iconColor: color, iconScale: 1.5 }));
-                } else if (item.type === 'parking') {
-                    // ВОССТАНОВЛЕНИЕ СТОЯНОК
-                    const pHtml = `<div style="width:450px; padding:35px;"><b style="color:#00AAFF; font-size:32px;">🅿️ ${item.title}</b><p style="font-size:18px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ».</p><div class="info-row" style="border-left-color:#00AAFF;">🚗 Свободно: ${item.totalSpots - item.busySpots} из ${item.totalSpots}</div></div>`;
+    const bHtml = `
+        <div style="width:350px; padding:30px;">
+            <b style="font-size:32px; color:${color};">🗑️ ${item.title}</b>
+            <div class="info-row" style="border-left-color:${color}; margin-top:20px;">
+                📊 Заполнение: ${item.load}%
+            </div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                <div class="info-row" style="font-size:12px; padding:10px;">📦 Объем: ${item.volume || '1.1 м³'}</div>
+                <div class="info-row" style="font-size:12px; padding:10px;">🛠️ Мат: ${item.material || 'Пластик'}</div>
+            </div>
+            <div class="info-row" style="border-left-color:#3498db; background:#f0f7ff;">
+                🕒 Выгрузка: ${item.lastEmpty || 'Неизвестно'}
+            </div>
+        </div>`;
+    layers.tB.push(new ymaps.Placemark(item.coords, { balloonContent: bHtml }, { preset: 'islands#trashIcon', iconColor: color, iconScale: 1.5 }));
+    }
+                else if (item.type === 'parking') {
+                    const freeSpots = (item.totalSpots || 0) - (item.busySpots || 0);
+                    const pHtml = `
+                        <div style="width:350px; padding:35px;">
+                            <b style="color:#00AAFF; font-size:32px;">🅿️ ${item.title}</b>
+                            <p style="font-size:18px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ».</p>
+                            <div class="info-row" style="border-left-color:#00AAFF; font-size:20px;">🚗 Свободно: <span style="color:#008000;">${freeSpots}</span> из ${item.totalSpots || 0}</div>
+                            <div class="info-row" style="background:#f4f7f4; border-left:none; text-align:center;">Занятость: ${Math.round((item.busySpots / item.totalSpots) * 100) || 0}%</div>
+                            <button class="ui-btn" style="background:#3498db; color:#fff; margin-top:15px;" onclick="window.openCamera()">СМОТРЕТЬ КАМЕРУ</button>
+                        </div>`;
                     layers.pk.push(new ymaps.Placemark(item.coords, { balloonContent: pHtml }, { preset: 'islands#parkingIcon', iconColor: '#00AAFF', iconScale: 1.8 }));
                 } else if (item.type === 'playground') {
                     // ВОССТАНОВЛЕНИЕ ПЛОЩАДОК
@@ -305,11 +327,11 @@ window.sendComplaintConfirm = () => {
     const gui = document.createElement('div'); gui.id = "eco-panel-root"; gui.className = "premium-card";
     gui.innerHTML = `<div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div><div class="eco-content">
         <label>Дома 🏠 <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Границы 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Мусорки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Границы дома 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Мусорные баки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Дет. площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Стоянки 🅿️ <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Орг. техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
     </div>`; document.body.appendChild(gui);
 
     const sBtn = document.createElement('button'); sBtn.className = "settings-trigger"; sBtn.innerHTML = `⚙️`; document.body.appendChild(sBtn);
