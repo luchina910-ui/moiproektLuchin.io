@@ -167,23 +167,48 @@ window.sendComplaintConfirm = () => {
             if (obj.infra) obj.infra.forEach(item => {
                 const color = item.load < 66 ? '#00cc00' : '#ff3300';
                 
-                if (item.type.includes('bin')) {
+if (item.type.includes('bin')) {
+    const longTitle = item.type === 'tko_bin' 
+        ? "Бак для крупногабаритного мусора" 
+        : `Бак для общих отходов ${item.title.includes('2') ? '№2' : '№1'}`;
+
+    // Генерируем HTML для фото, если оно указано
+    const photoHtml = item.photo 
+        ? `<img src="${item.photo}" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">` 
+        : '';
+
     const bHtml = `
-        <div style="width:350px; padding:30px;">
-            <b style="font-size:32px; color:${color};">🗑️ ${item.title}</b>
-            <div class="info-row" style="border-left-color:${color}; margin-top:20px;">
+        <div style="width:300px; padding:20px; text-align:center;">
+            ${photoHtml}
+            <b style="font-size:24px; color:${color}; display:block; line-height:1.2; margin-bottom:15px;">
+                🗑️ ${longTitle}
+            </b>
+            <div class="info-row" style="border-left:none; border-bottom:4px solid ${color}; background:#f9f9f9; display:inline-block; padding:8px 15px; font-size:18px;">
                 📊 Заполнение: ${item.load}%
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
-                <div class="info-row" style="font-size:12px; padding:10px;">📦 Объем: ${item.volume || '1.1 м³'}</div>
-                <div class="info-row" style="font-size:12px; padding:10px;">🛠️ Мат: ${item.material || 'Пластик'}</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:15px; text-align:left;">
+                <div class="info-row" style="font-size:12px; padding:8px; border-left-width:5px;">📦 Объем: ${item.volume || '1.1 м³'}</div>
+                <div class="info-row" style="font-size:12px; padding:8px; border-left-width:5px;">🛠️ Мат: ${item.material || 'Сталь'}</div>
             </div>
-            <div class="info-row" style="border-left-color:#3498db; background:#f0f7ff;">
-                🕒 Выгрузка: ${item.lastEmpty || 'Неизвестно'}
+            <div class="info-row" style="border-left:none; border-top:2px solid #3498db; background:#f0f7ff; margin-top:15px; font-size:13px;">
+                🕒 Последняя выгрузка: ${item.lastEmpty || '08:00'}
             </div>
         </div>`;
-    layers.tB.push(new ymaps.Placemark(item.coords, { balloonContent: bHtml }, { preset: 'islands#trashIcon', iconColor: color, iconScale: 1.5 }));
-    }
+layers.tB.push(new ymaps.Placemark(item.coords, { 
+    balloonContent: bHtml 
+}, { 
+    preset: 'islands#trashIcon', 
+    iconColor: color, 
+    iconScale: 1.5,
+    
+    // --- ВОТ ЗДЕСЬ МЕНЯЕМ ВЫСОТУ ---
+    balloonMinWidth: 350,       // Ширина окна
+    balloonMaxWidth: 420,
+    balloonMinHeight: 500,      // Минимальная высота (подбери под размер фото)
+    balloonMaxHeight: 800,      // Максимальная высота со скроллом
+    balloonPanelMaxMapArea: 0   // Чтобы балун не открывался на всю карту на мобилах
+}));
+}
                 else if (item.type === 'parking') {
                     const freeSpots = (item.totalSpots || 0) - (item.busySpots || 0);
                     const pHtml = `
@@ -292,7 +317,6 @@ window.sendComplaintConfirm = () => {
         `;
         window.openModal('🍃 Советы для жильцов от Вани', full);
     };
-
     window.runAction = (act) => {
         if(act === 'sat') map.setType('yandex#hybrid');
         else if(act === 'map') map.setType('yandex#map');
@@ -304,7 +328,6 @@ window.sendComplaintConfirm = () => {
         }
     };
 
-    // ФИКС: РАБОТА ВСЕХ 6 СЛОЕВ
     window.refreshL = () => {
         const id = (i) => document.getElementById(i);
         const c = { 
