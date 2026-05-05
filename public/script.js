@@ -1,6 +1,5 @@
 /**
- * ГИС ООО «УК «ВСЕ СВОИ» | v17.5.0 TITAN NEON FIXED
- * FIX: Boundaries and Parking restored, Dark Theme, +20% Scale.
+ * ГИС ООО «УК «ВСЕ СВОИ» | v0.1 betta
  */
 
 ymaps.ready(initIndustrialGis);
@@ -39,7 +38,7 @@ async function initIndustrialGis() {
         #eco-panel-root:hover .eco-content { opacity: 1; }
         .eco-content label { display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 800; color: #111; cursor: pointer; }
 
-        /* ИНЖЕНЕРНЫЕ КНОПКИ */
+        /* НАСТРОЙКИ */
         .settings-trigger { position: absolute; bottom: 40px; left: 40px; width: 95px; height: 95px; background: #fff; border-radius: 50%; border: 5px solid #008000; display: flex; align-items: center; justify-content: center; font-size: 55px; z-index: 1001; cursor: pointer; transition: 0.6s; }
         .settings-trigger.active { transform: rotate(180deg); background: #008000; color: #fff; }
         .secret-trigger { position: absolute; bottom: 40px; left: 160px; width: 95px; height: 95px; border-radius: 50%; background: #333; color: #fff; border: 4px solid #444; font-size: 16px; font-weight: 900; display: none; align-items: center; justify-content: center; z-index: 1001; cursor: pointer; }
@@ -71,7 +70,7 @@ async function initIndustrialGis() {
     const layers = { hM: [], hP: [], tB: [], tBZ: [], pl: [], pk: [] };
 
     window.openCamera = () => {
-        window.openModal('🎥 ВИДЕОПОТОК', `<div style="text-align:center;"><div style="width:100px; height:100px; border:10px solid #f3f3f3; border-top:10px solid #3498db; border-radius:50%; animation:spin 1s linear infinite; margin:auto;"></div><h2 style="font-size:35px; color:#3498db; margin-top:30px;">СВЯЗЬ...</h2><p>Node_402 Offline.</p></div>`);
+        window.openModal('🎥 Камера наблюдения', `<div style="text-align:center;"><div style="width:100px; height:100px; border:10px solid #f3f3f3; border-top:10px solid #3498db; border-radius:50%; animation:spin 1s linear infinite; margin:auto;"></div><h2 style="font-size:35px; color:#3498db; margin-top:30px;">Идёт подключение...</h2><p>Node_402 Offline.</p></div>`);
     };
 
     window.openComplaintAction = (addr) => {
@@ -113,19 +112,49 @@ async function initIndustrialGis() {
             </div>
 
             <button class="ui-btn" 
-                style="background:#008000; color:#fff; height:110px; font-size:28px; margin-top:35px; border:none;" 
-                onclick="const num=Math.floor(Math.random()*9000)+1000; alert('✅ Жалоба №' + num + ' отправлена диспетчеру УК!\\n\\nМы свяжемся с вами в ближайшее время.'); window.closeEverything();">
-                ОТПРАВИТЬ ЖАЛОБУ
+                style="background:#008000; color:#fff; height:90px; font-size:24px; margin-top:30px; border:none;" 
+                onclick="window.sendComplaintConfirm()">
+                ОТПРАВИТЬ ДИСПЕТЧЕРУ
             </button>
         `;
-        
-        // Показываем модальное окно
         modal.style.display = "flex";
     };
 
+window.sendComplaintConfirm = () => {
+    // 1. Находим наш sub-modal
+    const sub = document.getElementById('sub-modal-body');
+    if (!sub) return;
+
+    // 2. Генерируем номер
+    const ticketNum = "Ж-" + (Math.floor(Math.random() * 9000) + 1000);
+
+    // 3. Наполняем его контентом (компактным)
+    sub.innerHTML = `
+        <div class="success-popup" style="padding: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <span class="success-icon">✅</span>
+            <h1 style="color:#008000; font-size: 35px; margin-bottom: 10px;">ОТПРАВЛЕНО!</h1>
+            <p style="font-size: 20px; color: #333; margin-bottom: 20px;">Ваша жалоба принята диспетчером.</p>
+            <div style="background: #f0fdf0; padding: 15px 30px; border-radius: 20px; border: 2px dashed #008000; font-weight: 900; font-size: 24px;">
+                № ${ticketNum}
+            </div>
+            <p style="font-size: 14px; color: #888; margin-top: 20px;">Ожидайте звонка в течение 30 минут.</p>
+            <button class="ui-btn" style="margin-top: 30px; background: #008000; color: #fff; width: 250px;" 
+                onclick="window.closeEverything()">ОТЛИЧНО</button>
+        </div>
+    `;
+
+    // 4. Показываем sub-modal поверх окна жалобы
+    sub.style.display = "block";
+    
+    // 5. Авто-закрытие всего через 5 секунд (на случай если не нажали кнопку)
+    setTimeout(() => {
+        if(sub.style.display === "block") window.closeEverything();
+    }, 5000);
+};
+
     db.forEach(obj => {
         if (obj.id?.startsWith('h')) {
-            const hHtml = `<div class="house-card-pro"><img src="${obj.photo || ''}" class="house-img-pro"><b style="font-size:24px; color:#008000; display:block; margin-bottom:15px; text-align:center;">🏠 ${obj.address}</b><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="info-row">🏗️ Год: ${obj.year}</div><div class="info-row">🧱 Монолит</div><div class="info-row">🏢 Эт: ${obj.floors}</div><div class="info-row">📡 Falcon</div></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:20px;"><button class="ui-btn" style="background:#3498db; color:#fff;" onclick="window.openCamera()">КАМЕРА</button><button class="ui-btn" style="background:#d9534f; color:#fff;" onclick="window.openComplaintAction('${obj.address}')">ЖАЛОБА</button></div></div>`;
+            const hHtml = `<div class="house-card-pro"><img src="${obj.photo || ''}" class="house-img-pro"><b style="font-size:24px; color:#008000; display:block; margin-bottom:15px; text-align:center;">🏠 ${obj.address}</b><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="info-row">🏗️ Год: ${obj.year}</div><div class="info-row">🧱 Монолит</div><div class="info-row">🏢 Этажи: ${obj.floors}</div><div class="info-row">📡 Falcon</div></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:20px;"><button class="ui-btn" style="background:#3498db; color:#fff;" onclick="window.openCamera()">КАМЕРА</button><button class="ui-btn" style="background:#d9534f; color:#fff;" onclick="window.openComplaintAction('${obj.address}')">ЖАЛОБА</button></div></div>`;
             const m = new ymaps.Placemark(obj.coords, { balloonContent: hHtml }, { preset: 'islands#greenHomeCircleIcon', iconScale: 1.8, balloonMinWidth: 480, balloonMaxWidth: 480, balloonMinHeight: 600, balloonMaxHeight: 600, balloonPanelMaxMapArea: 0 });
             layers.hM.push(m); map.geoObjects.add(m);
             
@@ -239,7 +268,7 @@ async function initIndustrialGis() {
 
             </div>
         `;
-        window.openModal('🍃 ЭКОЛОГИЧЕСКИЙ МАНИФЕСТ v19.0', full);
+        window.openModal('🍃 Советы для жильцов от Вани', full);
     };
 
     window.runAction = (act) => {
@@ -298,10 +327,10 @@ async function initIndustrialGis() {
             <h1 style="color:#00ff88; text-align:center; font-size:65px;">STATION CONTROL</h1>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; margin-top:50px;">
                 <button class="ui-btn" onclick="window.openSub('📞 УК ВСЕ СВОИ', 'Диспетчерская (24/7):<br><b>+7 (921) 482-85-50</b>')">📞 НОМЕР УК</button>
-                <button class="ui-btn" onclick="window.open('https://vk.com')">👨‍💻 РАЗРАБОТЧИК</button>
+                <button class="ui-btn" onclick="window.open('https://vk.com/greyv1ld')">👨‍💻 РАЗРАБОТЧИК</button>
                 <button class="ui-btn" onclick="runAction('dev')">🔄 ОБНОВЛЕНИЯ</button>
-                <button class="ui-btn" onclick="window.openSub('🧹 ОЧИСТКА КЭША', 'Системный дамп ГИС очищен.')">🧹 CLEAN КЭШ</button>
-                <button class="ui-btn" onclick="window.openSub('🔐 CRYPTO', 'Ключи обновлены.')">🔐 SSL KEY</button>
+                <button class="ui-btn" onclick="window.openSub('🧹 ОЧИСТКА КЭША', 'Системный кеш очищен, Спасибо что пользуетесь сайтом.')">🧹 CLEAN КЭШ</button>
+                <button class="ui-btn" onclick="window.openSub('🔐 Проверка безопасности', 'Всё в подрядке, система под надёжным контролем.')">🔐 SECURITY</button>
                 <button class="ui-btn" onclick="window.openSub('🚜 TRAFFIC', 'Приоритет мусоровозов подан.')">🚜 TRAFFIC</button>
                 <button class="ui-btn" onclick="window.openSub('📊 АНАЛИТИКА', '11 домов передают данные.')">📊 СТАТУС</button>
                 <button class="ui-btn" onclick="window.openSub('🔥 ТЕПЛО', 'Карта наложена.')">🔥 HEATMAP</button>
