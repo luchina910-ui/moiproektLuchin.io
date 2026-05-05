@@ -23,7 +23,7 @@ async function initIndustrialGis() {
         }
         
         /* КАРТОЧКА ДОМА (480x600) */
-        .house-card-pro { width: 440px !important; height: 560px !important; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
+        .house-card-pro { width: 400px !important; height: 500px !important; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
         .house-img-pro { width: 100%; height: 240px; object-fit: cover; border-radius: 25px; border: 4px solid #eee; margin-bottom: 20px; }
         
         .info-row { background: #f9fbf9; padding: 16px 20px; border-radius: 20px; border-left: 10px solid #008000; font-size: 14px; font-weight: 800; margin-bottom: 10px; color: #222; }
@@ -155,7 +155,15 @@ window.sendComplaintConfirm = () => {
     db.forEach(obj => {
         if (obj.id?.startsWith('h')) {
             const hHtml = `<div class="house-card-pro"><img src="${obj.photo || ''}" class="house-img-pro"><b style="font-size:24px; color:#008000; display:block; margin-bottom:15px; text-align:center;">🏠 ${obj.address}</b><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div class="info-row">🏗️ Год: ${obj.year}</div><div class="info-row">🧱 Монолит</div><div class="info-row">🏢 Этажи: ${obj.floors}</div><div class="info-row">📡 Falcon</div></div><div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:20px;"><button class="ui-btn" style="background:#3498db; color:#fff;" onclick="window.openCamera()">КАМЕРА</button><button class="ui-btn" style="background:#d9534f; color:#fff;" onclick="window.openComplaintAction('${obj.address}')">ЖАЛОБА</button></div></div>`;
-            const m = new ymaps.Placemark(obj.coords, { balloonContent: hHtml }, { preset: 'islands#greenHomeCircleIcon', iconScale: 1.8, balloonMinWidth: 480, balloonMaxWidth: 480, balloonMinHeight: 600, balloonMaxHeight: 600, balloonPanelMaxMapArea: 0 });
+// Замени настройки в конце этой строки:
+const m = new ymaps.Placemark(obj.coords, { balloonContent: hHtml }, { 
+    preset: 'islands#greenHomeCircleIcon', 
+    iconScale: 1.8, 
+    balloonMinWidth: 350, 
+    balloonMinHeight: 500, // МЕНЯЙ ВЫСОТУ ТУТ
+    balloonPanelMaxMapArea: 0 
+});
+
             layers.hM.push(m); map.geoObjects.add(m);
             
             // ВОССТАНОВЛЕНИЕ ГРАНИЦ
@@ -172,7 +180,6 @@ if (item.type.includes('bin')) {
         ? "Бак для крупногабаритного мусора" 
         : `Бак для общих отходов ${item.title.includes('2') ? '№2' : '№1'}`;
 
-    // Генерируем HTML для фото, если оно указано
     const photoHtml = item.photo 
         ? `<img src="${item.photo}" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">` 
         : '';
@@ -209,22 +216,98 @@ layers.tB.push(new ymaps.Placemark(item.coords, {
     balloonPanelMaxMapArea: 0   // Чтобы балун не открывался на всю карту на мобилах
 }));
 }
-                else if (item.type === 'parking') {
-                    const freeSpots = (item.totalSpots || 0) - (item.busySpots || 0);
-                    const pHtml = `
-                        <div style="width:350px; padding:35px;">
-                            <b style="color:#00AAFF; font-size:32px;">🅿️ ${item.title}</b>
-                            <p style="font-size:18px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ».</p>
-                            <div class="info-row" style="border-left-color:#00AAFF; font-size:20px;">🚗 Свободно: <span style="color:#008000;">${freeSpots}</span> из ${item.totalSpots || 0}</div>
-                            <div class="info-row" style="background:#f4f7f4; border-left:none; text-align:center;">Занятость: ${Math.round((item.busySpots / item.totalSpots) * 100) || 0}%</div>
-                            <button class="ui-btn" style="background:#3498db; color:#fff; margin-top:15px;" onclick="window.openCamera()">СМОТРЕТЬ КАМЕРУ</button>
-                        </div>`;
-                    layers.pk.push(new ymaps.Placemark(item.coords, { balloonContent: pHtml }, { preset: 'islands#parkingIcon', iconColor: '#00AAFF', iconScale: 1.8 }));
-                } else if (item.type === 'playground') {
-                    // ВОССТАНОВЛЕНИЕ ПЛОЩАДОК
-                    const lHtml = `<div style="width:450px; padding:35px;"><b style="color:#008000; font-size:32px;">🎡 ${item.title}</b><p style="font-size:18px;">Сертификат ГОСТ 52169-2012.</p><div class="info-row">👶 Возраст: 3-12 лет</div></div>`;
-                    layers.pl.push(new ymaps.Placemark(item.coords, { balloonContent: lHtml }, { preset: 'islands#greenFamilyIcon', iconScale: 1.8 }));
-                }
+
+else if (item.type === 'parking') {
+    const freeSpots = (item.totalSpots || 0) - (item.busySpots || 0);
+    
+    const pHtml = `
+        <div class="custom-balloon" style="width: 440px; margin: 15px auto;">
+            <b style="color:#00AAFF; font-size:32px; display:block; text-align:center; margin-bottom:10px;">🅿️ ${item.title}</b>
+            <p style="font-size:16px; color:#666; text-align:center; margin-bottom:20px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ»</p>
+            
+            <div class="info-row" style="border-left-color:#00AAFF; font-size:22px; white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
+                <span>🚗 Свободно:</span>
+                <b style="color:#008000;">${freeSpots} <span style="color:#222; font-size:16px; font-weight:400;">из ${item.totalSpots || 0}</span></b>
+            </div>
+
+            <div class="info-row" style="background:#f4f7f4; border-left:none; text-align:center; margin-top:10px;">
+                Занятость: <b>${Math.round((item.busySpots / item.totalSpots) * 100) || 0}%</b>
+            </div>
+
+            <button class="ui-btn" style="background:#3498db; color:#fff; margin-top:15px; width:100%; border-bottom-color:#2980b9;" onclick="window.openCamera()">
+                СМОТРЕТЬ КАМЕРУ
+            </button>
+        </div>`;
+
+    layers.pk.push(new ymaps.Placemark(item.coords, { 
+        balloonContent: pHtml 
+    }, { 
+        preset: 'islands#parkingIcon', 
+        iconColor: '#00AAFF', 
+        iconScale: 1.8,
+        balloonMinWidth: 480, 
+        balloonMaxWidth: 480,
+        balloonMinHeight: 250, // Увеличили высоту, чтобы текст не поджимало
+        balloonPanelMaxMapArea: 0,
+        balloonShadow: false,
+        balloonAutoPan: true
+    }));
+
+    if(item.boundary) {
+        layers.pk.push(new ymaps.Polygon([item.boundary], {}, { 
+            fillColor: '#00AAFF20', 
+            strokeColor: '#00AAFF', 
+            strokeWidth: 2 
+        }));
+    }
+}
+
+else if (item.type === 'playground') {
+    const lHtml = `
+        <div class="custom-balloon" style="width: 440px; margin: 15px auto;">
+            <b style="color:#008000; font-size:30px; display:block; text-align:center; margin-bottom:15px;">🎡 ${item.title}</b>
+            
+            <div class="info-row" style="border-left-color:#008000;">
+                🧸 Покрытие: <b>${item.surface || 'Резиновая крошка'}</b>
+            </div>
+            
+            <div class="info-row" style="border-left-color:#2ecc71;">
+                🏃 Спорт: <b>${item.sportEq || 'Турники, брусья'}</b>
+            </div>
+            
+            <div class="info-row" style="border-left-color:#3498db;">
+                🧩 Инвентарь: <b>${item.kidsEq || 'Горки, качели'}</b>
+            </div>
+            
+            <div class="info-row" style="background:#fff7e6; border-left-color:#ffa500; text-align:center; border-left-width: 0; border-bottom: 4px solid #ffa500;">
+                👶 Возраст: <b>${item.ageRange || '3-12 лет'}</b>
+            </div>
+            
+            <p style="font-size:13px; color:#888; text-align:center; margin-top:15px;">Сертификат безопасности ГОСТ 52169-2012</p>
+        </div>`;
+
+    layers.pl.push(new ymaps.Placemark(item.coords, { 
+        balloonContent: lHtml 
+    }, { 
+        preset: 'islands#greenFamilyIcon', 
+        iconScale: 1.8,
+        // НАСТРОЙКИ ОКНА ПЛОЩАДКИ
+        balloonMinWidth: 480, 
+        balloonMaxWidth: 480,
+        balloonMinHeight: 250, // Оптимальная высота под 4 инфо-строки
+        balloonPanelMaxMapArea: 0,
+        balloonShadow: false,
+        balloonAutoPan: true
+    }));
+
+    if(item.boundary) {
+        layers.pl.push(new ymaps.Polygon([item.boundary], {}, { 
+            fillColor: '#00800020', 
+            strokeColor: '#008000', 
+            strokeWidth: 2 
+        }));
+    }
+}
             });
         }
     });
@@ -233,10 +316,12 @@ layers.tB.push(new ymaps.Placemark(item.coords, {
     const truckMarker = new ymaps.Placemark(trData.path, {}, { preset: 'islands#oliveDeliveryIcon', iconScale: 2.2 });
     const routeLine = new ymaps.Polyline(trData.path, {}, { strokeColor: '#00FF88', strokeWidth: 10, opacity: 0.4 });
     let seg = 0, prog = 0; setInterval(() => {
-        prog += 0.005; if (prog >= 1) { prog = 0; seg = (seg + 1) % (trData.path.length - 1); }
+        prog += 0.035; 
+        if (prog >= 1) { prog = 0; seg = (seg + 1) % (trData.path.length - 1); }
         const [lat1, lon1] = trData.path[seg], [lat2, lon2] = trData.path[seg+1];
         truckMarker.geometry.setCoordinates([lat1 + (lat2-lat1)*prog, lon1 + (lon2-lon1)*prog]);
     }, 50);
+
     const modal = document.createElement('div'); modal.className = "modal-overlay"; 
     modal.innerHTML = `<div class="modal-win premium-card" id="m-win-body"><button class="close-icon" onclick="window.closeEverything()">&times;</button><div id="m-content"></div><div class="sub-modal" id="sub-modal-body"></div></div>`;
     document.body.appendChild(modal);
