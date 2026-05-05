@@ -159,8 +159,8 @@ window.sendComplaintConfirm = () => {
 const m = new ymaps.Placemark(obj.coords, { balloonContent: hHtml }, { 
     preset: 'islands#greenHomeCircleIcon', 
     iconScale: 1.8, 
-    balloonMinWidth: 350, 
-    balloonMinHeight: 500, // МЕНЯЙ ВЫСОТУ ТУТ
+    balloonMinWidth: 400, 
+    balloonMinHeight: 550, // МЕНЯЙ ВЫСОТУ ТУТ
     balloonPanelMaxMapArea: 0 
 });
 
