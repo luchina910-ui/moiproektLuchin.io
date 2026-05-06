@@ -109,7 +109,7 @@ const objects = [
             { type: "trash_bin", title: "№1", coords: [64.56231, 39.84896], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:15", photo: "xueta.jpg" },
             { type: "trash_bin", title: "№2", coords: [64.56220, 39.84906], load: 85, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:15", photo: "xueta.jpg" },
             { type: "tko_bin", title: "КГМ", coords: [64.56196, 39.84912], load: 40, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 16:40", photo: "xueta.jpg" },
-            { type: "parking", title: "Стоянка Беломорский", coords: [64.56236, 39.84986], totalSpots: 45, busySpots: 32, boundary: [[64.56236,39.84986], [64.56246,39.84996], [64.56256,39.84986], [64.56246,39.84976]] },
+            { type: "parking", title: "Стоянка Беломорский", coords: [64.56236, 39.84986], totalSpots: 45, busySpots: 32, boundary: [[64.56262002549482,39.849565693346925], [64.562666165179,39.849876829592], [64.56212631788839,39.850370356049794], [64.562075562227,39.85002703329547]] },
             { type: "playground", title: "Детская площадка", coords: [64.56270, 39.84869], surface: "Резиновая крошка", sportEq: "Турники, брусья", kidsEq: "Горки, качели, песочница", ageRange: "3-12 лет", boundary: [[64.56270,39.84869], [64.56280,39.84879], [64.56290,39.84869], [64.56280,39.84859]] }
         ]
     },
