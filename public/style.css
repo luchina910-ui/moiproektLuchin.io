@@ -1,77 +1,398 @@
-@import url('https://googleapis.com');
+/* Импорт шрифта */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
 
-body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Montserrat', sans-serif; overflow: hidden; }
-#map { width: 100vw; height: 100vh; background: #e5e3de; }
+/* Базовые стили */
+body, html { 
+    margin: 0; 
+    padding: 0; 
+    width: 100%; 
+    height: 100%; 
+    font-family: 'Montserrat', sans-serif; 
+    overflow: hidden; 
+    transition: background-color 0.3s, color 0.3s;
+}
 
-/* КАРТОЧКА ДОМА */
-.house-card-pro { 
-    width: 440px !important;   /* МЕНЯЙ ШИРИНУ ТУТ */
-    height: 560px !important;  /* МЕНЯЙ ВЫСОТУ ТУТ */
+#map { 
+    width: 100vw; 
+    height: 100vh; 
+    background: #e5e3de; 
+}
+
+/* 🏠 КАРТОЧКА ДОМА (400x500, без скролла, красивая) */
+.house-card-pro {
+    width: 420px !important;
+    height: 600px !important;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden; /* Чтобы не было скролла внутри карточки */
+}
+
+.house-img-pro { 
+    width: 100%; 
+    height: 220px; 
+    object-fit: cover; 
+    border-radius: 18px; 
+    border: 3px solid #eee; 
+    margin-bottom: 15px; 
+}
+
+.info-row { 
+    background: #f9fbf9; 
+    padding: 12px 16px; 
+    border-radius: 16px; 
+    border-left: 8px solid #008000; 
+    font-size: 13px; 
+    font-weight: 800; 
+    margin-bottom: 8px; 
+    color: #222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-row span:first-child { color: #666; font-weight: 600; }
+.info-row span:last-child { color: #000; font-weight: 800; text-align: right; }
+
+/* 🗑️ ЦВЕТА БАКОВ */
+.bin-green { color: #00cc00 !important; }
+.bin-orange { color: #ffaa00 !important; }
+.bin-red { color: #ff3300 !important; }
+
+/* Кнопки */
+.ui-btn { 
+    width: 100%; 
+    padding: 16px; 
+    margin-top: 10px;
+    border-radius: 20px; 
+    border: none; 
+    background: #f4f7f4; 
+    color: #111; 
+    font-weight: 900; 
+    font-size: 12px; 
+    text-transform: uppercase; 
+    border-bottom: 4px solid #dce4de; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+    transition: all 0.3s;
+}
+.ui-btn:hover { 
+    background: #008000 !important; 
+    color: #fff !important; 
+    transform: translateY(-3px); 
+    border-bottom-color: #006600;
+}
+
+/* 🌿 ЭКОСИСТЕМА (панель слоев) */
+#eco-panel-root { 
+    position: absolute !important; 
+    top: 30px; 
+    right: 30px; 
+    width: 340px; 
+    z-index: 10000; 
+    height: 75px; 
+    overflow: hidden; 
+    border: 3px solid #008000; 
+    border-radius: 35px; 
+    transition: height 0.5s ease, padding 0.5s ease;
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+#eco-panel-root:hover { 
+    height: auto; 
+    padding-bottom: 25px; 
+}
+
+.eco-header { 
+    height: 75px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #008000; 
+    font-weight: 900; 
+    font-size: 16px; 
+    text-transform: uppercase; 
+    cursor: pointer; 
+    border-bottom: 2px solid #eee;
+}
+
+.eco-content { 
+    padding: 20px 30px; 
     display: flex; 
     flex-direction: column; 
-    padding: 20px; 
-    box-sizing: border-box; 
+    gap: 12px; 
+    opacity: 0; 
+    transition: opacity 0.3s ease 0.1s;
+}
+#eco-panel-root:hover .eco-content { 
+    opacity: 1; 
 }
 
-
-/* Панель слоев */
-.eco-panel { position: absolute; top: 30px; right: 30px; width: 330px; z-index: 5000; padding: 25px; }
-.eco-header { color: #008000; font-weight: 900; text-align: center; margin-bottom: 20px; font-size: 16px; letter-spacing: 2px; }
-
-/* Убираем float и используем Flexbox */
-.eco-content label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Это заменяет float: right */
-    font-size: 14px;
-    font-weight: 800;
-    color: #222;
-    margin-bottom: 12px;
-    cursor: pointer;
+.eco-content label { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    font-size: 14px; 
+    font-weight: 800; 
+    color: #111; 
+    cursor: pointer; 
 }
 
-.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+/* Переключатели (toggle) */
+.switch { 
+    position: relative; 
+    display: inline-block; 
+    width: 50px; 
+    height: 26px; 
+    vertical-align: middle; 
+}
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: #008000; }
-input:checked + .slider:before { transform: translateX(20px); }
+.slider { 
+    position: absolute; 
+    cursor: pointer; 
+    top: 0; left: 0; right: 0; bottom: 0; 
+    background-color: #ccc; 
+    transition: .4s; 
+    border-radius: 34px; 
+}
+.slider:before { 
+    position: absolute; 
+    content: ""; 
+    height: 20px; 
+    width: 20px; 
+    left: 3px; 
+    bottom: 3px; 
+    background-color: white; 
+    transition: .4s; 
+    border-radius: 50%; 
+}
+input:checked + .slider { background-color: #008000 !important; }
+input:checked + .slider:before { transform: translateX(24px); }
 
-/* Настройки */
-.settings-trigger { position: absolute; bottom: 40px; left: 40px; width: 80px; height: 80px; border-radius: 50%; background: #fff; border: 3px solid #008000; cursor: pointer; font-size: 40px; z-index: 1001; }
-.settings-panel { position: absolute; bottom: 140px; left: 40px; width: 350px; padding: 30px; display: none; z-index: 1000; border-top: 10px solid #008000; }
+/* ⚙️ НАСТРОЙКИ (шестеренка) */
+.settings-trigger { 
+    position: absolute; 
+    bottom: 40px; 
+    left: 40px;  
+    width: 85px; 
+    height: 85px; 
+    background: #fff; 
+    border-radius: 50%; 
+    border: 4px solid #008000; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 45px; 
+    z-index: 1001; 
+    cursor: pointer; 
+    transition: transform 0.6s; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.settings-trigger.active { 
+    transform: rotate(180deg); 
+    background: #008000; 
+    color: #fff; 
+}
 
-.ui-btn { width: 100%; padding: 16px; margin: 8px 0; border: none; border-radius: 22px; background: #f4f7f4; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 12px; border-bottom: 4px solid #dce4de; }
-.ui-btn:hover { background: #008000; color: #fff; transform: translateY(-3px); }
+/* Кнопка ДОП (скрытая) */
+.secret-trigger { 
+    position: absolute; 
+    bottom: 40px; 
+    left: 140px; 
+    width: 85px; 
+    height: 85px; 
+    border-radius: 50%; 
+    background: #333; 
+    color: #fff; 
+    border: 3px solid #444; 
+    font-size: 14px; 
+    font-weight: 900; 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 1001; 
+    cursor: pointer; 
+    transition: all 0.3s;
+}
+.secret-trigger.active-mode { 
+    background: #000 !important; 
+    color: #00ff88 !important; 
+    border-color: #00ff88 !important; 
+    box-shadow: 0 0 20px rgba(0,255,136,0.6); 
+}
 
-/* Окна */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-.modal-win { width: 800px; background: #fff; border-radius: 50px; padding: 50px; border-top: 20px solid #008000; position: relative; max-height: 85vh; overflow-y: auto; animation: popUp 0.5s; }
+/* Панель настроек */
+#settings-panel-root { 
+    position: absolute; 
+    bottom: 140px; 
+    left: 40px; 
+    width: 400px; 
+    padding: 30px; 
+    display: none; 
+    z-index: 1000; 
+    border-top: 15px solid #008000; 
+    background: rgba(255,255,255,0.98);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
 
-.loader-spin { border: 6px solid #f3f3f3; border-top: 6px solid #008000; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 20px auto; }
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-@keyframes popUp { from { transform: scale(0.9) translateY(40px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+/* 🪟 МОДАЛЬНЫЕ ОКНА */
+.modal-overlay { 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.85); 
+    z-index: 20000; 
+    display: none; 
+    align-items: center; 
+    justify-content: center; 
+    backdrop-filter: blur(10px); 
+}
 
-/* Специальный стиль для маленького окна подтверждения */
+.modal-win { 
+    width: 900px; 
+    background: #fff; 
+    border-radius: 40px; 
+    padding: 50px; 
+    border-top: 20px solid #008000; 
+    position: relative; 
+    max-height: 90vh; 
+    overflow-y: auto;
+    animation: popUp 0.4s ease-out;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.sub-modal { 
+    position: absolute; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: #fff; 
+    z-index: 30000 !important; 
+    border-radius: 40px; 
+    padding: 50px; 
+    display: none; 
+    box-sizing: border-box; 
+    border: 5px solid #008000; 
+}
+
+.close-icon { 
+    position: absolute; 
+    top: 25px; 
+    right: 35px; 
+    cursor: pointer; 
+    font-size: 60px; 
+    color: #ccc; 
+    border: none; 
+    background: none; 
+    line-height: 1;
+    transition: color 0.3s;
+}
+.close-icon:hover { color: #e74c3c; }
+
+@keyframes popUp { 
+    from { transform: scale(0.9) translateY(30px); opacity: 0; } 
+    to { transform: scale(1) translateY(0); opacity: 1; } 
+}
+
+/* Инпуты в модальных окнах */
+.premium-card input, 
+.premium-card select, 
+.premium-card textarea {
+    width: 100%;
+    padding: 18px;
+    border: 2px solid #eee;
+    border-radius: 18px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+.premium-card input:focus,
+.premium-card select:focus,
+.premium-card textarea:focus {
+    border-color: #008000;
+}
+
+/* 🌙 ТЁМНАЯ ТЕМА */
+body.interface-dark { background: #1a1a1a; color: #fff; }
+body.interface-dark #map { background: #2d2d2d; }
+body.interface-dark .premium-card, 
+body.interface-dark .modal-win, 
+body.interface-dark .sub-modal, 
+body.interface-dark #settings-panel-root, 
+body.interface-dark #eco-panel-root { 
+    background: #222 !important; 
+    color: #00ff88 !important; 
+    border-color: #00ff88 !important; 
+}
+body.interface-dark .info-row { 
+    background: #333 !important; 
+    color: #fff !important; 
+    border-left-color: #00ff88 !important; 
+}
+body.interface-dark .ui-btn { 
+    background: #333 !important; 
+    color: #00ff88 !important; 
+    border-bottom-color: #00ff8833 !important; 
+}
+body.interface-dark .eco-content label, 
+body.interface-dark .eco-header { 
+    color: #00ff88 !important; 
+}
+body.interface-dark .house-card-pro { background: #222; color: #fff; }
+body.interface-dark .house-img-pro { border-color: #444; }
+body.interface-dark .close-icon { color: #888; }
+
+/* Анимация загрузки */
+.loader-spin { 
+    border: 8px solid #f3f3f3; 
+    border-top: 8px solid #008000; 
+    border-radius: 50%; 
+    width: 80px; 
+    height: 80px; 
+    animation: spin 1s linear infinite; 
+    margin: 20px auto; 
+}
+@keyframes spin { 
+    0% { transform: rotate(0deg); } 
+    100% { transform: rotate(360deg); } 
+}
+
+/* Успешная отправка */
 .success-popup {
     text-align: center;
-    border: 5px solid #00ff88 !important;
-    box-shadow: 0 0 50px rgba(0, 255, 136, 0.3) !important;
+    border: 4px solid #00ff88 !important;
+    box-shadow: 0 0 40px rgba(0, 255, 136, 0.3) !important;
+    border-radius: 30px;
+    padding: 40px;
 }
 .success-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
+    font-size: 70px;
+    margin-bottom: 15px;
     display: block;
     animation: bounce 0.8s infinite alternate;
 }
-@keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+@keyframes bounce { 
+    from { transform: translateY(0); } 
+    to { transform: translateY(-8px); } 
+}
 
+/* Баллоны на карте */
 .custom-balloon {
-    background-color: #ffffff !important; /* Белый фон */
-    border: 4px solid #008000 !important;   /* Зеленая обводка */
-    border-radius: 30px !important;        /* Закругление */
-    padding: 30px;
+    background-color: #ffffff !important;
+    border: 3px solid #008000 !important;
+    border-radius: 25px !important;
+    padding: 20px;
     box-sizing: border-box;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
 }
