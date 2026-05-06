@@ -142,8 +142,8 @@ async function initIndustrialGis() {
                     <img src="${obj.photo || ''}" class="house-img-pro">
                     <b style="font-size:20px; color:#008000; display:block; margin-bottom:10px; text-align:center;">🏠 ${obj.address}</b>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
-                        <div class="info-row">🏗️ ${obj.year} год.</div>
-                        <div class="info-row">🏢 ${obj.floors} этжей.</div>
+                        <div class="info-row">🏗️ ${obj.year} год постройки</div>
+                        <div class="info-row">🏢 ${obj.floors} эт. у дома</div>
                         <div class="info-row">🧱 ${obj.material || 'Монолит'}</div>
                         <div class="info-row">📡 ${obj.elevator || 'Falcon'}</div>
                         <div class="info-row" style="grid-column: span 2;">️ ${obj.developer || 'Застройщик'}</div>
