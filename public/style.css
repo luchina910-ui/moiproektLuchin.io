@@ -396,3 +396,14 @@ body.interface-dark .close-icon { color: #888; }
     overflow: hidden;
     font-family: 'Montserrat', sans-serif;
 }
+
+/* ====== 📱 RESPONSIVE ====== */
+@media (max-width: 768px) {
+  .modal-win, .sub-modal { width: 95%; padding: 20px; border-radius: 20px; }
+  #eco-panel-root { top: 16px; right: 16px; width: 260px; }
+  .settings-trigger, .secret-trigger { width: 60px; height: 60px; font-size: 24px; }
+  .secret-trigger { left: 90px; }
+  #settings-panel-root { left: 16px; width: calc(100% - 32px); bottom: 100px; }
+  .house-card-pro { width: 320px !important; }
+  .bin-balloon, .parking-balloon, .playground-balloon { width: 300px !important; }
+}
