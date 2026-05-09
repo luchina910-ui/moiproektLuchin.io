@@ -10,61 +10,6 @@ async function initIndustrialGis() {
     font.rel = 'stylesheet';
     document.head.appendChild(font);
 
-    const style = document.createElement('style');
-    style.innerHTML = `
-        body, button, input, select, div, textarea { font-family: 'Montserrat', sans-serif !important; font-size: 16px; transition: 0.3s; }
-        #map { width: 100vw; height: 100vh; background: #e5e3de; }
-        
-        .premium-card { 
-            background: rgba(255, 255, 255, 0.98) !important; 
-            backdrop-filter: blur(25px); 
-            border-radius: 35px; 
-            border: 3px solid rgba(0, 128, 0, 0.15); 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1); 
-        }
-        
-        /* КАРТОЧКА ДОМА - компактная */
-        .house-card-pro { width: 420px !important; height: auto !important; max-height: 650px !important; display: flex; flex-direction: column; padding: 15px; box-sizing: border-box; overflow: hidden; }
-        .house-img-pro { width: 100%; height: 180px; object-fit: cover; border-radius: 20px; border: 3px solid #eee; margin-bottom: 12px; }
-        
-        .info-row { background: #f9fbf9; padding: 10px 12px; border-radius: 12px; border-left: 6px solid #008000; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .ui-btn { width: 100%; padding: 14px; border-radius: 20px; border: none; background: #f4f7f4; color: #111; font-weight: 900; font-size: 12px; text-transform: uppercase; border-bottom: 4px solid #dce4de; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .ui-btn:hover { background: #008000 !important; color: #fff !important; transform: translateY(-4px); }
-
-        /* ЭКОСИСТЕМА */
-        #eco-panel-root { position: absolute !important; top: 30px; right: 30px; width: 340px; z-index: 10000; height: 75px; overflow: hidden; border: 4px solid #008000; border-radius: 35px; transition: 0.5s ease; }
-        #eco-panel-root:hover { height: auto; padding-bottom: 25px; }
-        .eco-header { height: 75px; display: flex; align-items: center; justify-content: center; color: #008000; font-weight: 900; font-size: 16px; text-transform: uppercase; cursor: pointer; }
-        .eco-content { padding: 0 40px; display: flex; flex-direction: column; gap: 15px; opacity: 0; }
-        #eco-panel-root:hover .eco-content { opacity: 1; }
-        .eco-content label { display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 800; color: #111; cursor: pointer; }
-
-        /* НАСТРОЙКИ */
-        .settings-trigger { position: absolute; bottom: 40px; left: 40px; width: 95px; height: 95px; background: #fff; border-radius: 50%; border: 5px solid #008000; display: flex; align-items: center; justify-content: center; font-size: 55px; z-index: 1001; cursor: pointer; transition: 0.6s; }
-        .settings-trigger.active { transform: rotate(180deg); background: #008000; color: #fff; }
-        .secret-trigger { position: absolute; bottom: 40px; left: 160px; width: 95px; height: 95px; border-radius: 50%; background: #333; color: #fff; border: 4px solid #444; font-size: 16px; font-weight: 900; display: none; align-items: center; justify-content: center; z-index: 1001; cursor: pointer; }
-        .secret-trigger.active-mode { background: #000 !important; color: #00ff88 !important; border-color: #00ff88 !important; box-shadow: 0 0 30px rgba(0,255,136,0.6); }
-
-        /* ТЕМА */
-        body.interface-dark .premium-card, body.interface-dark .modal-win, body.interface-dark .sub-modal, body.interface-dark #settings-panel-root, body.interface-dark #eco-panel-root { background: #080c08 !important; color: #00ff88 !important; border-color: #00ff88 !important; }
-        body.interface-dark .info-row { background: #111d11 !important; color: #fff !important; border-left-color: #00ff88 !important; }
-        body.interface-dark .ui-btn { background: #152015 !important; color: #00ff88 !important; border-bottom-color: #00ff8833 !important; }
-        body.interface-dark .eco-content label, body.interface-dark .eco-header { color: #00ff88 !important; }
-
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 20000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
-        .modal-win { width: 1000px; background: #fff; border-radius: 70px; padding: 70px; border-top: 30px solid #008000; position: relative; max-height: 95vh; overflow-y: auto; }
-        .sub-modal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; min-height: 100%; background: #fff; z-index: 30000 !important; border-radius: 70px; padding: 60px; display: none; box-sizing: border-box; border: 6px solid #008000; }
-        .close-icon { position: absolute; top: 30px; right: 50px; cursor: pointer; font-size: 80px; color: #ccc; border:none; background:none; line-height: 1; }
-
-        .switch { position: relative; display: inline-block; width: 70px; height: 38px; vertical-align: middle; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 40px; }
-        .slider:before { position: absolute; content: ""; height: 30px; width: 30px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #008000 !important; }
-        input:checked + .slider:before { transform: translateX(32px); }
-    `;
-    document.head.appendChild(style);
-
     const map = new ymaps.Map('map', { center: [64.562, 39.82], zoom: 14, controls: ['zoomControl'] });
 
     const response = await fetch('/api/objects');
@@ -161,8 +106,8 @@ async function initIndustrialGis() {
             }, {
                 preset: 'islands#greenHomeCircleIcon',
                 iconScale: 1.8,
-                balloonMinWidth: 420,
-                balloonMinHeight: 600,
+                balloonMinWidth: 430,
+                balloonMinHeight: 720,
                 balloonPanelMaxMapArea: 0
             });
             layers.hM.push(m);
@@ -421,20 +366,20 @@ window.openEcoGuide = () => {
 
     function id(i) { return document.getElementById(i); }
     
-    const gui = document.createElement('div'); 
-    gui.id = "eco-panel-root"; 
-    gui.className = "premium-card";
-    gui.innerHTML = `
-        <div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div>
-        <div class="eco-content">
-            <label>Дома 🏠 <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label>
-            <label>Границы дома 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
-            <label>Мусорные баки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
-            <label>Дет. площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
-            <label>Стоянки 🅿️ <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label>
-            <label>Орг. техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
-        </div>`; 
-    document.body.appendChild(gui);
+const gui = document.createElement('div'); 
+gui.id = "eco-panel-root"; 
+gui.className = "premium-card";
+gui.innerHTML = `
+    <div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div>
+    <div class="eco-content">
+        <label>Дома 🏠 <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Границы 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Мусорные баки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Дет. площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Стоянки 🅿️ <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Орг. техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
+    </div>`; 
+document.body.appendChild(gui);
 
     const sBtn = document.createElement('button'); 
     sBtn.className = "settings-trigger"; 
@@ -495,4 +440,18 @@ window.openEcoGuide = () => {
     };
     
     refreshL();
+
+// 📸 ФОТО ВМЕСТО QR-КОДА
+window.showQR = () => {
+    window.openModal('📸 QR код Luchin Ivan', `
+        <div style="text-align:center; padding: 20px;">
+            <p style="font-size:18px; color:#555; margin-bottom:25px;">Фото объекта</p>
+            <img src="/qrcod_e68S.png" alt="Фото" 
+                 style="width:100%; max-width:350px; height:auto; border-radius:24px; box-shadow:0 12px 35px rgba(0,0,0,0.15); border:5px solid #fff; cursor:zoom-in; transition: transform 0.3s;" 
+                 onclick="this.style.transform = this.style.transform === 'scale(1.6)' ? 'scale(1)' : 'scale(1.6)';">
+            <p style="font-size:13px; color:#888; margin-top:15px;">Нажми на фото, чтобы увеличить</p>
+        </div>`);
+};
+
+refreshL();
 }
