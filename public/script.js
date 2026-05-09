@@ -179,8 +179,8 @@ async function initIndustrialGis() {
 
             if (obj.infra) {
                 obj.infra.forEach(item => {
-                    const color = item.load < 66 ? '#00cc00' : '#ff3300';
-                    
+const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff3300');
+
                     if (item.type.includes('bin')) {
                         const longTitle = item.type === 'tko_bin'
                             ? "Бак для крупногабаритного мусора"
@@ -224,7 +224,7 @@ async function initIndustrialGis() {
                     else if (item.type === 'parking') {
                         const freeSpots = (item.totalSpots || 0) - (item.busySpots || 0);
                         const pHtml = `
-                            <div class="custom-balloon" style="width: 440px; margin: 15px auto;">
+                            <div class="custom-balloon" style="width: 540px; margin: 15px auto;">
                                 <b style="color:#00AAFF; font-size:32px; display:block; text-align:center; margin-bottom:10px;">🅿️ ${item.title}</b>
                                 <p style="font-size:16px; color:#666; text-align:center; margin-bottom:20px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ»</p>
                                 <div class="info-row" style="border-left-color:#00AAFF; font-size:22px; white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
@@ -245,7 +245,7 @@ async function initIndustrialGis() {
                             preset: 'islands#parkingIcon', 
                             iconColor: '#00AAFF', 
                             iconScale: 1.8,
-                            balloonMinWidth: 480, 
+                            balloonMinWidth: 580, 
                             balloonMaxWidth: 480,
                             balloonMinHeight: 250,
                             balloonPanelMaxMapArea: 0,
@@ -477,14 +477,14 @@ window.openEcoGuide = () => {
     secBtn.onclick = () => {
         secBtn.classList.toggle('active-mode');
         document.getElementById('m-content').innerHTML = `
-            <h1 style="color:#00ff88; text-align:center; font-size:65px;">STATION CONTROL</h1>
+        <h1 style="color:#00ff88; text-align:center; font-size:65px;">ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ</h1>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; margin-top:50px;">
                 <button class="ui-btn" onclick="window.openSub('📞 УК ВСЕ СВОИ', 'Диспетчерская (24/7): <br><b>+7 (921) 482-85-50</b>')">📞 НОМЕР УК</button>
                 <button class="ui-btn" onclick="window.open('https://vk.com/greyv1ld')">👨‍💻 РАЗРАБОТЧИК</button>
                 <button class="ui-btn" onclick="runAction('dev')">🔄 ОБНОВЛЕНИЯ</button>
+                <button class="ui-btn" onclick="window.showQR()">📱 QR КОД</button>
                 <button class="ui-btn" onclick="window.openSub('🧹 ОЧИСТКА КЭША', 'Системный кеш очищен, Спасибо что пользуетесь сайтом.')">🧹 CLEAN КЭШ</button>
                 <button class="ui-btn" onclick="window.openSub('🔐 Проверка безопасности', 'Всё в подрядке, система под надёжным контролем.')">🔐 SECURITY</button>
-                <button class="ui-btn" onclick="window.openSub('🚜 TRAFFIC', 'Приоритет мусоровозов подан.')">🚜 TRAFFIC</button>
                 <button class="ui-btn" onclick="window.openSub('📊 АНАЛИТИКА', '11 домов передают данные.')">📊 СТАТУС</button>
                 <button class="ui-btn" onclick="window.openSub('🔥 ТЕПЛО', 'Карта наложена.')">🔥 HEATMAP</button>
                 <button class="ui-btn" onclick="window.openSub('⚡ FORCE SCAN', 'Все датчики: 100% OK.')">⚡ FORCE SCAN</button>
