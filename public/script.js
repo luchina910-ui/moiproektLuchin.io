@@ -373,13 +373,26 @@ gui.innerHTML = `
     <div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div>
     <div class="eco-content">
         <label>Дома 🏠 <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Границы 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Границы дома 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Мусорные баки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Дет. площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Стоянки 🅿️ <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Орг. техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
     </div>`; 
 document.body.appendChild(gui);
+
+// ✅ ЛОГИКА КЛИКА (МОБИЛКА + УДОБСТВО ПК)
+const ecoHeader = gui.querySelector('.eco-header');
+ecoHeader.addEventListener('click', (e) => {
+    e.stopPropagation();
+    gui.classList.toggle('open');
+});
+// Авто-закрытие при клике в любое другое место (актуально для телефона)
+document.addEventListener('click', (e) => {
+    if (!gui.contains(e.target) && !e.target.closest('.settings-trigger') && !e.target.closest('.secret-trigger')) {
+        gui.classList.remove('open');
+    }
+});
 
     const sBtn = document.createElement('button'); 
     sBtn.className = "settings-trigger"; 
@@ -441,12 +454,11 @@ document.body.appendChild(gui);
     
     refreshL();
 
-// 📸 ФОТО ВМЕСТО QR-КОДА
 window.showQR = () => {
     window.openModal('📸 QR код Luchin Ivan', `
         <div style="text-align:center; padding: 20px;">
             <p style="font-size:18px; color:#555; margin-bottom:25px;">Фото объекта</p>
-            <img src="/qrcod_e68S.png" alt="Фото" 
+            <img src="/qrcod_e68S.jpg" alt="Фото" 
                  style="width:100%; max-width:350px; height:auto; border-radius:24px; box-shadow:0 12px 35px rgba(0,0,0,0.15); border:5px solid #fff; cursor:zoom-in; transition: transform 0.3s;" 
                  onclick="this.style.transform = this.style.transform === 'scale(1.6)' ? 'scale(1)' : 'scale(1.6)';">
             <p style="font-size:13px; color:#888; margin-top:15px;">Нажми на фото, чтобы увеличить</p>
