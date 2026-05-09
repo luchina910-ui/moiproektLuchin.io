@@ -410,7 +410,7 @@ document.body.appendChild(gui);
         <button class="ui-btn" onclick="runAction('map')">🗺️ КАРТА</button> 
         <button class="ui-btn" onclick="runAction('sat')">🛰️ СПУТНИК</button> 
         <button class="ui-btn" onclick="runAction('theme')">🌙 ТЕМА</button> 
-        <label style="display:flex;justify-content:space-between;align-items:center;font-size:16px;margin-top:25px;color:#666">ENGINEERING <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span></label>`;
+        <label style="display:flex;justify-content:space-between;align-items:center;font-size:16px;margin-top:25px;color:#666">Доп. настройки <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span></label>`;
     document.body.appendChild(tBox); 
 
     sBtn.onclick = () => { 
