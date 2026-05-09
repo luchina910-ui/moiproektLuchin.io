@@ -1,5 +1,14 @@
 /* Импорт шрифта */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap');
+:root {
+  --primary: #008000;
+  --primary-dark: #006600;
+  --glass: rgba(255, 255, 255, 0.92);
+  --glass-dark: rgba(18, 22, 18, 0.95);
+  --shadow: 0 10px 30px rgba(0,0,0,0.12);
+  --radius: 24px;
+  --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
 /* Базовые стили */
 body, html { 
@@ -20,16 +29,10 @@ body, html {
 
 /* 🏠 КАРТОЧКА ДОМА (400x500, без скролла, красивая) */
 .house-card-pro {
-    width: 420px !important;
-    height: 600px !important;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box;
-    background: #fff;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden; /* Чтобы не было скролла внутри карточки */
+  width: 420px !important; max-width: 95vw !important; height: auto !important; max-height: 85vh !important;
+  display: flex; flex-direction: column; padding: 20px; box-sizing: border-box;
+  background: var(--glass) !important; border-radius: var(--radius); box-shadow: var(--shadow);
+  overflow-y: auto; animation: slideUp 0.4s ease-out;
 }
 
 .house-img-pro { 
@@ -64,117 +67,103 @@ body, html {
 .bin-red { color: #ff3300 !important; }
 
 /* Кнопки */
-.ui-btn { 
-    width: 100%; 
-    padding: 16px; 
-    margin-top: 10px;
-    border-radius: 20px; 
-    border: none; 
-    background: #f4f7f4; 
-    color: #111; 
-    font-weight: 900; 
-    font-size: 12px; 
-    text-transform: uppercase; 
-    border-bottom: 4px solid #dce4de; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 8px; 
-    transition: all 0.3s;
+.ui-btn {
+  width: 100%; padding: 16px; margin-top: 10px; border-radius: 20px; border: none;
+  background: #f4f7f4; color: #111; font-weight: 900; font-size: 12px;
+  text-transform: uppercase; cursor: pointer; display: flex; align-items: center;
+  justify-content: center; gap: 8px; position: relative; overflow: hidden;
+  transition: var(--transition); min-height: 44px; /* Тап-зона для телефона */
 }
-.ui-btn:hover { 
-    background: #008000 !important; 
-    color: #fff !important; 
-    transform: translateY(-3px); 
-    border-bottom-color: #006600;
+.ui-btn::before {
+  content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: 0.6s;
 }
+.ui-btn:hover::before { left: 100%; }
+.ui-btn:hover { background: var(--primary) !important; color: #fff !important; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,128,0,0.3); }
+.ui-btn:active { transform: translateY(-1px) scale(0.98); } /* Отклик на нажатие */
 
-/* 🌿 ЭКОСИСТЕМА (панель слоев) */
-#eco-panel-root { 
-    position: absolute !important; 
-    top: 30px; 
-    right: 30px; 
-    width: 340px; 
-    z-index: 10000; 
-    height: 75px; 
-    overflow: hidden; 
-    border: 3px solid #008000; 
-    border-radius: 35px; 
-    transition: height 0.5s ease, padding 0.5s ease;
-    background: rgba(255,255,255,0.95);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+/* 🌿 ЭКО-ПАНЕЛЬ + АНИМИРОВАННЫЕ ПОЛЗУНКИ */
+#eco-panel-root {
+  position: absolute !important; top: 20px; right: 20px;
+  width: 310px; z-index: 10000; min-height: 60px;
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-#eco-panel-root:hover { 
-    height: auto; 
-    padding-bottom: 25px; 
-}
+#eco-panel-root:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.2); transform: translateY(2px); }
 
-.eco-header { 
-    height: 75px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: #008000; 
-    font-weight: 900; 
-    font-size: 16px; 
-    text-transform: uppercase; 
-    cursor: pointer; 
-    border-bottom: 2px solid #eee;
+.eco-header {
+  height: 60px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #008000, #00aa44);
+  color: #fff; font-weight: 900; font-size: 14px; text-transform: uppercase;
+  cursor: pointer; letter-spacing: 0.5px;
 }
+.eco-content {
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+  opacity: 0; max-height: 0; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+#eco-panel-root:hover .eco-content { opacity: 1; max-height: 500px; }
 
-.eco-content { 
-    padding: 20px 30px; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; 
-    opacity: 0; 
-    transition: opacity 0.3s ease 0.1s;
+.eco-content label {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-radius: 16px;
+  background: rgba(245, 250, 245, 0.6);
+  font-size: 13px; font-weight: 800; color: #222; cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0; transform: translateX(-15px);
+  margin-bottom: 6px;
 }
-#eco-panel-root:hover .eco-content { 
-    opacity: 1; 
-}
+/* Каскадное появление строк */
+#eco-panel-root:hover .eco-content label { opacity: 1; transform: translateX(0); }
+#eco-panel-root:hover .eco-content label:nth-child(1) { transition-delay: 0.05s; }
+#eco-panel-root:hover .eco-content label:nth-child(2) { transition-delay: 0.1s; }
+#eco-panel-root:hover .eco-content label:nth-child(3) { transition-delay: 0.15s; }
+#eco-panel-root:hover .eco-content label:nth-child(4) { transition-delay: 0.2s; }
+#eco-panel-root:hover .eco-content label:nth-child(5) { transition-delay: 0.25s; }
+#eco-panel-root:hover .eco-content label:nth-child(6) { transition-delay: 0.3s; }
+.eco-content label:hover { background: #e6f5e6; transform: scale(1.02) translateX(3px) !important; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
 
-.eco-content label { 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    font-size: 14px; 
-    font-weight: 800; 
-    color: #111; 
-    cursor: pointer; 
-}
-
-/* Переключатели (toggle) */
-.switch { 
-    position: relative; 
-    display: inline-block; 
-    width: 50px; 
-    height: 26px; 
-    vertical-align: middle; 
+/* 🎛️ ПОЛЗУНКИ С АНИМАЦИЕЙ */
+.switch {
+  position: relative; display: inline-block;
+  width: 54px; height: 28px; flex-shrink: 0;
 }
 .switch input { opacity: 0; width: 0; height: 0; }
-.slider { 
-    position: absolute; 
-    cursor: pointer; 
-    top: 0; left: 0; right: 0; bottom: 0; 
-    background-color: #ccc; 
-    transition: .4s; 
-    border-radius: 34px; 
+.slider {
+  position: absolute; cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #dce4de;
+  border-radius: 34px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
 }
-.slider:before { 
-    position: absolute; 
-    content: ""; 
-    height: 20px; 
-    width: 20px; 
-    left: 3px; 
-    bottom: 3px; 
-    background-color: white; 
-    transition: .4s; 
-    border-radius: 50%; 
+.slider::before {
+  position: absolute; content: "";
+  height: 22px; width: 22px; left: 3px; bottom: 3px;
+  background-color: #fff; border-radius: 50%;
+  transition: all 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Пружинящий отскок */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
-input:checked + .slider { background-color: #008000 !important; }
-input:checked + .slider:before { transform: translateX(24px); }
+/* При наведении на строку ползунок слегка подсвечивается */
+.eco-content label:hover .slider { background-color: #c8d6c8; }
+
+/* ВКЛЮЧЕННОЕ СОСТОЯНИЕ */
+input:checked + .slider {
+  background-color: #008000;
+  box-shadow: 0 0 12px rgba(0,128,0,0.35), inset 0 2px 5px rgba(0,0,0,0.15);
+}
+input:checked + .slider::before {
+  transform: translateX(26px) scale(1.05);
+  background-color: #f0fdf0;
+  box-shadow: 0 3px 8px rgba(0,128,0,0.25);
+}
+/* Нажатие (активный тап) */
+input:active + .slider::before { transform: translateX(12px) scale(0.9); }
 
 /* ⚙️ НАСТРОЙКИ (шестеренка) */
 .settings-trigger { 
@@ -282,19 +271,32 @@ input:checked + .slider:before { transform: translateX(24px); }
     border: 5px solid #008000; 
 }
 
-.close-icon { 
-    position: absolute; 
-    top: 25px; 
-    right: 35px; 
-    cursor: pointer; 
-    font-size: 60px; 
-    color: #ccc; 
-    border: none; 
-    background: none; 
-    line-height: 1;
-    transition: color 0.3s;
+.close-icon {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    cursor: pointer;
+    font-size: 50px;
+    color: #aaa;
+    border: none;
+    background: transparent;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-.close-icon:hover { color: #e74c3c; }
+.close-icon:hover {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    transform: rotate(90deg) scale(1.1);
+}
+.close-icon:active {
+    transform: rotate(90deg) scale(0.9);
+    background: rgba(231, 76, 60, 0.2);
+}
 
 @keyframes popUp { 
     from { transform: scale(0.9) translateY(30px); opacity: 0; } 
@@ -322,34 +324,12 @@ input:checked + .slider:before { transform: translateX(24px); }
 }
 
 /* 🌙 ТЁМНАЯ ТЕМА */
-body.interface-dark { background: #1a1a1a; color: #fff; }
-body.interface-dark #map { background: #2d2d2d; }
-body.interface-dark .premium-card, 
-body.interface-dark .modal-win, 
-body.interface-dark .sub-modal, 
-body.interface-dark #settings-panel-root, 
-body.interface-dark #eco-panel-root { 
-    background: #222 !important; 
-    color: #00ff88 !important; 
-    border-color: #00ff88 !important; 
-}
-body.interface-dark .info-row { 
-    background: #333 !important; 
-    color: #fff !important; 
-    border-left-color: #00ff88 !important; 
-}
-body.interface-dark .ui-btn { 
-    background: #333 !important; 
-    color: #00ff88 !important; 
-    border-bottom-color: #00ff8833 !important; 
-}
-body.interface-dark .eco-content label, 
-body.interface-dark .eco-header { 
-    color: #00ff88 !important; 
-}
-body.interface-dark .house-card-pro { background: #222; color: #fff; }
-body.interface-dark .house-img-pro { border-color: #444; }
-body.interface-dark .close-icon { color: #888; }
+body.interface-dark .eco-content label { background: rgba(30, 45, 30, 0.6) !important; color: #00ff88 !important; }
+body.interface-dark .eco-content label:hover { background: #253525 !important; }
+body.interface-dark .eco-content label:hover .slider { background: #1a2a1a !important; }
+body.interface-dark .slider { background-color: #1a251a !important; }
+body.interface-dark input:checked + .slider { background-color: #00ff88 !important; box-shadow: 0 0 15px rgba(0,255,136,0.3); }
+body.interface-dark input:checked + .slider::before { background-color: #0a140a !important; box-shadow: 0 0 10px rgba(0,255,136,0.2); }
 
 /* Анимация загрузки */
 .loader-spin { 
@@ -397,13 +377,37 @@ body.interface-dark .close-icon { color: #888; }
     font-family: 'Montserrat', sans-serif;
 }
 
-/* ====== 📱 RESPONSIVE ====== */
+/* ✨ АНИМАЦИИ */
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes popUp { from { transform: scale(0.92) translateY(30px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+.modal-win { animation: popUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.sub-modal { animation: popUp 0.3s ease-out; }
+.settings-trigger { transition: var(--transition); }
+.settings-trigger:hover { transform: scale(1.1) rotate(45deg); }
+.settings-trigger.active { transform: rotate(180deg) !important; }
+
+/* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ */
 @media (max-width: 768px) {
   .modal-win, .sub-modal { width: 95%; padding: 20px; border-radius: 20px; }
-  #eco-panel-root { top: 16px; right: 16px; width: 260px; }
+  
+  /* ЭКО-ПАНЕЛЬ НА ТЕЛЕФОНЕ */
+  #eco-panel-root { 
+    top: 15px !important; right: 15px !important; width: calc(100% - 30px) !important; 
+    height: auto !important; overflow: visible !important; border: none !important;
+    background: rgba(255,255,255,0.92) !important;
+  }
+  .eco-content { opacity: 1 !important; max-height: none !important; }
+  .eco-content label { 
+    opacity: 1 !important; transform: none !important; transition-delay: 0s !important; 
+    padding: 14px 16px !important; font-size: 14px !important; 
+  }
+  /* Увеличиваем ползунки для удобного нажатия */
+  .switch { width: 58px !important; height: 30px !important; }
+  .slider::before { height: 24px !important; width: 24px !important; left: 3px !important; bottom: 3px !important; }
+  input:checked + .slider::before { transform: translateX(28px) !important; }
+
   .settings-trigger, .secret-trigger { width: 60px; height: 60px; font-size: 24px; }
   .secret-trigger { left: 90px; }
   #settings-panel-root { left: 16px; width: calc(100% - 32px); bottom: 100px; }
   .house-card-pro { width: 320px !important; }
-  .bin-balloon, .parking-balloon, .playground-balloon { width: 300px !important; }
 }
