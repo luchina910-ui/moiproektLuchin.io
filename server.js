@@ -104,11 +104,11 @@ const objects = [
     {
         id: "h1", address: "пр-кт Беломорский, 56", coords: [64.5624, 39.8495], floors: 4, year: 2023,
         photo: "/dom56.jpg", developer: "ООО «СЗ-Север»", series: "Комфорт-класс", material: "Монолитный железобетон", area: "2840 м²", apartments: 48, elevator: "Лифт отсутствует",
-        boundary: [[64.56726971,39.83932947], [64.56731815,39.83959769], [64.56693294,39.83989810], [64.56689142,39.83962988], [64.56726971,39.83932947]],
+        boundary: [[64.56727,39.83933],[64.56732,39.83960],[64.56693,39.83990],[64.56689,39.83963],[64.56727,39.83933]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.56231, 39.84896], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:15", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.56220, 39.84906], load: 85, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:15", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.56196, 39.84912], load: 40, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 16:40", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.56231, 39.84896], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:15", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.56220, 39.84906], load: 85, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:15", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.56196, 39.84912], load: 40, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 16:40", photo: "TKO.jpg" },
             { type: "parking", title: "Стоянка Беломорский", coords: [64.56236, 39.84986], totalSpots: 45, busySpots: 32, boundary: [[64.56262002549482,39.849565693346925], [64.562666165179,39.849876829592], [64.56212631788839,39.850370356049794], [64.562075562227,39.85002703329547]] },
             { type: "playground", title: "Детская площадка", coords: [64.56270, 39.84869], surface: "Резиновая крошка", sportEq: "Турники, брусья", kidsEq: "Горки, качели, песочница", ageRange: "3-12 лет", boundary: [[64.56278612454417,39.84847127985749], [64.56286917577474,39.84895407747948], [64.56268461511912,39.84913110327382], [64.56262463186896,39.848594661469576]] }
         ]
@@ -118,9 +118,9 @@ const objects = [
         photo: "/dom2.jpg", developer: "ГК «Север»", series: "Комфорт-класс", material: "Кирпично-монолитный", area: "4520 м²", apartments: 72, elevator: "2 лифта OTIS",
         boundary: [[64.55702953,39.75432192], [64.55716105,39.75527678], [64.55664417,39.75568448], [64.55652187,39.75568984], [64.55648265,39.75532506], [64.55684723,39.75500588], [64.55676416,39.75445066], [64.55691877,39.75433265], [64.55702953,39.75432192]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.55683, 39.75615], load: 95, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.55678, 39.75619], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.55686, 39.75613], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 12:00", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.55683, 39.75615], load: 95, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.55678, 39.75619], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:30", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.55686, 39.75613], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 12:00", photo: "TKO.jpg" },
             { type: "parking", title: "Парковка Крымская 2", coords: [64.55686, 39.75575], totalSpots: 20, busySpots: 18, boundary: [[64.55709953216086,39.75531390587727], [64.5571872159019,39.755775245827266], [64.55659187994412,39.75629022995696], [64.55651803849148,39.75571087280886]] },
             { type: "playground", title: "Детская зона", coords: [64.55651, 39.75404], surface: "Песок", sportEq: "Воркаут-зона", kidsEq: "Качели, карусель", ageRange: "5-14 лет", boundary: [[64.55660808982401,39.753655039565075], [64.55671885020584,39.75453480412121], [64.55646502187783,39.75471719433377], [64.55626195706051,39.75330098797259]] }
         ]
@@ -130,11 +130,11 @@ const objects = [
         photo: "/dom6.jpg", developer: "АО «АрхУНР»", series: "Комфорт-класс", material: "Монолит", area: "5120 м²", apartments: 86, elevator: "2 лифта  OTIS",
         boundary: [[64.55572,39.75607], [64.55577,39.75642], [64.55521,39.75688], [64.55510,39.75688], [64.55505,39.75654], [64.55561,39.75608], [64.55572,39.75607]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.55552, 39.75727], load: 10, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.55548, 39.75730], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.55539, 39.75737], load: 60, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 10:20", photo: "xueta.jpg" },
-            { type: "parking", title: "Стоянка Крымская 6", coords: [64.55543, 39.75687], totalSpots: 30, busySpots: 5, boundary: [[64.55543,39.75687], [64.55553,39.75697], [64.55563,39.75687], [64.55553,39.75677]] },
-            { type: "playground", title: "Детская площадка", coords: [64.55523, 39.75533], surface: "Резина", sportEq: "Брусья, турники", kidsEq: "Карусель, горка", ageRange: "2-10 лет", boundary: [[64.55523,39.75533], [64.55533,39.75543], [64.55543,39.75533], [64.55533,39.75523]] }
+            { type: "trash_bin", title: "№1", coords: [64.55552, 39.75727], load: 10, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.55548, 39.75730], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:00", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.55539, 39.75737], load: 60, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 10:20", photo: "TKO.jpg" },
+            { type: "parking", title: "Стоянка Крымская 6", coords: [64.55543, 39.75687], totalSpots: 30, busySpots: 5, boundary: [[64.55543,39.75687],[64.55553,39.75697],[64.55563,39.75687],[64.55553,39.75677]] },
+            { type: "playground", title: "Детская площадка", coords: [64.55523, 39.75533], surface: "Резина", sportEq: "Брусья, турники", kidsEq: "Карусель, горка", ageRange: "2-10 лет", boundary: [[64.55523,39.75533],[64.55533,39.75543],[64.55543,39.75533],[64.55533,39.75523]] }
         ]
     },
     {
@@ -142,11 +142,11 @@ const objects = [
         photo: "/dom8.jpg", developer: "ООО «СЗ-Север»", series: "Бизнес-класс", material: "Монолитный каркас", area: "5680 м²", apartments: 94, elevator: "2 лифта",
         boundary: [[64.55515,39.75723], [64.55520,39.75759], [64.55467,39.75806], [64.55457,39.75806], [64.55450,39.75768], [64.55502,39.75723], [64.55515,39.75723]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.55480, 39.75634], load: 82, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.55475, 39.75639], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.55472, 39.75642], load: 33, volume: "8 м³", material: "Металл", lastEmpty: "Ср, 14:15", photo: "xueta.jpg" },
-            { type: "parking", title: "Парковка Крымская 8", coords: [64.55469, 39.75708], totalSpots: 25, busySpots: 12, boundary: [[64.55469,39.75708], [64.55479,39.75718], [64.55489,39.75708], [64.55479,39.75698]] },
-            { type: "playground", title: "Игровой городок", coords: [64.55442, 39.75583], surface: "Плитка", sportEq: "Футбольное поле", kidsEq: "Лабиринт, горки", ageRange: "4-12 лет", boundary: [[64.55442,39.75583], [64.55452,39.75593], [64.55462,39.75583], [64.55452,39.75573]] }
+            { type: "trash_bin", title: "№1", coords: [64.55480, 39.75634], load: 82, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.55475, 39.75639], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:45", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.55472, 39.75642], load: 33, volume: "8 м³", material: "Металл", lastEmpty: "Ср, 14:15", photo: "TKO.jpg" },
+            { type: "parking", title: "Парковка Крымская 8", coords: [64.55469, 39.75708], totalSpots: 25, busySpots: 12, boundary: [64.55469, 39.75708], totalSpots: 25, busySpots: 12, boundary: [[64.55469,39.75708],[64.55479,39.75718],[64.55489,39.75708],[64.55479,39.75698]] },
+            { type: "playground", title: "Игровой городок", coords: [64.55442, 39.75583], surface: "Плитка", sportEq: "Футбольное поле", kidsEq: "Лабиринт, горки", ageRange: "4-12 лет", boundary: [[64.55442,39.75583],[64.55452,39.75593],[64.55462,39.75583],[64.55452,39.75573]] }
         ]
     },
     {
@@ -154,9 +154,9 @@ const objects = [
         photo: "/dom7.jpg", developer: "ЗАО «Стройинвест»", series: "Комфорт-класс", material: "Панельный", area: "4890 м²", apartments: 81, elevator: "2 лифта",
         boundary: [[64.53638,39.78688], [64.53639,39.78700], [64.53635,39.78700], [64.53635,39.78707], [64.53634,39.78733], [64.53604,39.78731], [64.53604,39.78719], [64.53602,39.78719], [64.53603,39.78704], [64.53604,39.78704], [64.53604,39.78701], [64.53600,39.78700], [64.53600,39.78687], [64.53638,39.78688]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.5361, 39.7877], load: 12, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.5362, 39.7878], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.5363, 39.7879], load: 90, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 19:00", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.5361, 39.7877], load: 12, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5362, 39.7878], load: 45, volume: "1.1 м³", material: "Сталь", lastEmpty: "08:50", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5363, 39.7879], load: 90, volume: "8 м³", material: "Металл", lastEmpty: "Вчера, 19:00", photo: "TKO.jpg" },
             { type: "parking", title: "Парковка Кудьма", coords: [64.5364, 39.7881], totalSpots: 50, busySpots: 48, boundary: [[64.53640,39.78810], [64.53650,39.78820], [64.53660,39.78810], [64.53650,39.78800]] },
             { type: "playground", title: "Детская площадка", coords: [64.5358, 39.7874], surface: "Газон", sportEq: "Баскетбольная площадка", kidsEq: "Песочница, качели", ageRange: "1-8 лет", boundary: [[64.53580,39.78740], [64.53590,39.78750], [64.53600,39.78740], [64.53590,39.78730]] }
         ]
@@ -166,21 +166,21 @@ const objects = [
         photo: "/dom63.jpg", developer: "СеверСтрой", series: "Комфорт-класс", material: "Кирпич монолит", area: "6100 м²", apartments: 78, elevator: "6 лифтов премиум",
         boundary: [[64.6088180243599,39.81338253477745], [64.60882032679395,39.813666848932314], [64.60883644808665,39.813661484514085], [64.60884105397712,39.813747315202306], [64.60885487212961,39.81375267962015], [64.6088732959331,39.81481483438877], [64.60862686334517,39.814836292060875], [64.60862686321198,39.814771919044404], [64.60861304452045,39.81476655462633], [64.60860843792533,39.81446614721604], [64.6086245595867,39.81445541837986], [64.60862225498198,39.814273028164564], [64.60860613316261,39.814278392582594], [64.6086038297864,39.81398334959035], [64.60861764820844,39.81397798517192], [64.60861534476308,39.8137580440321], [64.60862686028274,39.8137580440321], [64.60861995087905,39.81370976426976], [64.6078967633045,39.813752679612826], [64.6078944596412,39.81347909429244], [64.60791749124076,39.81347372987441], [64.60791749120942,39.813441543366096]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.60887, 39.81459], load: 10, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.60888, 39.81471], load: 20, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.60904, 39.81497], load: 15, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 09:30", photo: "xueta.jpg" },
-            { type: "parking", title: "Стоянка Октябрьская", coords: [64.60828, 39.81315], totalSpots: 60, busySpots: 20, boundary: [[64.60828,39.81315], [64.60838,39.81325], [64.60848,39.81315], [64.60838,39.81305]] },
-            { type: "playground", title: "Спорт-площадка", coords: [64.60835, 39.81439], surface: "Тартан", sportEq: "Тренажёры уличные", kidsEq: "Скалодром детский", ageRange: "6-16 лет", boundary: [[64.60835,39.81439], [64.60845,39.81449], [64.60855,39.81439], [64.60845,39.81429]] }
+            { type: "trash_bin", title: "№1", coords: [64.60887, 39.81459], load: 10, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.60888, 39.81471], load: 50, volume: "1.1 м³", material: "Пластик", lastEmpty: "07:15", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.60904, 39.81497], load: 75, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 09:30", photo: "TKO.jpg" },
+            { type: "parking", title: "Стоянка Октябрьская", coords: [64.60828, 39.81315], totalSpots: 60, busySpots: 20, boundary: [[64.6085731700175,39.81273226626996],[64.60861232336745,39.8133599031803],[64.60792138189501,39.813402818524814],[64.60790295654442,39.812828825795606]] },
+            { type: "playground", title: "Спорт-площадка", coords: [64.60835, 39.81439], surface: "Тартан", sportEq: "Тренажёры уличные", kidsEq: "Скалодром детский", ageRange: "6-16 лет", boundary: [[64.60845801457647,39.81404654868813],[64.60847413606089,39.814979957424654],[64.60821388243215,39.81502287276945],[64.6082253983729,39.814030455434285]] }
         ]
     },
     {
         id: "h7", address: "ул. Пионерская, 8", coords: [64.5671, 39.8396], floors: 5, year: 2024,
-        photo: "/img/h7.jpg", developer: "УК Пионер", series: "Бизнес-класс", material: "Блок-секции", area: "1800 м²", apartments: 30, elevator: "1 пассажирский",
+        photo: "/dom8(2).jpg", developer: "УК Пионер", series: "Бизнес-класс", material: "Блок-секции", area: "1800 м²", apartments: 30, elevator: "1 пассажирский",
         boundary: [[64.56710,39.83960], [64.56720,39.83970], [64.56730,39.83960], [64.56720,39.83950], [64.56710,39.83960]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.56723, 39.83920], load: 55, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.56721, 39.83912], load: 88, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.56738, 39.83876], load: 5, volume: "8 м³", material: "Металл", lastEmpty: "Пт, 11:45", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.56723, 39.83920], load: 55, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.56721, 39.83912], load: 88, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.56738, 39.83876], load: 5, volume: "8 м³", material: "Металл", lastEmpty: "Пт, 11:45", photo: "TKO.jpg" },
             { type: "parking", title: "Мини-стоянка", coords: [64.56742, 39.83898], totalSpots: 15, busySpots: 10, boundary: [[64.56742,39.83898], [64.56752,39.83908], [64.56762,39.83898], [64.56752,39.83888]] },
             { type: "playground", title: "Детская площадка", coords: [64.56713, 39.83925], surface: "Песок", sportEq: "Волейбольная площадка", kidsEq: "Качели, горка", ageRange: "3-10 лет", boundary: [[64.56713,39.83925], [64.56723,39.83935], [64.56733,39.83925], [64.56723,39.83915]] }
         ]
@@ -190,9 +190,9 @@ const objects = [
         photo: "/img/h8.jpg", developer: "ЛенСтрой", series: "Высотка комфорт", material: "Монолитный каркас", area: "8500 м²", apartments: 120, elevator: "4 лифта Kone",
         boundary: [],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.5102, 40.6360], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.5103, 40.6361], load: 45, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.5104, 40.6362], load: 92, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 13:20", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.5102, 40.6360], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5103, 40.6361], load: 45, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5104, 40.6362], load: 92, volume: "8 м³", material: "Металл", lastEmpty: "Чт, 13:20", photo: "TKO.jpg" },
             { type: "parking", title: "Гостевая А", coords: [64.5106, 40.6365], totalSpots: 40, busySpots: 35, boundary: [[64.51060,40.63650], [64.51070,40.63660], [64.51080,40.63650], [64.51070,40.63640]] },
             { type: "playground", title: "Спорт-городок", coords: [64.5098, 40.6362], surface: "Резина", sportEq: "Футбольное поле", kidsEq: "Горки, турники", ageRange: "5-15 лет", boundary: [[64.50980,40.63620], [64.50990,40.63630], [64.51000,40.63620], [64.50990,40.63610]] }
         ]
@@ -202,9 +202,9 @@ const objects = [
         photo: "/img/h9.jpg", developer: "Горстрой", series: "Хрущевка", material: "Панель 1-335", area: "3200 м²", apartments: 54, elevator: "Нет",
         boundary: [],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.5422, 40.5218], load: 65, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.5423, 40.5219], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.5424, 40.5220], load: 50, volume: "8 м³", material: "Металл", lastEmpty: "Сб, 10:00", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.5422, 40.5218], load: 65, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5423, 40.5219], load: 15, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5424, 40.5220], load: 50, volume: "8 м³", material: "Металл", lastEmpty: "Сб, 10:00", photo: "TKO.jpg" },
             { type: "parking", title: "Парковка", coords: [64.5425, 40.5225], totalSpots: 25, busySpots: 20, boundary: [[64.54250,40.52250], [64.54260,40.52260], [64.54270,40.52250], [64.54260,40.52240]] },
             { type: "playground", title: "Игровая площадка", coords: [64.5420, 40.5210], surface: "Асфальт", sportEq: "Шахматный стол", kidsEq: "Карусель, песочница", ageRange: "4-12 лет", boundary: [[64.54200,40.52100], [64.54210,40.52110], [64.54220,40.52100], [64.54210,40.52090]] }
         ]
@@ -214,9 +214,9 @@ const objects = [
         photo: "/img/h10.jpg", developer: "ОктябрьСтрой", series: "Новая комфорт", material: "Кирпич-монолит", area: "4100 м²", apartments: 64, elevator: "2 лифта",
         boundary: [],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.5315, 40.5992], load: 40, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.5316, 40.5993], load: 72, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.5317, 40.5994], load: 12, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 09:00", photo: "xueta.jpg" },
+            { type: "trash_bin", title: "№1", coords: [64.5315, 40.5992], load: 40, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.5316, 40.5993], load: 72, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.5317, 40.5994], load: 12, volume: "8 м³", material: "Металл", lastEmpty: "Пн, 09:00", photo: "TKO.jpg" },
             { type: "parking", title: "Парковка 10", coords: [64.5319, 40.5999], totalSpots: 35, busySpots: 10, boundary: [[64.53190,40.59990], [64.53200,40.60000], [64.53210,40.59990], [64.53200,40.59980]] },
             { type: "playground", title: "Детский уголок", coords: [64.5310, 40.5990], surface: "Плитка", sportEq: "Настольный теннис", kidsEq: "Домик игровой", ageRange: "2-9 лет", boundary: [[64.53100,40.59900], [64.53110,40.59910], [64.53120,40.59900], [64.53110,40.59890]] }
         ]
@@ -226,11 +226,11 @@ const objects = [
         photo: "/img/h11.jpg", developer: "СеверИнвест", series: "Бизнес-Лайт", material: "Монолит", area: "5900 м²", apartments: 92, elevator: "3 лифта Schindler",
         boundary: [[64.59598,39.80088], [64.59589,39.80111], [64.59612,39.80153], [64.59625,39.80153], [64.59658,39.80056], [64.59647,39.80038], [64.59634,39.80039], [64.59616,39.80097], [64.59611,39.80088], [64.59598,39.80088]],
         infra: [
-            { type: "trash_bin", title: "№1", coords: [64.59625, 39.79989], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "xueta.jpg" },
-            { type: "trash_bin", title: "№2", coords: [64.59628, 39.79979], load: 99, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "xueta.jpg" },
-            { type: "tko_bin", title: "КГМ", coords: [64.59579, 39.80006], load: 0, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 15:30", photo: "xueta.jpg" },
-            { type: "parking", title: "Северная-П", coords: [64.5969, 39.8019], totalSpots: 50, busySpots: 45, boundary: [[64.59690,39.80190], [64.59700,39.80200], [64.59710,39.80190], [64.59700,39.80180]] },
-            { type: "playground", title: "Детская площадка", coords: [64.5961, 39.8012], surface: "Резина", sportEq: "Воркаут-зона", kidsEq: "Батут, горки", ageRange: "3-14 лет", boundary: [[64.59610,39.80120], [64.59620,39.80130], [64.59630,39.80120], [64.59620,39.80110]] }
+            { type: "trash_bin", title: "№1", coords: [64.59625, 39.79989], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "neTKO1.jpg" },
+            { type: "trash_bin", title: "№2", coords: [64.59628, 39.79979], load: 99, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "neTKO2.jpg" },
+            { type: "tko_bin", title: "КГМ", coords: [64.59579, 39.80006], load: 53, volume: "8 м³", material: "Металл", lastEmpty: "Вт, 15:30", photo: "TKO.jpg" },
+            { type: "parking", title: "Северная-П", coords: [64.59649924452397,39.80009334996799], totalSpots: 50, busySpots: 45, boundary:  [[64.59664404944525,39.800065176976844],[64.5965495797555,39.8003924064761],[64.59633759819059,39.80001689721349],[64.59644589266792,39.79967357445883]] },
+            { type: "playground", title: "Детская площадка", coords: [64.59611460306907,39.80055039626414], surface: "Резина", sportEq: "Воркаут-зона", kidsEq: "Батут, горки", ageRange: "3-14 лет", boundary: [[64.59614104215618,39.80029121100067],[64.59626316293185,39.80051115214008],[64.5961318249257,39.80090275465522],[64.59599357408021,39.80072572885969]] }
         ]
     },
     { id: "truck_route", type: "truck_route", path: fullPath }
