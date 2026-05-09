@@ -176,7 +176,7 @@ const objects = [
     {
         id: "h7", address: "ул. Пионерская, 8", coords: [64.5671, 39.8396], floors: 5, year: 2024,
         photo: "/dom8(2).jpg", developer: "УК Пионер", series: "Бизнес-класс", material: "Блок-секции", area: "1800 м²", apartments: 30, elevator: "1 пассажирский",
-        boundary: [[64.56710,39.83960], [64.56720,39.83970], [64.56730,39.83960], [64.56720,39.83950], [64.56710,39.83960]],
+        boundary: [],
         infra: [
             { type: "trash_bin", title: "№1", coords: [64.56723, 39.83920], load: 55, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "neTKO1.jpg" },
             { type: "trash_bin", title: "№2", coords: [64.56721, 39.83912], load: 88, volume: "1.1 м³", material: "Сталь", lastEmpty: "09:10", photo: "neTKO2.jpg" },
