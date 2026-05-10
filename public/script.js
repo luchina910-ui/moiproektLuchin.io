@@ -1,14 +1,9 @@
 /**
- * ГИС ООО «УК «ВСЕ СВОИ» | v0.2 Final
+ * ГИС ООО «УК «ВСЕ СВОИ» 
  */
 ymaps.ready(initIndustrialGis);
 
 async function initIndustrialGis() {
-    // Подключение шрифтов и стилей
-    const font = document.createElement('link');
-    font.href = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap';
-    font.rel = 'stylesheet';
-    document.head.appendChild(font);
 
     const map = new ymaps.Map('map', { center: [64.562, 39.82], zoom: 14, controls: ['zoomControl'] });
 
@@ -366,19 +361,19 @@ window.openEcoGuide = () => {
 
     function id(i) { return document.getElementById(i); }
     
-const gui = document.createElement('div'); 
-gui.id = "eco-panel-root"; 
+const gui = document.createElement('div');
+gui.id = "eco-panel-root";
 gui.className = "premium-card";
 gui.innerHTML = `
     <div class="eco-header">🌿 ЭКОСИСТЕМА ДВОРА</div>
     <div class="eco-content">
         <label>Дома 🏠 <span class="switch"><input type="checkbox" id="l-h" checked onchange="refreshL()"><span class="slider"></span></span></label>
-        <label>Границы дома 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
+        <label>Границы 📐 <span class="switch"><input type="checkbox" id="l-p" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Мусорные баки 🗑️ <span class="switch"><input type="checkbox" id="l-t" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Дет. площадки 🎡 <span class="switch"><input type="checkbox" id="l-pl" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Стоянки 🅿️ <span class="switch"><input type="checkbox" id="l-pk" onchange="refreshL()"><span class="slider"></span></span></label>
         <label>Орг. техника 🚛 <span class="switch"><input type="checkbox" id="l-tr" onchange="refreshL()"><span class="slider"></span></span></label>
-    </div>`; 
+    </div>`;
 document.body.appendChild(gui);
 
 // ✅ ЛОГИКА КЛИКА (МОБИЛКА + УДОБСТВО ПК)
@@ -454,8 +449,9 @@ document.addEventListener('click', (e) => {
     
     refreshL();
 
+// ✅ ФОТО ВМЕСТО QR
 window.showQR = () => {
-    window.openModal('📸 QR код Luchin Ivan', `
+    window.openModal('📸 QR КОД (ФОТО)', `
         <div style="text-align:center; padding: 20px;">
             <p style="font-size:18px; color:#555; margin-bottom:25px;">Фото объекта</p>
             <img src="/qrcod_e68S.jpg" alt="Фото" 
