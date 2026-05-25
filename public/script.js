@@ -24,31 +24,37 @@ async function initIndustrialGis() {
     window.openComplaintAction = (addr) => {
         const content = document.getElementById('m-content');
         content.innerHTML = `
-            <h1 style="color:#d9534f; font-weight:900; font-size:55px; margin-bottom:10px;">🚨 ОФОРМЛЕНИЕ ЖАЛОБЫ</h1>
-            <p style="font-size:24px; margin-bottom:35px;">Объект: <b style="color:#008000;">${addr}</b></p>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
-                <input type="text" id="f-fio" placeholder="Ваше полное ФИО" class="premium-card" style="width:100%; padding:25px; border:2px solid #eee; font-size:18px; box-sizing:border-box; outline:none;">
-                <input type="tel" id="f-tel" placeholder="Номер телефона для связи" class="premium-card" style="width:100%; padding:25px; border:2px solid #eee; font-size:18px; box-sizing:border-box; outline:none;">
+            <div class="complaint-form-container">
+                <h1 class="complaint-title">🚨 ОФОРМЛЕНИЕ ЖАЛОБЫ</h1>
+                <p class="complaint-address">Объект: <b>${addr}</b></p>
+                
+                <div class="form-grid">
+                    <input type="text" id="f-fio" placeholder="Ваше полное ФИО" class="premium-input" style="outline:none;">
+                    <input type="tel" id="f-tel" placeholder="Номер телефона для связи" class="premium-input" style="outline:none;">
+                </div>
+                
+                <div style="margin-bottom:25px;">
+                    <label class="form-label">Возможная причина:</label>
+                    <select id="f-reason" class="premium-select" style="outline:none;">
+                        <option value="" disabled selected>-- Выберите категорию (если подходит) --</option>
+                        <option value="Мусор">📦 Не вывезен мусор / Переполнение</option>
+                        <option value="Поломка">🛠 Сломан бак или ограждение площадки</option>
+                        <option value="Парковка">🚗 Проезд заблокирован автомобилем</option>
+                        <option value="Освещение">💡 Не работает уличное освещение</option>
+                        <option value="Грязь">🧹 Грязь или лед на территории</option>
+                        <option value="Другое">🔍 Другое (опишите ниже)</option>
+                    </select>
+                </div>
+                
+                <div style="margin-top:20px;">
+                    <label class="form-label">Что именно произошло?</label>
+                    <textarea id="f-desc" class="premium-textarea" style="outline:none;" placeholder="Напишите здесь детали происшествия..."></textarea>
+                </div>
+                
+                <button class="submit-btn" onclick="window.sendComplaintConfirm()">
+                    📤 ОТПРАВИТЬ ДИСПЕТЧЕРУ
+                </button>
             </div>
-            <div style="margin-bottom:20px;">
-                <label style="display:block; font-size:16px; font-weight:800; margin-bottom:10px; color:#888; text-transform:uppercase;">Возможная причина:</label>
-                <select id="f-reason" class="premium-card" style="width:100%; padding:25px; border:2px solid #eee; font-size:18px; cursor:pointer; appearance: auto; outline:none;">
-                    <option value="" disabled selected>-- Выберите категорию (если подходит) --</option>
-                    <option value="Мусор">📦 Не вывезен мусор / Переполнение</option>
-                    <option value="Поломка">🛠 Сломан бак или ограждение площадки</option>
-                    <option value="Парковка">🚗 Проезд заблокирован автомобилем</option>
-                    <option value="Освещение">💡 Не работает уличное освещение</option>
-                    <option value="Грязь">🧹 Грязь или лед на территории</option>
-                    <option value="Другое">🔍 Другое (опишите ниже)</option>
-                </select>
-            </div>
-            <div style="margin-top:10px;">
-                <label style="display:block; font-size:16px; font-weight:800; margin-bottom:10px; color:#888; text-transform:uppercase;">Что именно произошло?</label>
-                <textarea id="f-desc" class="premium-card" style="width:100%; height:200px; padding:25px; border:2px solid #eee; font-size:18px; resize:none; box-sizing:border-box; outline:none;" placeholder="Напишите здесь детали происшествия..."></textarea>
-            </div>
-            <button class="ui-btn" style="background:#008000; color:#fff; height:90px; font-size:24px; margin-top:30px; border:none;" onclick="window.sendComplaintConfirm()">
-                ОТПРАВИТЬ ДИСПЕТЧЕРУ
-            </button>
         `;
         modal.style.display = "flex";
     };
@@ -58,15 +64,13 @@ async function initIndustrialGis() {
         if (!sub) return;
         const ticketNum = "Ж-" + (Math.floor(Math.random() * 9000) + 1000);
         sub.innerHTML = `
-            <div class="success-popup" style="padding: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;">
+            <div class="success-popup" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
                 <span class="success-icon">✅</span>
-                <h1 style="color:#008000; font-size: 35px; margin-bottom: 10px;">ОТПРАВЛЕНО!</h1>
-                <p style="font-size: 20px; color: #333; margin-bottom: 20px;">Ваша жалоба принята диспетчером.</p>
-                <div style="background: #f0fdf0; padding: 15px 30px; border-radius: 20px; border: 2px dashed #008000; font-weight: 900; font-size: 24px;">
-                    № ${ticketNum}
-                </div>
-                <p style="font-size: 14px; color: #888; margin-top: 20px;">Ожидайте звонка в течение 30 минут.</p>
-                <button class="ui-btn" style="margin-top: 30px; background: #008000; color: #fff; width: 250px;" onclick="window.closeEverything()">ОТЛИЧНО</button>
+                <h1 class="success-title">ОТПРАВЛЕНО!</h1>
+                <p class="success-message">Ваша жалоба принята диспетчером.</p>
+                <div class="ticket-number">№ ${ticketNum}</div>
+                <p class="success-note">Ожидайте звонка в течение 30 минут.</p>
+                <button class="success-ok-btn" onclick="window.closeEverything()">ОТЛИЧНО</button>
             </div>
         `;
         sub.style.display = "block";
@@ -146,6 +150,9 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                                 <div class="info-row" style="border-left:none; border-top:2px solid #3498db; background:#f0f7ff; margin-top:15px; font-size:13px;">
                                     🕒 Последняя выгрузка: ${item.lastEmpty || '08:00'}
                                 </div>
+                                <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; margin-top:15px; width:100%; font-size:11px; padding:12px;" onclick="window.openWasteTrackingInfo()">
+                                    ℹ️ Как работает система отслеживания
+                                </button>
                             </div>`;
                             
                         layers.tB.push(new ymaps.Placemark(item.coords, {
@@ -324,6 +331,93 @@ window.openEcoGuide = () => {
     `;
 
     window.openModal('', html); // Пустой заголовок, чтобы не дублировать большой h1 из openModal
+};
+
+// ℹ️ Информация о системе отслеживания мусора
+window.openWasteTrackingInfo = () => {
+    const html = `
+        <div style="font-family: 'Montserrat', sans-serif; padding: 10px; max-width: 900px; margin: 0 auto;">
+            <h2 style="text-align: center; color: #3498db; font-size: 36px; margin: 0 0 25px 0; font-weight: 900;">📡 КАК РАБОТАЕТ СИСТЕМА ОТСЛЕЖИВАНИЯ МУСОРА</h2>
+            
+            <div style="background: linear-gradient(135deg, #f0f7ff, #ffffff); border-radius: 24px; padding: 30px; margin-bottom: 25px; border-left: 6px solid #3498db;">
+                <h3 style="color: #3498db; font-size: 22px; margin: 0 0 15px 0;">🎯 Принцип работы</h3>
+                <p style="font-size: 15px; line-height: 1.7; color: #333; margin: 0;">
+                    Каждый мусорный бак оснащён ультразвуковым датчиком уровня заполнения Falcon Smart. 
+                    Датчик измеряет расстояние до поверхности мусора каждые <strong>15 минут</strong> и передаёт данные на сервер.
+                </p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 25px;">
+                <div style="background: #ffffff; border-radius: 20px; padding: 25px; border: 2px solid #e8f4f8; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
+                    <div style="font-size: 40px; margin-bottom: 10px;">📊</div>
+                    <h4 style="color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;">Шаг 1: Мониторинг</h4>
+                    <p style="font-size: 14px; line-height: 1.6; color: #666; margin: 0;">
+                        Датчик continuously измеряет уровень заполнения бака в реальном времени.
+                    </p>
+                </div>
+                <div style="background: #ffffff; border-radius: 20px; padding: 25px; border: 2px solid #e8f4f8; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
+                    <div style="font-size: 40px; margin-bottom: 10px;">🔄</div>
+                    <h4 style="color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;">Шаг 2: Анализ</h4>
+                    <p style="font-size: 14px; line-height: 1.6; color: #666; margin: 0;">
+                        При достижении <strong>80% заполнения</strong> система автоматически создаёт заявку на вывоз.
+                    </p>
+                </div>
+                <div style="background: #ffffff; border-radius: 20px; padding: 25px; border: 2px solid #e8f4f8; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
+                    <div style="font-size: 40px; margin-bottom: 10px;">🚛</div>
+                    <h4 style="color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;">Шаг 3: Маршрутизация</h4>
+                    <p style="font-size: 14px; line-height: 1.6; color: #666; margin: 0;">
+                        ИИ-алгоритм строит оптимальный маршрут для мусоровоза, учитывая все заполненные баки.
+                    </p>
+                </div>
+                <div style="background: #ffffff; border-radius: 20px; padding: 25px; border: 2px solid #e8f4f8; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
+                    <div style="font-size: 40px; margin-bottom: 10px;">✅</div>
+                    <h4 style="color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;">Шаг 4: Отчётность</h4>
+                    <p style="font-size: 14px; line-height: 1.6; color: #666; margin: 0;">
+                        После вывоза данные обновляются, и вы видите актуальную информацию в ГИС.
+                    </p>
+                </div>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #fff9e6, #ffffff); border-radius: 24px; padding: 30px; margin-bottom: 25px; border-left: 6px solid #f39c12;">
+                <h3 style="color: #f39c12; font-size: 22px; margin: 0 0 15px 0;">⚡ Преимущества системы</h3>
+                <ul style="font-size: 15px; line-height: 1.8; color: #333; margin: 0; padding-left: 25px;">
+                    <li><strong>Экономия ресурсов:</strong> Мусоровоз выезжает только когда это действительно необходимо</li>
+                    <li><strong>Чистота дворов:</strong> Баки не переполняются, нет стихийных свалок</li>
+                    <li><strong>Прозрачность:</strong> Вы всегда видите актуальный статус каждого контейнера</li>
+                    <li><strong>Экология:</strong> Оптимизация маршрутов снижает выбросы CO₂ от спецтехники</li>
+                    <li><strong>Контроль:</strong> Все действия фиксируются и доступны в личном кабинете</li>
+                </ul>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #e8f5e9, #ffffff); border-radius: 24px; padding: 30px; border-left: 6px solid #008000;">
+                <h3 style="color: #008000; font-size: 22px; margin: 0 0 15px 0;">📈 Технические характеристики</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div style="background: #ffffff; padding: 15px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 28px; color: #008000; font-weight: 900;">±2 мм</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Точность измерения</div>
+                    </div>
+                    <div style="background: #ffffff; padding: 15px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 28px; color: #008000; font-weight: 900;">5 лет</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Срок службы датчика</div>
+                    </div>
+                    <div style="background: #ffffff; padding: 15px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 28px; color: #008000; font-weight: 900;">NB-IoT</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Тип связи</div>
+                    </div>
+                    <div style="background: #ffffff; padding: 15px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 28px; color: #008000; font-weight: 900;">IP68</div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">Защита корпуса</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); border-radius: 22px; border: 2px dashed #3498db;">
+                <p style="margin: 0; font-size: 16px; color: #3498db; font-weight: 700;">💡 Система работает 24/7 без участия человека — умный двор будущего уже здесь!</p>
+            </div>
+        </div>
+    `;
+    
+    window.openModal('ℹ️ Система отслеживания', html);
 };
 
     window.runAction = (act) => {
