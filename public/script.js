@@ -304,6 +304,22 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         window.toggleCompanyPanel();
     });
     
+    // Функция для закрытия модального окна диплома
+    window.closeDiplomaModal = () => {
+        const diplomaModal = document.getElementById('diploma-modal-overlay');
+        if (diplomaModal) {
+            diplomaModal.style.display = 'none';
+        }
+    };
+    
+    // Показываем модальное окно диплома при загрузке страницы
+    setTimeout(() => {
+        const diplomaModal = document.getElementById('diploma-modal-overlay');
+        if (diplomaModal) {
+            diplomaModal.style.display = 'flex';
+        }
+    }, 500);
+    
     window.openModal = (t, h) => { 
         document.getElementById('m-content').innerHTML = `<h1 style="color:#008000; font-weight:900; font-size:60px; margin-bottom:45px;">${t}</h1>${h}`; 
         modal.style.display = "flex"; 
