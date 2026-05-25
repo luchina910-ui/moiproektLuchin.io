@@ -28,6 +28,35 @@ body, html {
 }
 
 /* 🏢 ПАНЕЛЬ УПРАВЛЯЮЩЕЙ КОМПАНИИ (слева сверху) */
+.uk-toggle-btn {
+    position: absolute !important;
+    top: 20px;
+    left: 20px;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #008000, #00aa44);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10001;
+    box-shadow: 0 8px 25px rgba(0, 128, 0, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: pulse 2s infinite;
+}
+
+.uk-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(0, 128, 0, 0.4);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 8px 25px rgba(0, 128, 0, 0.3); }
+    50% { box-shadow: 0 8px 35px rgba(0, 128, 0, 0.5); }
+}
+
 .company-panel {
     position: absolute !important;
     top: 20px;
@@ -35,19 +64,58 @@ body, html {
     width: 380px;
     max-width: calc(100vw - 40px);
     z-index: 10000;
-    background: rgba(255, 255, 255, 0.95) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
     backdrop-filter: blur(20px);
     border-radius: 28px;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    animation: slideInLeft 0.5s ease-out;
     border: 2px solid rgba(0, 128, 0, 0.1);
+    opacity: 0;
+    transform: translateX(-50px);
+    pointer-events: none;
+}
+
+.company-panel-visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.company-panel-hidden {
+    display: none;
 }
 
 @keyframes slideInLeft {
     from { transform: translateX(-50px); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
+}
+
+.company-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #e0e0e0;
+    font-size: 28px;
+    color: #666;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 10001;
+}
+
+.company-close-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+    border-color: #e74c3c;
+    transform: rotate(90deg);
 }
 
 .company-header {
@@ -491,13 +559,170 @@ input:active + .slider::before { transform: translateX(12px) scale(0.9); }
     font-size: 16px;
     font-family: 'Montserrat', sans-serif;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
     box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.95);
 }
 .premium-card input:focus,
 .premium-card select:focus,
 .premium-card textarea:focus {
     border-color: #008000;
+    box-shadow: 0 0 15px rgba(0, 128, 0, 0.15);
+    background: #fff;
+}
+
+/* 🚨 СТИЛИ ДЛЯ ЖАЛОБ (КРАСИВОЕ ОФОРМЛЕНИЕ) */
+.complaint-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.complaint-title {
+    text-align: center;
+    color: #008000;
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 10px rgba(0, 128, 0, 0.1);
+}
+
+.complaint-address {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 25px;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #f0fdf0, #ffffff);
+    border-radius: 20px;
+    border-left: 5px solid #008000;
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.1);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.premium-input,
+.premium-select,
+.premium-textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 16px;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background: rgba(255, 255, 255, 0.95);
+    box-sizing: border-box;
+}
+
+.premium-input:hover,
+.premium-select:hover,
+.premium-textarea:hover {
+    border-color: #00aa44;
+    background: #fff;
+}
+
+.premium-input:focus,
+.premium-select:focus,
+.premium-textarea:focus {
+    border-color: #008000;
+    box-shadow: 0 0 20px rgba(0, 128, 0, 0.2);
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+.premium-select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23008000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 20px;
+    padding-right: 50px;
+}
+
+.premium-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 20px 40px;
+    background: linear-gradient(135deg, #008000, #00aa44);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 25px rgba(0, 128, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.submit-btn:hover::before {
+    left: 100%;
+}
+
+.submit-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(0, 128, 0, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 128, 0, 0.3);
+}
+
+/* Адаптация формы для мобильных */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .complaint-title {
+        font-size: 28px;
+    }
+    
+    .complaint-address {
+        font-size: 14px;
+        padding: 12px 18px;
+    }
 }
 
 /* 🌙 ТЁМНАЯ ТЕМА */
@@ -601,11 +826,33 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     box-shadow: 0 6px 20px rgba(0, 128, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.success-ok-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+}
+
+.success-ok-btn:hover::before {
+    left: 100%;
 }
 
 .success-ok-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(0, 128, 0, 0.4);
+}
+
+.success-ok-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.3);
 }
 
 /* Баллоны на карте */
