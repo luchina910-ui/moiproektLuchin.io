@@ -876,24 +876,374 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
 .settings-trigger:hover { transform: scale(1.1) rotate(45deg); }
 .settings-trigger.active { transform: rotate(180deg) !important; }
 
-/* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ */
+/* 📱 МОБИЛЬНАЯ АДАПТАЦИЯ (ПОЛНАЯ) */
 @media (max-width: 768px) {
+    /* Базовые настройки */
+    body, html { 
+        overflow: auto !important; 
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    #map { 
+        height: 100vh !important; 
+    }
+    
     /* Общие модалки */
-    .modal-win, .sub-modal { width: 95%; padding: 20px; border-radius: 20px; }
+    .modal-overlay {
+        padding: 10px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow-y: auto;
+    }
+    
+    .modal-win, .sub-modal { 
+        width: calc(100% - 20px) !important; 
+        max-width: 100% !important;
+        padding: 25px 20px !important; 
+        border-radius: 20px !important; 
+        margin: 60px auto !important;
+        max-height: calc(100vh - 40px) !important;
+        overflow-y: auto !important;
+    }
+    
+    .close-icon {
+        top: 15px !important;
+        right: 15px !important;
+        font-size: 40px !important;
+        width: 40px !important;
+        height: 40px !important;
+    }
     
     /* Кнопки настроек */
-    .settings-trigger, .secret-trigger { width: 60px; height: 60px; font-size: 24px; bottom: 20px; }
-    .settings-trigger { left: 20px; }
-    .secret-trigger { left: 95px; }
-    #settings-panel-root { left: 16px; width: calc(100% - 32px); bottom: 100px; }
-
-    /* 📱 ЭКО-ПАНЕЛЬ (Скрыта по умолчанию, открывается кликом) */
-    #eco-panel-root { top: 15px !important; right: 15px !important; width: calc(100% - 30px) !important; }
-    #eco-panel-root:hover .eco-content { opacity: 0; max-height: 0; } /* Отключаем ховер */
-    #eco-panel-root.open .eco-content { opacity: 1; max-height: 500px; } /* Открыто по клику */
+    .settings-trigger, .secret-trigger { 
+        width: 60px !important; 
+        height: 60px !important; 
+        font-size: 28px !important; 
+        bottom: 20px !important; 
+    }
+    .settings-trigger { left: 20px !important; }
+    .secret-trigger { left: 95px !important; }
+    #settings-panel-root { 
+        left: 16px !important; 
+        width: calc(100% - 32px) !important; 
+        bottom: 100px !important; 
+        padding: 20px !important;
+    }
     
-    .eco-content label { opacity: 1 !important; transform: none !important; transition-delay: 0s !important; padding: 14px 16px !important; }
-    .switch { width: 58px !important; height: 30px !important; }
+    /* 🏢 ПАНЕЛЬ УК */
+    .uk-toggle-btn {
+        top: 15px !important;
+        left: 15px !important;
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 32px !important;
+    }
+    
+    .company-panel {
+        top: 15px !important;
+        left: 15px !important;
+        width: calc(100% - 30px) !important;
+        max-width: none !important;
+        max-height: calc(100vh - 30px) !important;
+        overflow-y: auto !important;
+        border-radius: 20px !important;
+    }
+    
+    .company-header {
+        padding: 15px !important;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .company-logo {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 40px !important;
+    }
+    
+    .company-title h2 {
+        font-size: 18px !important;
+    }
+    
+    .company-title p {
+        font-size: 11px !important;
+    }
+    
+    .company-content {
+        padding: 15px !important;
+    }
+    
+    .company-close-btn {
+        top: 10px !important;
+        right: 10px !important;
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 24px !important;
+    }
+    
+    .info-item {
+        padding: 10px 12px !important;
+    }
+    
+    .info-icon {
+        font-size: 20px !important;
+    }
+    
+    .info-details strong {
+        font-size: 10px !important;
+    }
+    
+    .info-details span {
+        font-size: 12px !important;
+    }
+    
+    .value-badge {
+        font-size: 11px !important;
+        padding: 6px 12px !important;
+    }
+    
+    /* 🗺️ ЭКО-ПАНЕЛЬ */
+    #eco-panel-root { 
+        top: 15px !important; 
+        right: 15px !important; 
+        width: calc(100% - 100px) !important;
+        max-width: 200px !important;
+    }
+    #eco-panel-root:hover .eco-content { opacity: 0; max-height: 0; }
+    #eco-panel-root.open .eco-content { opacity: 1; max-height: 500px; }
+    
+    .eco-header {
+        height: 50px !important;
+        font-size: 12px !important;
+        padding: 0 10px !important;
+    }
+    
+    .eco-content label { 
+        opacity: 1 !important; 
+        transform: none !important; 
+        transition-delay: 0s !important; 
+        padding: 12px 14px !important; 
+        font-size: 12px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .switch { 
+        width: 50px !important; 
+        height: 26px !important; 
+        align-self: flex-end;
+    }
+    
+    /* 🏠 КАРТОЧКА ДОМА */
+    .house-card-pro {
+        width: calc(100% - 40px) !important;
+        max-width: 380px !important;
+        padding: 15px !important;
+        max-height: calc(100vh - 80px) !important;
+    }
+    
+    .house-img-pro {
+        height: 180px !important;
+    }
+    
+    .info-row {
+        font-size: 12px !important;
+        padding: 10px 12px !important;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .ui-btn {
+        padding: 14px !important;
+        font-size: 11px !important;
+        min-height: 48px !important;
+    }
+    
+    /* 🚨 ФОРМА ЖАЛОБ */
+    .complaint-form-container {
+        padding: 0 10px;
+    }
+    
+    .complaint-title {
+        font-size: 24px !important;
+        letter-spacing: 1px !important;
+    }
+    
+    .complaint-address {
+        font-size: 13px !important;
+        padding: 12px 15px !important;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .form-label {
+        font-size: 12px !important;
+    }
+    
+    .premium-input,
+    .premium-select,
+    .premium-textarea {
+        padding: 14px 16px !important;
+        font-size: 14px !important;
+    }
+    
+    .premium-textarea {
+        min-height: 120px !important;
+    }
+    
+    .submit-btn {
+        padding: 16px 30px !important;
+        font-size: 16px !important;
+    }
+    
+    /* ✅ ПОДТВЕРЖДЕНИЕ */
+    .success-popup {
+        padding: 30px 20px !important;
+    }
+    
+    .success-icon {
+        font-size: 60px !important;
+    }
+    
+    .success-title {
+        font-size: 28px !important;
+    }
+    
+    .success-message {
+        font-size: 15px !important;
+    }
+    
+    .ticket-number {
+        font-size: 22px !important;
+        padding: 15px 25px !important;
+    }
+    
+    .success-ok-btn {
+        width: 100% !important;
+        max-width: 280px !important;
+        padding: 16px !important;
+        font-size: 15px !important;
+    }
+    
+    /* 🎓 ДИПЛОМНОЕ ОКНО */
+    .diploma-modal {
+        max-width: calc(100% - 20px) !important;
+        padding: 30px 20px !important;
+    }
+    
+    .diploma-header {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+    
+    .diploma-title {
+        font-size: 28px !important;
+    }
+    
+    .diploma-icon {
+        font-size: 50px !important;
+    }
+    
+    .diploma-main-text {
+        font-size: 15px !important;
+        padding: 15px 18px !important;
+    }
+    
+    .diploma-info-text {
+        font-size: 14px !important;
+        padding: 15px 18px !important;
+    }
+    
+    .diploma-author-block {
+        padding: 20px !important;
+        margin: 15px 0 !important;
+    }
+    
+    .author-name {
+        font-size: 13px !important;
+    }
+    
+    .author-fullname {
+        font-size: 18px !important;
+    }
+    
+    .author-group {
+        font-size: 14px !important;
+    }
+    
+    .diploma-code-text {
+        font-size: 14px !important;
+        padding: 15px 18px !important;
+    }
+    
+    .diploma-contacts-text {
+        font-size: 13px !important;
+    }
+    
+    .thank-you-text {
+        font-size: 18px !important;
+    }
+    
+    .diploma-close-btn {
+        padding: 15px 40px !important;
+        font-size: 15px !important;
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    /* Баллоны на карте */
+    .custom-balloon {
+        padding: 15px !important;
+        font-size: 13px !important;
+    }
+    
+    /* Настройки панели */
+    #settings-panel-root h3,
+    #settings-panel-root p {
+        font-size: 14px !important;
+    }
+}
+
+/* 📱 ОСОБО МАЛЕНЬКИЕ ЭКРАНЫ (iPhone SE и т.д.) */
+@media (max-width: 380px) {
+    .uk-toggle-btn {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 26px !important;
+    }
+    
+    .company-panel {
+        width: calc(100% - 20px) !important;
+        left: 10px !important;
+    }
+    
+    .house-card-pro {
+        width: calc(100% - 20px) !important;
+        padding: 12px !important;
+    }
+    
+    .house-img-pro {
+        height: 150px !important;
+    }
+    
+    .diploma-title {
+        font-size: 24px !important;
+    }
+    
+    .success-title {
+        font-size: 24px !important;
+    }
+}
+
+/* 🖥️ ПК ВЕРСИЯ (оставляем без изменений) */
+@media (min-width: 769px) {
+    #eco-panel-root:hover .eco-content { opacity: 1; max-height: 450px; }
 }
 
 /* 🌙 ТЁМНАЯ ТЕМА (ПОЛНАЯ) */
