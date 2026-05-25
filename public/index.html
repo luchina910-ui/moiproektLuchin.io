@@ -20,8 +20,12 @@
     <!-- Контейнер карты -->
     <div id="map"></div>
     
-    <!-- Панель управляющей компании (слева сверху) -->
-    <div id="company-panel-root" class="company-panel">
+    <!-- Кнопка УК (слева сверху) -->
+    <div id="uk-toggle-btn" class="uk-toggle-btn">🏢</div>
+    
+    <!-- Панель управляющей компании (скрыта по умолчанию) -->
+    <div id="company-panel-root" class="company-panel company-panel-hidden">
+        <button class="company-close-btn" onclick="toggleCompanyPanel()">&times;</button>
         <div class="company-header">
             <div class="company-logo">🏢</div>
             <div class="company-title">

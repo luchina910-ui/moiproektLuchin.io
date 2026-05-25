@@ -281,6 +281,29 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         modal.style.display = "none"; 
     };
     
+    // Функция для переключения панели УК
+    window.toggleCompanyPanel = () => {
+        const panel = document.getElementById('company-panel-root');
+        const btn = document.getElementById('uk-toggle-btn');
+        
+        if (panel.classList.contains('company-panel-visible')) {
+            panel.classList.remove('company-panel-visible');
+            panel.classList.add('company-panel-hidden');
+            btn.style.display = 'flex';
+        } else {
+            panel.classList.remove('company-panel-hidden');
+            setTimeout(() => {
+                panel.classList.add('company-panel-visible');
+            }, 10);
+            btn.style.display = 'none';
+        }
+    };
+    
+    // Клик по кнопке УК
+    document.getElementById('uk-toggle-btn').addEventListener('click', () => {
+        window.toggleCompanyPanel();
+    });
+    
     window.openModal = (t, h) => { 
         document.getElementById('m-content').innerHTML = `<h1 style="color:#008000; font-weight:900; font-size:60px; margin-bottom:45px;">${t}</h1>${h}`; 
         modal.style.display = "flex"; 
