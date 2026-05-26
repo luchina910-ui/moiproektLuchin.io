@@ -892,7 +892,8 @@
             document.getElementById('userInfo').style.display = 'block';
             document.getElementById('userName').textContent = '👤 ' + currentUser.login;
             document.getElementById('userApartment').textContent = currentUser.apartment;
-            document.getElementById('accountBtn').style.display = 'none';
+            // Обновляем текст кнопки аккаунта вместо скрытия
+            document.getElementById('accountBtn').innerHTML = '👤 ' + currentUser.login;
         }
 
         // Toggle account menu
@@ -925,6 +926,8 @@
         function logout() {
             localStorage.removeItem('currentUser');
             currentUser = null;
+            // Восстанавливаем исходный текст кнопки аккаунта
+            document.getElementById('accountBtn').innerHTML = '👤 Личный кабинет';
             location.reload();
         }
 
