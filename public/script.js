@@ -379,6 +379,11 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         window.toggleCompanyPanel();
     });
     
+    // Клик по кнопке Личного кабинета
+    document.getElementById('lk-toggle-btn')?.addEventListener('click', () => {
+        window.openPersonalCabinet();
+    });
+    
     // Функция для закрытия модального окна диплома
     window.closeDiplomaModal = () => {
         const diplomaModal = document.getElementById('diploma-modal-overlay');
@@ -394,6 +399,63 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
             diplomaModal.style.display = 'flex';
         }
     }, 500);
+    
+    // Функция открытия Личного кабинета
+    window.openPersonalCabinet = () => {
+        const content = document.getElementById('m-content');
+        content.innerHTML = `
+            <div class="personal-cabinet-container" style="text-align:center; padding:20px;">
+                <h1 style="color:#3498db; font-weight:900; font-size:50px; margin-bottom:30px;">👤 ЛИЧНЫЙ КАБИНЕТ</h1>
+                <p style="font-size:20px; color:#666; margin-bottom:40px;">Авторизация в системе ГИС УК «ВСЕ СВОИ»</p>
+                
+                <div style="max-width:400px; margin:0 auto; background:#f8f9fa; padding:30px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="margin-bottom:25px;">
+                        <input type="text" id="lk-login" placeholder="Логин или email" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    </div>
+                    <div style="margin-bottom:25px;">
+                        <input type="password" id="lk-password" placeholder="Пароль" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    </div>
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; width:100%; padding:15px; font-size:18px; border:none; border-radius:10px; cursor:pointer;" onclick="window.loginToPersonalCabinet()">
+                        🔐 ВОЙТИ
+                    </button>
+                    <div style="margin-top:20px; font-size:14px; color:#888;">
+                        <a href="#" style="color:#3498db; text-decoration:none;">Забыли пароль?</a> | 
+                        <a href="#" style="color:#3498db; text-decoration:none;">Регистрация</a>
+                    </div>
+                </div>
+                
+                <div style="margin-top:40px; max-width:600px; margin-left:auto; margin-right:auto;">
+                    <h2 style="color:#008000; font-size:24px; margin-bottom:20px;">💡 Возможности личного кабинета:</h2>
+                    <div style="text-align:left; font-size:16px; line-height:1.8;">
+                        <div style="margin-bottom:10px;">✅ Просмотр истории обращений и жалоб</div>
+                        <div style="margin-bottom:10px;">✅ Оплата счетов онлайн</div>
+                        <div style="margin-bottom:10px;">✅ Передача показаний счетчиков</div>
+                        <div style="margin-bottom:10px;">✅ Получение уведомлений от УК</div>
+                        <div style="margin-bottom:10px;">✅ Запись на прием к специалисту</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        modal.style.display = "flex";
+    };
+    
+    // Функция входа в личный кабинет (демо)
+    window.loginToPersonalCabinet = () => {
+        const login = document.getElementById('lk-login').value;
+        const password = document.getElementById('lk-password').value;
+        
+        const sub = document.getElementById('sub-modal-body');
+        sub.innerHTML = `
+            <div class="success-popup" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding:40px;">
+                <span class="success-icon" style="font-size:80px;">🎉</span>
+                <h1 class="success-title" style="color:#3498db; font-size:40px; margin:20px 0;">ДОБРО ПОЖАЛОВАТЬ!</h1>
+                <p class="success-message" style="font-size:20px; color:#666;">Вы успешно вошли в личный кабинет</p>
+                <p style="font-size:16px; color:#888; margin-top:10px;">Пользователь: <strong>${login || 'Гость'}</strong></p>
+                <button class="success-ok-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; padding:15px 40px; border:none; border-radius:10px; font-size:18px; cursor:pointer; margin-top:30px;" onclick="window.closeEverything()">ПРОДОЛЖИТЬ</button>
+            </div>
+        `;
+        sub.style.display = "block";
+    };
     
     window.openModal = (t, h) => { 
         document.getElementById('m-content').innerHTML = `<h1 style="color:#008000; font-weight:900; font-size:60px; margin-bottom:45px;">${t}</h1>${h}`; 
