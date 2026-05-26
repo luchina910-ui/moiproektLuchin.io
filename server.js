@@ -239,6 +239,7 @@ const objects = [
 // API МАРШРУТЫ
 app.get('/api/objects', (req, res) => { res.json({ data: objects }); });
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/personal-cabinet', express.static(path.join(__dirname, 'personal-cabinet')));
 
 // ЗАПУСК
 app.listen(PORT, () => {
