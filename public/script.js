@@ -285,22 +285,22 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     
     // Функция для переключения панели УК
     window.toggleCompanyPanel = () => {
-        // Закрываем другие панели перед открытием УК
-        window.closeAllPanels();
-        
         const panel = document.getElementById('company-panel-root');
         const btn = document.getElementById('uk-toggle-btn');
         
         if (panel.classList.contains('company-panel-visible')) {
             panel.classList.remove('company-panel-visible');
             panel.classList.add('company-panel-hidden');
-            btn.style.display = 'flex';
+            setTimeout(() => {
+                btn.style.display = 'flex';
+            }, 400);
         } else {
+            window.closeAllPanels();
+            btn.style.display = 'none';
             panel.classList.remove('company-panel-hidden');
             setTimeout(() => {
                 panel.classList.add('company-panel-visible');
             }, 10);
-            btn.style.display = 'none';
         }
     };
     

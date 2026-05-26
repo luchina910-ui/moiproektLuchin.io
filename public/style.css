@@ -95,11 +95,12 @@ body, html {
     opacity: 1;
     transform: translateX(0);
     pointer-events: all;
-    animation: slideInLeft 0.5s ease-out;
 }
 
 .company-panel-hidden {
-    display: none;
+    opacity: 0;
+    transform: translateX(-50px);
+    pointer-events: none;
 }
 
 @keyframes slideInLeft {
@@ -263,7 +264,12 @@ body, html {
         max-height: 60vh;
         overflow-y: auto;
         transform-origin: top left;
-        transform: scale(0.5);
+    }
+    
+    .company-panel-hidden {
+        opacity: 0;
+        transform: translateX(-50px);
+        pointer-events: none;
     }
     
     .company-header {
@@ -992,7 +998,12 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         overflow-y: auto !important;
         border-radius: 20px !important;
         transform-origin: top left;
-        transform: scale(0.5);
+    }
+    
+    .company-panel-hidden {
+        opacity: 0;
+        transform: translateX(-50px);
+        pointer-events: none;
     }
     
     .company-header {
@@ -1272,6 +1283,12 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
     .company-panel {
         width: calc(100% - 20px) !important;
         left: 10px !important;
+    }
+    
+    .company-panel-hidden {
+        opacity: 0;
+        transform: translateX(-50px);
+        pointer-events: none;
     }
     
     .house-card-pro {
