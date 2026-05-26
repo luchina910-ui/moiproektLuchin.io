@@ -125,7 +125,7 @@
             padding: 20px;
         }
 
-        .auth-modal, .registration-modal {
+        .auth-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -504,7 +504,7 @@
             </div>
             <button class="notification-btn" onclick="toggleNotificationsPanel()" style="margin-left: 10px;">
                 🔔
-                <span class="notification-badge">5</span>
+                <span class="notification-badge" id="notificationBadge">5</span>
             </button>
         </div>
         <div id="userInfo" style="display: none;">
@@ -598,43 +598,20 @@
             </div>
         </div>
 
-        <!-- Auth Modal (for first-time users) -->
+        <!-- Auth Modal (for login) -->
         <div class="auth-modal" id="authModal">
             <div class="modal-content">
-                <h2 class="modal-title">Первый вход в систему</h2>
-                <form id="authForm" onsubmit="handleFirstAuth(event)">
-                    <div class="form-group">
-                        <label for="apartmentNumber">Номер квартиры</label>
-                        <input type="text" id="apartmentNumber" required placeholder="Например: 45">
-                    </div>
-                    <div class="form-group">
-                        <label for="accessCode">Код доступа</label>
-                        <input type="password" id="accessCode" required placeholder="Введите код из уведомления">
-                    </div>
-                    <button type="submit" class="submit-btn">Продолжить регистрацию</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Registration Modal -->
-        <div class="registration-modal" id="regModal">
-            <div class="modal-content">
-                <button class="close-btn" onclick="closeModal('regModal')">&times;</button>
-                <h2 class="modal-title">Создание аккаунта</h2>
-                <form id="regForm" onsubmit="handleRegistration(event)">
+                <h2 class="modal-title">Вход в личный кабинет</h2>
+                <form id="authForm" onsubmit="handleLogin(event)">
                     <div class="form-group">
                         <label for="login">Логин</label>
-                        <input type="text" id="login" required placeholder="Придумайте логин">
+                        <input type="text" id="login" required placeholder="Введите логин">
                     </div>
                     <div class="form-group">
                         <label for="password">Пароль</label>
-                        <input type="password" id="password" required placeholder="Придумайте пароль">
+                        <input type="password" id="password" required placeholder="Введите пароль">
                     </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Подтвердите пароль</label>
-                        <input type="password" id="confirmPassword" required placeholder="Повторите пароль">
-                    </div>
-                    <button type="submit" class="submit-btn">Зарегистрироваться</button>
+                    <button type="submit" class="submit-btn">Войти</button>
                 </form>
             </div>
         </div>
@@ -867,40 +844,8 @@
             <h3 class="panel-title">🔔 Уведомления</h3>
             <button class="panel-close" onclick="closePanel('notificationsPanel')">&times;</button>
         </div>
-        <div class="notification-item" style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4caf50;">
-            <div class="complaint-date">Сегодня, 14:15</div>
-            <p style="margin: 5px 0;"><strong>🎉 Добро пожаловать!</strong></p>
-            <p style="color: #555; font-size: 14px;">Ваш личный кабинет успешно активирован. Теперь вы можете отслеживать все услуги онлайн</p>
-        </div>
-        <div class="notification-item" style="background: #fff8e1; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #ffc107;">
-            <div class="complaint-date">Сегодня, 12:00</div>
-            <p style="margin: 5px 0;"><strong>⚡ Важная информация</strong></p>
-            <p style="color: #555; font-size: 14px;">Проверьте правильность переданных показаний счётчиков за текущий месяц</p>
-        </div>
-        <div class="notification-item" style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #2196f3;">
-            <div class="complaint-date">Сегодня, 10:30</div>
-            <p style="margin: 5px 0;"><strong>💳 Оплата услуг</strong></p>
-            <p style="color: #555; font-size: 14px;">Напоминание: Не забудьте передать показания счётчиков до 25 числа</p>
-        </div>
-        <div class="notification-item" style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #ff9800;">
-            <div class="complaint-date">Вчера, 16:45</div>
-            <p style="margin: 5px 0;"><strong>🔧 Плановые работы</strong></p>
-            <p style="color: #555; font-size: 14px;">Завтра с 9:00 до 17:00 будут проводиться работы по замене стояков ХВС</p>
-        </div>
-        <div class="notification-item" style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4caf50;">
-            <div class="complaint-date">20 января, 14:20</div>
-            <p style="margin: 5px 0;"><strong>✅ Заявка выполнена</strong></p>
-            <p style="color: #555; font-size: 14px;">Ваша заявка №1234 на ремонт межпанельных швов выполнена</p>
-        </div>
-        <div class="notification-item" style="background: #fce4ec; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #e91e63;">
-            <div class="complaint-date">18 января, 09:00</div>
-            <p style="margin: 5px 0;"><strong>📢 Общее собрание</strong></p>
-            <p style="color: #555; font-size: 14px;">Приглашаем на общее собрание собственников 25 января в 19:00</p>
-        </div>
-        <div class="notification-item" style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #9c27b0;">
-            <div class="complaint-date">15 января, 11:30</div>
-            <p style="margin: 5px 0;"><strong>📄 Новый документ</strong></p>
-            <p style="color: #555; font-size: 14px;">Опубликован новый тариф на коммунальные услуги с 1 февраля 2025</p>
+        <div id="notificationsList">
+            <!-- Notifications will be loaded here dynamically -->
         </div>
     </div>
 
@@ -912,8 +857,6 @@
     <script>
         // State management
         let currentUser = null;
-        let tempApartment = null;
-        let tempCode = null;
 
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
@@ -927,64 +870,99 @@
                 currentUser = JSON.parse(user);
                 showDashboard();
             } else {
-                const isFirstTime = localStorage.getItem('isFirstTime');
-                if (!isFirstTime) {
-                    document.getElementById('authModal').style.display = 'flex';
-                } else {
-                    document.getElementById('authModal').style.display = 'flex';
-                }
+                document.getElementById('authModal').style.display = 'flex';
             }
         }
 
-        // Handle first authentication
-        function handleFirstAuth(event) {
-            event.preventDefault();
-            const apartment = document.getElementById('apartmentNumber').value;
-            const code = document.getElementById('accessCode').value;
-            
-            // Validate code (default code is 1234 for demo)
-            if (code === '1234') {
-                tempApartment = apartment;
-                tempCode = code;
-                document.getElementById('authModal').style.display = 'none';
-                document.getElementById('regModal').style.display = 'flex';
-            } else {
-                showNotification('❌ Неверный код доступа! Используйте код: 1234');
-            }
-        }
-
-        // Handle registration
-        function handleRegistration(event) {
+        // Handle login with hardcoded credentials
+        function handleLogin(event) {
             event.preventDefault();
             const login = document.getElementById('login').value;
             const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                showNotification('❌ Пароли не совпадают!');
-                return;
-            }
-
-            if (password.length < 6) {
-                showNotification('❌ Пароль должен быть не менее 6 символов!');
-                return;
-            }
-
-            // Create user
-            const user = {
-                login: login,
-                apartment: tempApartment,
-                registeredAt: new Date().toISOString()
-            };
-
-            localStorage.setItem('user_' + login, JSON.stringify(user));
-            localStorage.setItem('isFirstTime', 'true');
-            localStorage.setItem('currentUser', JSON.stringify(user));
             
-            currentUser = user;
-            closeModal('regModal');
-            showDashboard();
-            showNotification('✅ Регистрация успешна! Добро пожаловать!');
+            // Hardcoded credentials: Ivan / 1234
+            if (login === 'Ivan' && password === '1234') {
+                const user = {
+                    login: login,
+                    apartment: '1',
+                    registeredAt: new Date().toISOString()
+                };
+                
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                currentUser = user;
+                document.getElementById('authModal').style.display = 'none';
+                showDashboard();
+                loadNotifications();
+                showNotification('✅ Добро пожаловать, Ivan!');
+            } else {
+                showNotification('❌ Неверный логин или пароль!');
+            }
+        }
+
+        // Load notifications for current user
+        function loadNotifications() {
+            const notificationsList = document.getElementById('notificationsList');
+            const notificationBadge = document.getElementById('notificationBadge');
+            const notifications = [
+                {
+                    date: 'Сегодня, 14:15',
+                    icon: '🎉',
+                    title: 'Добро пожаловать!',
+                    text: 'Ваш личный кабинет успешно активирован. Теперь вы можете отслеживать все услуги онлайн',
+                    color: '#e8f5e9',
+                    border: '#4caf50'
+                },
+                {
+                    date: 'Сегодня, 12:00',
+                    icon: '⚡',
+                    title: 'Важная информация',
+                    text: 'Проверьте правильность переданных показаний счётчиков за текущий месяц',
+                    color: '#fff8e1',
+                    border: '#ffc107'
+                },
+                {
+                    date: 'Сегодня, 10:30',
+                    icon: '💳',
+                    title: 'Оплата услуг',
+                    text: 'Напоминание: Не забудьте передать показания счётчиков до 25 числа',
+                    color: '#e3f2fd',
+                    border: '#2196f3'
+                },
+                {
+                    date: 'Вчера, 16:45',
+                    icon: '🔧',
+                    title: 'Плановые работы',
+                    text: 'Завтра с 9:00 до 17:00 будут проводиться работы по замене стояков ХВС',
+                    color: '#fff3e0',
+                    border: '#ff9800'
+                },
+                {
+                    date: '20 января, 14:20',
+                    icon: '✅',
+                    title: 'Заявка выполнена',
+                    text: 'Ваша заявка №1234 на ремонт межпанельных швов выполнена',
+                    color: '#e8f5e9',
+                    border: '#4caf50'
+                }
+            ];
+            
+            let html = '';
+            notifications.forEach(notif => {
+                html += `
+                    <div class="notification-item" style="background: ${notif.color}; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid ${notif.border};">
+                        <div class="complaint-date">${notif.date}</div>
+                        <p style="margin: 5px 0;"><strong>${notif.icon} ${notif.title}</strong></p>
+                        <p style="color: #555; font-size: 14px;">${notif.text}</p>
+                    </div>
+                `;
+            });
+            
+            notificationsList.innerHTML = html;
+            
+            // Update badge count
+            if (notificationBadge) {
+                notificationBadge.textContent = notifications.length;
+            }
         }
 
         // Show dashboard
@@ -996,6 +974,8 @@
             document.getElementById('userApartment').textContent = currentUser.apartment;
             // Обновляем текст кнопки аккаунта вместо скрытия
             document.getElementById('accountBtn').innerHTML = '👤 ' + currentUser.login;
+            // Load notifications when dashboard is shown
+            loadNotifications();
         }
 
         // Toggle account menu
@@ -1091,8 +1071,8 @@
 
         // Close modals when clicking outside
         window.onclick = function(event) {
-            if (event.target.classList.contains('auth-modal') || event.target.classList.contains('registration-modal')) {
-                // Don't allow closing auth modal without completing registration
+            if (event.target.classList.contains('auth-modal')) {
+                // Don't allow closing auth modal without completing login
             }
         }
     </script>
