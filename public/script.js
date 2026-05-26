@@ -283,6 +283,9 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     
     // Функция для переключения панели УК
     window.toggleCompanyPanel = () => {
+        // Закрываем другие панели перед открытием УК
+        window.closeAllPanels();
+        
         const panel = document.getElementById('company-panel-root');
         const btn = document.getElementById('uk-toggle-btn');
         
@@ -296,6 +299,55 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                 panel.classList.add('company-panel-visible');
             }, 10);
             btn.style.display = 'none';
+        }
+    };
+    
+    // Закрытие всех панелей и модальных окон
+    window.closeAllPanels = () => {
+        // Закрываем панель УК
+        const companyPanel = document.getElementById('company-panel-root');
+        if (companyPanel && companyPanel.classList.contains('company-panel-visible')) {
+            companyPanel.classList.remove('company-panel-visible');
+            companyPanel.classList.add('company-panel-hidden');
+            const ukBtn = document.getElementById('uk-toggle-btn');
+            if (ukBtn) ukBtn.style.display = 'flex';
+        }
+        
+        // Закрываем эко-панель
+        const ecoPanel = document.getElementById('eco-panel-root');
+        if (ecoPanel) {
+            ecoPanel.classList.remove('open');
+        }
+        
+        // Закрываем панель настроек
+        const settingsPanel = document.getElementById('settings-panel-root');
+        if (settingsPanel) {
+            settingsPanel.style.display = 'none';
+            const settingsBtn = document.querySelector('.settings-trigger');
+            if (settingsBtn) settingsBtn.classList.remove('active');
+        }
+        
+        // Скрываем дополнительную кнопку
+        const secretBtn = document.querySelector('.secret-trigger');
+        if (secretBtn) {
+            secretBtn.style.display = 'none';
+            secretBtn.classList.remove('active-mode');
+        }
+    };
+    
+    // Глобальная функция закрытия всего при клике вне элементов
+    window.handleOutsideClick = (e) => {
+        const gui = document.getElementById('eco-panel-root');
+        const settingsBtn = document.querySelector('.settings-trigger');
+        const secretBtn = document.querySelector('.secret-trigger');
+        const companyPanel = document.getElementById('company-panel-root');
+        const ukBtn = document.getElementById('uk-toggle-btn');
+        
+        // Если клик не по эко-панели и не по кнопкам настроек - закрываем эко-панель
+        if (gui && !gui.contains(e.target) && 
+            !settingsBtn?.contains(e.target) && 
+            !secretBtn?.contains(e.target)) {
+            gui.classList.remove('open');
         }
     };
     
@@ -513,12 +565,30 @@ document.body.appendChild(gui);
 const ecoHeader = gui.querySelector('.eco-header');
 ecoHeader.addEventListener('click', (e) => {
     e.stopPropagation();
+    // Закрываем другие панели при открытии эко-панели
+    window.closeAllPanels();
     gui.classList.toggle('open');
 });
+
 // Авто-закрытие при клике в любое другое место (актуально для телефона)
 document.addEventListener('click', (e) => {
-    if (!gui.contains(e.target) && !e.target.closest('.settings-trigger') && !e.target.closest('.secret-trigger')) {
+    const settingsPanel = document.getElementById('settings-panel-root');
+    const settingsBtn = document.querySelector('.settings-trigger');
+    
+    // Если клик не по эко-панели, не по настройкам и не по кнопке настроек
+    if (!gui.contains(e.target) && 
+        !settingsPanel?.contains(e.target) &&
+        !settingsBtn?.contains(e.target) && 
+        !e.target.closest('.secret-trigger')) {
         gui.classList.remove('open');
+    }
+    
+    // Закрываем панель настроек если клик вне её
+    if (settingsPanel && settingsPanel.style.display === 'block' &&
+        !settingsPanel.contains(e.target) && 
+        !settingsBtn?.contains(e.target)) {
+        settingsPanel.style.display = 'none';
+        settingsBtn?.classList.remove('active');
     }
 });
 
@@ -554,13 +624,19 @@ document.addEventListener('click', (e) => {
         <label style="display:flex;justify-content:space-between;align-items:center;font-size:16px;margin-top:25px;color:#666">Доп. настройки <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span></label>`;
     document.body.appendChild(tBox); 
 
-    sBtn.onclick = () => { 
+    sBtn.onclick = (e) => { 
+        e.stopPropagation();
+        // Закрываем другие панели при открытии настроек
+        window.closeAllPanels();
         const open = tBox.style.display === "block"; 
         tBox.style.display = open ? "none" : "block"; 
         sBtn.classList.toggle('active', !open); 
     };
     
-    secBtn.onclick = () => {
+    secBtn.onclick = (e) => {
+        e.stopPropagation();
+        // Закрываем другие панели при открытии доп. настроек
+        window.closeAllPanels();
         secBtn.classList.toggle('active-mode');
         document.getElementById('m-content').innerHTML = `
         <h1 style="color:#00ff88; text-align:center; font-size:65px;">ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ</h1>
