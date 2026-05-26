@@ -64,11 +64,11 @@ body, html {
     box-shadow: 0 12px 35px rgba(0, 128, 0, 0.4);
 }
 
-/* 👤 КНОПКА ЛИЧНОГО КАБИНЕТА (слева, рядом с УК) */
+/* 👤 КНОПКА ЛИЧНОГО КАБИНЕТА (под панелью УК) */
 .lk-toggle-btn {
     position: absolute !important;
-    top: 20px;
-    left: 100px;
+    top: 100px;
+    left: 20px;
     width: 70px;
     height: 70px;
     background: linear-gradient(135deg, #3498db, #2980b9);
@@ -322,7 +322,8 @@ body, html {
     
     /* Кнопка ЛК на мобильных */
     .lk-toggle-btn {
-        left: 90px !important;
+        top: 90px !important;
+        left: 15px !important;
         width: 60px !important;
         height: 60px !important;
         font-size: 32px !important;
@@ -580,16 +581,35 @@ input:active + .slider::before { transform: translateX(12px) scale(0.9); }
 }
 
 .modal-win { 
-    width: 900px; 
+    width: 950px; 
     background: #fff; 
     border-radius: 40px; 
     padding: 50px; 
     border-top: 20px solid #008000; 
     position: relative; 
-    max-height: 90vh; 
+    max-height: 95vh; 
     overflow-y: auto;
     animation: popUp 0.4s ease-out;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* Стили для личного кабинета - без прокрутки */
+.personal-cabinet-container,
+.resident-dashboard,
+.meter-submission-form {
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.resident-dashboard h1 {
+    font-size: 40px !important;
+    margin-bottom: 10px !important;
+}
+
+.resident-dashboard .ui-btn {
+    height: auto !important;
+    min-height: 60px;
 }
 
 .sub-modal { 
@@ -1035,8 +1055,8 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
     
     /* 👤 КНОПКА ЛИЧНОГО КАБИНЕТА - мобильная версия */
     .lk-toggle-btn {
-        top: 15px !important;
-        left: 90px !important;
+        top: 90px !important;
+        left: 15px !important;
         width: 60px !important;
         height: 60px !important;
         font-size: 32px !important;
@@ -1334,6 +1354,8 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
     }
     
     .lk-toggle-btn {
+        top: 80px !important;
+        left: 10px !important;
         width: 50px !important;
         height: 50px !important;
         font-size: 26px !important;

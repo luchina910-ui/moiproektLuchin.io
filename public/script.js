@@ -33,7 +33,7 @@ async function initIndustrialGis() {
                     <input type="tel" id="f-tel" placeholder="Номер телефона для связи" class="premium-input" style="outline:none;">
                 </div>
                 
-                <div style="margin-bottom:25px;">
+                <div style="margin-bottom:20px;">
                     <label class="form-label">Возможная причина:</label>
                     <select id="f-reason" class="premium-select" style="outline:none;">
                         <option value="" disabled selected>-- Выберите категорию (если подходит) --</option>
@@ -131,16 +131,16 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                             : `Бак для общих отходов ${item.title.includes('2') ? '№2' : '№1'}`;
                         
                         const photoHtml = item.photo
-                            ? `<img src="${item.photo}" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">`
+                            ? `<img src="${item.photo}" style="width:100%; height:200px; object-fit:cover; border-radius:15px; margin-bottom:10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">`
                             : '';
 
                         const bHtml = `
-                            <div style="width:300px; padding:20px; text-align:center;">
+                            <div style="width:300px; padding:15px; max-height:85vh; overflow-y:auto; text-align:center;">
                                 ${photoHtml}
-                                <b style="font-size:24px; color:${color}; display:block; line-height:1.2; margin-bottom:15px;">
+                                <b style="font-size:20px; color:${color}; display:block; line-height:1.2; margin-bottom:10px;">
                                     🗑️ ${longTitle}
                                 </b>
-                                <div class="info-row" style="border-left:none; border-bottom:4px solid ${color}; background:#f9f9f9; display:inline-block; padding:8px 15px; font-size:18px;">
+                                <div class="info-row" style="border-left:none; border-bottom:4px solid ${color}; background:#f9f9f9; display:inline-block; padding:8px 15px; font-size:13px;">
                                     📊 Заполнение: ${item.load}%
                                 </div>
                                 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:15px; text-align:left;">
@@ -173,10 +173,10 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                         const pHtml = `
                             <div class="custom-balloon" style="width: 540px; margin: 15px auto;">
                                 <b style="color:#00AAFF; font-size:32px; display:block; text-align:center; margin-bottom:10px;">🅿️ ${item.title}</b>
-                                <p style="font-size:16px; color:#666; text-align:center; margin-bottom:20px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ»</p>
+                                <p style="font-size:13px; color:#666; text-align:center; margin-bottom:20px;">ИИ-мониторинг ООО УК «ВСЕ СВОИ»</p>
                                 <div class="info-row" style="border-left-color:#00AAFF; font-size:22px; white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
                                     <span>🚗 Свободно:</span>
-                                    <b style="color:#008000;">${freeSpots} <span style="color:#222; font-size:16px; font-weight:400;">из ${item.totalSpots || 0}</span></b>
+                                    <b style="color:#008000;">${freeSpots} <span style="color:#222; font-size:13px; font-weight:400;">из ${item.totalSpots || 0}</span></b>
                                 </div>
                                 <div class="info-row" style="background:#f4f7f4; border-left:none; text-align:center; margin-top:10px;">
                                     Занятость: <b>${Math.round((item.busySpots / item.totalSpots) * 100) || 0}%</b>
@@ -211,7 +211,7 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                     else if (item.type === 'playground') {
                         const lHtml = `
                             <div class="custom-balloon" style="width: 440px; margin: 15px auto;">
-                                <b style="color:#008000; font-size:30px; display:block; text-align:center; margin-bottom:15px;">🎡 ${item.title}</b>
+                                <b style="color:#008000; font-size:30px; display:block; text-align:center; margin-bottom:10px;">🎡 ${item.title}</b>
                                 <div class="info-row" style="border-left-color:#008000;">
                                     🧸 Покрытие: <b>${item.surface || 'Резиновая крошка'}</b>
                                 </div>
@@ -404,29 +404,29 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     window.openPersonalCabinet = () => {
         const content = document.getElementById('m-content');
         content.innerHTML = `
-            <div class="personal-cabinet-container" style="text-align:center; padding:20px;">
-                <h1 style="color:#3498db; font-weight:900; font-size:50px; margin-bottom:30px;">👤 ЛИЧНЫЙ КАБИНЕТ</h1>
+            <div class="personal-cabinet-container" style="text-align:center; padding:15px; max-height:85vh; overflow-y:auto;">
+                <h1 style="color:#3498db; font-weight:900; font-size:50px; margin-bottom:20px;">👤 ЛИЧНЫЙ КАБИНЕТ</h1>
                 <p style="font-size:20px; color:#666; margin-bottom:40px;">Авторизация в системе ГИС УК «ВСЕ СВОИ»</p>
                 
-                <div style="max-width:400px; margin:0 auto; background:#f8f9fa; padding:30px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-                    <div style="margin-bottom:25px;">
-                        <input type="text" id="lk-login" placeholder="Логин или email" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                <div style="max-width:400px; margin:0 auto; background:#f8f9fa; padding:30px; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="margin-bottom:20px;">
+                        <input type="text" id="lk-login" placeholder="Логин или email" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:13px;">
                     </div>
-                    <div style="margin-bottom:25px;">
-                        <input type="password" id="lk-password" placeholder="Пароль" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    <div style="margin-bottom:20px;">
+                        <input type="password" id="lk-password" placeholder="Пароль" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:13px;">
                     </div>
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; width:100%; padding:15px; font-size:18px; border:none; border-radius:10px; cursor:pointer;" onclick="window.loginToPersonalCabinet()">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; width:100%; padding:15px; font-size:13px; border:none; border-radius:10px; cursor:pointer;" onclick="window.loginToPersonalCabinet()">
                         🔐 ВОЙТИ
                     </button>
-                    <div style="margin-top:20px; font-size:14px; color:#888;">
+                    <div style="margin-top:20px; font-size:13px; color:#888;">
                         <a href="#" style="color:#3498db; text-decoration:none;">Забыли пароль?</a> | 
                         <a href="#" style="color:#3498db; text-decoration:none;">Регистрация</a>
                     </div>
                 </div>
                 
                 <div style="margin-top:40px; max-width:600px; margin-left:auto; margin-right:auto;">
-                    <h2 style="color:#008000; font-size:24px; margin-bottom:20px;">💡 Возможности личного кабинета:</h2>
-                    <div style="text-align:left; font-size:16px; line-height:1.8;">
+                    <h2 style="color:#008000; font-size:20px; margin-bottom:20px;">💡 Возможности личного кабинета:</h2>
+                    <div style="text-align:left; font-size:13px; line-height:1.7;">
                         <div style="margin-bottom:10px;">✅ Просмотр истории обращений и жалоб</div>
                         <div style="margin-bottom:10px;">✅ Оплата счетов онлайн</div>
                         <div style="margin-bottom:10px;">✅ Передача показаний счетчиков</div>
@@ -452,32 +452,32 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     window.openResidentDashboard = (userName) => {
         const content = document.getElementById('m-content');
         content.innerHTML = `
-            <div class="resident-dashboard" style="padding:20px;">
-                <h1 style="color:#3498db; font-weight:900; font-size:45px; margin-bottom:15px; text-align:center;">👤 ЛИЧНЫЙ КАБИНЕТ ЖИЛЬЦА</h1>
-                <p style="font-size:18px; color:#666; margin-bottom:30px; text-align:center;">Пользователь: <strong>${userName || 'Гость'}</strong></p>
+            <div class="resident-dashboard" style="padding:15px; max-height:85vh; overflow-y:auto;">
+                <h1 style="color:#3498db; font-weight:900; font-size:36px; margin-bottom:10px; text-align:center;">👤 ЛИЧНЫЙ КАБИНЕТ ЖИЛЬЦА</h1>
+                <p style="font-size:13px; color:#666; margin-bottom:20px; text-align:center;">Пользователь: <strong>${userName || 'Гость'}</strong></p>
                 
                 <!-- Информационный блок -->
-                <div style="background:linear-gradient(135deg, #f0f7ff, #ffffff); border-radius:20px; padding:25px; margin-bottom:25px; border-left:5px solid #3498db; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
-                    <h2 style="color:#3498db; font-size:24px; margin:0 0 15px 0;">📋 Важная информация</h2>
-                    <div style="font-size:16px; line-height:1.8; color:#333;">
-                        <div style="margin-bottom:12px;">
+                <div style="background:linear-gradient(135deg, #f0f7ff, #ffffff); border-radius:15px; padding:20px; margin-bottom:20px; border-left:5px solid #3498db; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                    <h2 style="color:#3498db; font-size:20px; margin:0 0 12px 0;">📋 Важная информация</h2>
+                    <div style="font-size:13px; line-height:1.7; color:#333;">
+                        <div style="margin-bottom:10px;">
                             <strong>📊 Как подавать показания счётчиков:</strong><br>
                             Нажмите кнопку "Подать показания" ниже, заполните все поля (адрес, квартиру, ФИО, телефон) и укажите текущие показания по холодной воде, горячей воде и электроэнергии. После нажмите "Передать показания".
                         </div>
-                        <div style="margin-bottom:12px;">
+                        <div style="margin-bottom:10px;">
                             <strong>💧 Плановые отключения воды:</strong><br>
                             Информация о плановых отключениях публикуется заблаговременно в этом разделе. Следите за обновлениями. В данный момент плановые отключения не запланированы.
                         </div>
-                        <div style="margin-bottom:12px;">
+                        <div style="margin-bottom:10px;">
                             <strong>📞 Экстренные контакты:</strong><br>
                             Аварийная служба: +7 (921) 482-85-50 (круглосуточно)<br>
                             Диспетчерская: +7 (921) 482-85-50 (Пн-Пт: 8:00–20:00)
                         </div>
-                        <div style="margin-bottom:12px;">
+                        <div style="margin-bottom:10px;">
                             <strong>🗑️ Вывоз мусора:</strong><br>
                             Контейнеры вывозятся ежедневно в 08:00. При переполнении баков используйте кнопку "Жалоба" на карте.
                         </div>
-                        <div style="margin-bottom:12px;">
+                        <div style="margin-bottom:10px;">
                             <strong>📮 Приём показаний:</strong><br>
                             Показания принимаются с 20 по 25 число каждого месяца.
                         </div>
@@ -485,30 +485,30 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                 </div>
                 
                 <!-- Кнопки действий -->
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-bottom:25px;">
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #008000, #00aa44); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openMeterSubmissionForm()">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:12px; margin-bottom:20px;">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #008000, #00aa44); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openMeterSubmissionForm()">
                         📊 ПОДАТЬ ПОКАЗАНИЯ СЧЁТЧИКОВ
                     </button>
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openSub('📝 История обращений', 'Здесь будет история ваших обращений и жалоб.<br><br>В данный момент у вас нет активных обращений.')">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openSub('📝 История обращений', 'Здесь будет история ваших обращений и жалоб.<br><br>В данный момент у вас нет активных обращений.')">
                         📋 ИСТОРИЯ ОБРАЩЕНИЙ
                     </button>
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #f39c12, #e67e22); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openSub('💳 Оплата счетов', 'Функция онлайн-оплаты счетов находится в разработке.<br><br>Ожидайте обновления!')">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #f39c12, #e67e22); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openSub('💳 Оплата счетов', 'Функция онлайн-оплаты счетов находится в разработке.<br><br>Ожидайте обновления!')">
                         💳 ОПЛАТА СЧЕТОВ
                     </button>
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #9b59b6, #8e44ad); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openSub('🔔 Уведомления', 'Здесь будут отображаться уведомления от управляющей компании.<br><br>Новых уведомлений нет.')">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #9b59b6, #8e44ad); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openSub('🔔 Уведомления', 'Здесь будут отображаться уведомления от управляющей компании.<br><br>Новых уведомлений нет.')">
                         🔔 УВЕДОМЛЕНИЯ
                     </button>
                 </div>
                 
                 <!-- Дополнительные функции -->
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
-                    <button class="ui-btn" style="background:#f4f7f4; color:#333; font-size:14px;" onclick="window.openSub('📅 Запись на приём', 'Функция записи на приём к специалисту.<br><br>Доступно время:<br>• Пн-Пт: 8:00–20:00<br>• Сб-Вс: 9:00–18:00<br><br>Запись открывается за 3 дня.')">
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+                    <button class="ui-btn" style="background:#f4f7f4; color:#333; font-size:13px;" onclick="window.openSub('📅 Запись на приём', 'Функция записи на приём к специалисту.<br><br>Доступно время:<br>• Пн-Пт: 8:00–20:00<br>• Сб-Вс: 9:00–18:00<br><br>Запись открывается за 3 дня.')">
                         📅 ЗАПИСЬ НА ПРИЁМ
                     </button>
-                    <button class="ui-btn" style="background:#f4f7f4; color:#333; font-size:14px;" onclick="window.openSub('❓ Часто задаваемые вопросы', '<div style=\'text-align:left; font-size:15px; line-height:1.8;\'><strong>В: Как передать показания?</strong><br>О: Через кнопку \'Подать показания счётчиков\' в личном кабинете.<br><br><strong>В: Когда вывозят мусор?</strong><br>О: Ежедневно в 08:00.<br><br><strong>В: Куда звонить при аварии?</strong><br>О: +7 (921) 482-85-50 (круглосуточно).</div>')">
+                    <button class="ui-btn" style="background:#f4f7f4; color:#333; font-size:13px;" onclick="window.openSub('❓ Часто задаваемые вопросы', '<div style=\'text-align:left; font-size:15px; line-height:1.7;\'><strong>В: Как передать показания?</strong><br>О: Через кнопку \'Подать показания счётчиков\' в личном кабинете.<br><br><strong>В: Когда вывозят мусор?</strong><br>О: Ежедневно в 08:00.<br><br><strong>В: Куда звонить при аварии?</strong><br>О: +7 (921) 482-85-50 (круглосуточно).</div>')">
                         ❓ FAQ
                     </button>
-                    <button class="ui-btn" style="background:#e74c3c; color:#fff; font-size:14px;" onclick="window.openPersonalCabinet()">
+                    <button class="ui-btn" style="background:#e74c3c; color:#fff; font-size:13px;" onclick="window.openPersonalCabinet()">
                         🚪 ВЫЙТИ ИЗ КАБИНЕТА
                     </button>
                 </div>
@@ -521,56 +521,56 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     window.openMeterSubmissionForm = () => {
         const content = document.getElementById('m-content');
         content.innerHTML = `
-            <div class="meter-submission-form" style="padding:20px;">
-                <h1 style="color:#008000; font-weight:900; font-size:40px; margin-bottom:15px; text-align:center;">📊 ПОДАЧА ПОКАЗАНИЙ СЧЁТЧИКОВ</h1>
-                <p style="font-size:16px; color:#666; margin-bottom:30px; text-align:center;">Заполните все поля для передачи показаний</p>
+            <div class="meter-submission-form" style="padding:15px; max-height:85vh; overflow-y:auto;">
+                <h1 style="color:#008000; font-weight:900; font-size:32px; margin-bottom:10px; text-align:center;">📊 ПОДАЧА ПОКАЗАНИЙ СЧЁТЧИКОВ</h1>
+                <p style="font-size:13px; color:#666; margin-bottom:20px; text-align:center;">Заполните все поля для передачи показаний</p>
                 
-                <div style="max-width:600px; margin:0 auto; background:#f8f9fa; padding:30px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                <div style="max-width:550px; margin:0 auto; background:#f8f9fa; padding:15px; max-height:85vh; overflow-y:auto; border-radius:15px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
                     <!-- Основные данные -->
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">📍 Адрес дома:</label>
-                        <input type="text" id="meter-address" placeholder="Улица, дом" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;" value="г. Северодвинск, ">
+                    <div style="margin-bottom:10px;">
+                        <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">📍 Адрес дома:</label>
+                        <input type="text" id="meter-address" placeholder="Улица, дом" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:13px;" value="г. Северодвинск, ">
                     </div>
                     
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">🏠 Номер квартиры:</label>
-                        <input type="text" id="meter-apartment" placeholder="№ квартиры" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    <div style="margin-bottom:10px;">
+                        <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">🏠 Номер квартиры:</label>
+                        <input type="text" id="meter-apartment" placeholder="№ квартиры" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:13px;">
                     </div>
                     
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">👤 ФИО собственника:</label>
-                        <input type="text" id="meter-fio" placeholder="Фамилия Имя Отчество" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    <div style="margin-bottom:10px;">
+                        <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">👤 ФИО собственника:</label>
+                        <input type="text" id="meter-fio" placeholder="Фамилия Имя Отчество" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:13px;">
                     </div>
                     
-                    <div style="margin-bottom:25px;">
-                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">📞 Номер телефона:</label>
-                        <input type="tel" id="meter-phone" placeholder="+7 (___) ___-__-__" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    <div style="margin-bottom:18px;">
+                        <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">📞 Номер телефона:</label>
+                        <input type="tel" id="meter-phone" placeholder="+7 (___) ___-__-__" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:13px;">
                     </div>
                     
-                    <div style="border-top:2px solid #ddd; padding-top:25px; margin-top:25px;">
-                        <h3 style="color:#008000; font-size:20px; margin-bottom:20px; text-align:center;">💧 Показания счётчиков</h3>
+                    <div style="border-top:2px solid #ddd; padding-top:18px; margin-top:18px;">
+                        <h3 style="color:#008000; font-size:13px; margin-bottom:10px; text-align:center;">💧 Показания счётчиков</h3>
                         
-                        <div style="margin-bottom:20px;">
-                            <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">❄️ Холодная вода (м³):</label>
-                            <input type="number" id="meter-cold" placeholder="0.000" step="0.001" min="0" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #3498db; border-radius:10px; font-size:16px; background:#f0f7ff;">
+                        <div style="margin-bottom:10px;">
+                            <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">❄️ Холодная вода (м³):</label>
+                            <input type="number" id="meter-cold" placeholder="0.000" step="0.001" min="0" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #3498db; border-radius:8px; font-size:13px; background:#f0f7ff;">
                         </div>
                         
-                        <div style="margin-bottom:20px;">
-                            <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">🔥 Горячая вода (м³):</label>
-                            <input type="number" id="meter-hot" placeholder="0.000" step="0.001" min="0" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #e74c3c; border-radius:10px; font-size:16px; background:#fff5f5;">
+                        <div style="margin-bottom:10px;">
+                            <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">🔥 Горячая вода (м³):</label>
+                            <input type="number" id="meter-hot" placeholder="0.000" step="0.001" min="0" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #e74c3c; border-radius:8px; font-size:13px; background:#fff5f5;">
                         </div>
                         
-                        <div style="margin-bottom:25px;">
-                            <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">⚡ Электроэнергия (кВт·ч):</label>
-                            <input type="number" id="meter-electro" placeholder="0" step="1" min="0" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #f39c12; border-radius:10px; font-size:16px; background:#fffaf0;">
+                        <div style="margin-bottom:18px;">
+                            <label style="display:block; font-size:13px; font-weight:700; color:#333; margin-bottom:6px;">⚡ Электроэнергия (кВт·ч):</label>
+                            <input type="number" id="meter-electro" placeholder="0" step="1" min="0" class="premium-input" style="width:100%; outline:none; padding:12px; border:2px solid #f39c12; border-radius:8px; font-size:13px; background:#fffaf0;">
                         </div>
                     </div>
                     
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #008000, #00aa44); color:#fff; width:100%; padding:18px; font-size:18px; border:none; border-radius:10px; cursor:pointer; margin-top:10px;" onclick="window.submitMeterReadings()">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #008000, #00aa44); color:#fff; width:100%; padding:15px; font-size:13px; border:none; border-radius:10px; cursor:pointer; margin-top:8px;" onclick="window.submitMeterReadings()">
                         📤 ПЕРЕДАТЬ ПОКАЗАНИЯ
                     </button>
                     
-                    <button class="ui-btn" style="background:#f4f7f4; color:#333; width:100%; padding:15px; font-size:16px; border:none; border-radius:10px; cursor:pointer; margin-top:10px;" onclick="window.openResidentDashboard('${userName}')">
+                    <button class="ui-btn" style="background:#f4f7f4; color:#333; width:100%; padding:12px; font-size:13px; border:none; border-radius:10px; cursor:pointer; margin-top:8px;" onclick="window.openResidentDashboard(document.getElementById('lk-login')?.value || 'Гость')">
                         ← НАЗАД В КАБИНЕТ
                     </button>
                 </div>
@@ -596,8 +596,8 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                 <div class="error-popup" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding:40px;">
                     <span class="error-icon" style="font-size:80px;">⚠️</span>
                     <h1 class="error-title" style="color:#e74c3c; font-size:35px; margin:20px 0;">ОШИБКА!</h1>
-                    <p class="error-message" style="font-size:18px; color:#666; text-align:center;">Заполните все поля формы</p>
-                    <button class="success-ok-btn" style="background:linear-gradient(135deg, #e74c3c, #c0392b); color:#fff; padding:15px 40px; border:none; border-radius:10px; font-size:18px; cursor:pointer; margin-top:20px;" onclick="document.getElementById('sub-modal-body').style.display='none'">ПОНЯТНО</button>
+                    <p class="error-message" style="font-size:13px; color:#666; text-align:center;">Заполните все поля формы</p>
+                    <button class="success-ok-btn" style="background:linear-gradient(135deg, #e74c3c, #c0392b); color:#fff; padding:15px 40px; border:none; border-radius:10px; font-size:13px; cursor:pointer; margin-top:20px;" onclick="document.getElementById('sub-modal-body').style.display='none'">ПОНЯТНО</button>
                 </div>
             `;
             sub.style.display = "block";
@@ -611,7 +611,7 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                 <span class="success-icon" style="font-size:80px;">✅</span>
                 <h1 class="success-title" style="color:#008000; font-size:40px; margin:20px 0;">ПОКАЗАНИЯ ОТПРАВЛЕНЫ!</h1>
                 <p class="success-message" style="font-size:20px; color:#666; text-align:center;">Благодарим за предоставленную информацию</p>
-                <div style="background:#f0fdf0; padding:20px; border-radius:15px; margin-top:20px; text-align:left; font-size:14px; line-height:1.6;">
+                <div style="background:#f0fdf0; padding:15px; max-height:85vh; overflow-y:auto; border-radius:15px; margin-top:20px; text-align:left; font-size:13px; line-height:1.6;">
                     <strong>📍 Адрес:</strong> ${address}<br>
                     <strong>🏠 Квартира:</strong> ${apartment}<br>
                     <strong>👤 ФИО:</strong> ${fio}<br>
@@ -641,8 +641,8 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         const sub = document.getElementById('sub-modal-body');
         sub.innerHTML = `
             <button class="close-icon" onclick="this.parentElement.style.display='none'">&times;</button>
-            <h1 style="color:#008000; font-weight:900; font-size:50px; margin-bottom:30px;">${title}</h1>
-            <div style="font-size:26px; line-height:1.8; text-align:justify;">${text}</div>
+            <h1 style="color:#008000; font-weight:900; font-size:50px; margin-bottom:20px;">${title}</h1>
+            <div style="font-size:26px; line-height:1.7; text-align:justify;">${text}</div>
             <button class="ui-btn" style="background:#008000; color:#fff; width:350px; height:100px; margin-top:50px;" onclick="this.parentElement.style.display='none'">ВЕРНУТЬСЯ</button>
         `;
         sub.style.display = "block";
@@ -698,7 +698,7 @@ window.openWasteTrackingInfo = () => {
                 </p>
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 25px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 25px;">
                 <div style="background: #ffffff; border-radius: 20px; padding: 25px; border: 2px solid #e8f4f8; box-shadow: 0 4px 15px rgba(52, 152, 219, 0.1);">
                     <div style="font-size: 40px; margin-bottom: 10px;">📊</div>
                     <h4 style="color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;">Шаг 1: Мониторинг</h4>
@@ -742,7 +742,7 @@ window.openWasteTrackingInfo = () => {
             
             <div style="background: linear-gradient(135deg, #e8f5e9, #ffffff); border-radius: 24px; padding: 30px; border-left: 6px solid #008000;">
                 <h3 style="color: #008000; font-size: 22px; margin: 0 0 15px 0;">📈 Технические характеристики</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
                     <div style="background: #ffffff; padding: 15px; border-radius: 15px; text-align: center;">
                         <div style="font-size: 28px; color: #008000; font-weight: 900;">±2 мм</div>
                         <div style="font-size: 12px; color: #666; margin-top: 5px;">Точность измерения</div>
@@ -862,7 +862,7 @@ ecoHeader.addEventListener('click', (e) => {
         <button class="ui-btn" onclick="runAction('map')">🗺️ КАРТА</button> 
         <button class="ui-btn" onclick="runAction('sat')">🛰️ СПУТНИК</button> 
         <button class="ui-btn" onclick="runAction('theme')">🌙 ТЕМА</button> 
-        <label style="display:flex;justify-content:space-between;align-items:center;font-size:16px;margin-top:25px;color:#666">Доп. настройки <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span></label>`;
+        <label style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-top:25px;color:#666">Доп. настройки <span class="switch"><input type="checkbox" onchange="document.querySelector('.secret-trigger').style.display = this.checked ? 'flex' : 'none'"><span class="slider"></span></span></label>`;
     document.body.appendChild(tBox); 
 
     sBtn.onclick = (e) => { 
@@ -923,7 +923,7 @@ ecoHeader.addEventListener('click', (e) => {
 window.showQR = () => {
     window.openModal('📸 QR КОД (ФОТО)', `
         <div style="text-align:center; padding: 20px;">
-            <p style="font-size:18px; color:#555; margin-bottom:25px;">Фото объекта</p>
+            <p style="font-size:13px; color:#555; margin-bottom:20px;">Фото объекта</p>
             <img src="/qrcod_e68S.jpg" alt="Фото" 
                  style="width:100%; max-width:350px; height:auto; border-radius:24px; box-shadow:0 12px 35px rgba(0,0,0,0.15); border:5px solid #fff; cursor:zoom-in; transition: transform 0.3s;" 
                  onclick="this.style.transform = this.style.transform === 'scale(1.6)' ? 'scale(1)' : 'scale(1.6)';">
