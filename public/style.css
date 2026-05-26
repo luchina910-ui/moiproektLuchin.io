@@ -338,7 +338,7 @@ body, html {
 
 /* 🏠 КАРТОЧКА ДОМА (увеличенная для ПК, красивая) */
 .house-card-pro {
-  width: 520px !important; max-width: 95vw !important; height: auto !important; max-height: none !important;
+  width: 520px !important; max-width: 95vw !important; height: 700px !important; max-height: none !important;
   display: flex; flex-direction: column; padding: 20px; box-sizing: border-box;
   background: var(--glass) !important; border-radius: var(--radius); box-shadow: var(--shadow);
   overflow-y: auto; animation: slideUp 0.4s ease-out;
