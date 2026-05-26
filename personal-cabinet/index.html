@@ -38,6 +38,37 @@
             flex-wrap: wrap;
         }
 
+        .notification-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .notification-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #dc3545;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .account-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -72,6 +103,20 @@
             border-radius: 20px;
             font-size: 14px;
             color: #333;
+        }
+
+        .notification-panel-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .notification-panel-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
         .main-container {
@@ -457,6 +502,10 @@
             <div class="uk-info">
                 🏢 УК "Дом Комфорт" | 📞 8 (800) 123-45-67
             </div>
+            <button class="notification-btn" onclick="toggleNotificationsPanel()" style="margin-left: 10px;">
+                🔔
+                <span class="notification-badge">5</span>
+            </button>
         </div>
         <div id="userInfo" style="display: none;">
             <span id="userName"></span>
@@ -812,6 +861,39 @@
         </ul>
     </div>
 
+    <!-- Notifications Panel -->
+    <div class="section-panel" id="notificationsPanel">
+        <div class="panel-header">
+            <h3 class="panel-title">🔔 Уведомления</h3>
+            <button class="panel-close" onclick="closePanel('notificationsPanel')">&times;</button>
+        </div>
+        <div class="notification-item" style="background: #e3f2fd; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #2196f3;">
+            <div class="complaint-date">Сегодня, 10:30</div>
+            <p style="margin: 5px 0;"><strong>💳 Оплата услуг</strong></p>
+            <p style="color: #555; font-size: 14px;">Напоминание: Не забудьте передать показания счётчиков до 25 числа</p>
+        </div>
+        <div class="notification-item" style="background: #fff3e0; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #ff9800;">
+            <div class="complaint-date">Вчера, 16:45</div>
+            <p style="margin: 5px 0;"><strong>🔧 Плановые работы</strong></p>
+            <p style="color: #555; font-size: 14px;">Завтра с 9:00 до 17:00 будут проводиться работы по замене стояков ХВС</p>
+        </div>
+        <div class="notification-item" style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #4caf50;">
+            <div class="complaint-date">20 января, 14:20</div>
+            <p style="margin: 5px 0;"><strong>✅ Заявка выполнена</strong></p>
+            <p style="color: #555; font-size: 14px;">Ваша заявка №1234 на ремонт межпанельных швов выполнена</p>
+        </div>
+        <div class="notification-item" style="background: #fce4ec; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #e91e63;">
+            <div class="complaint-date">18 января, 09:00</div>
+            <p style="margin: 5px 0;"><strong>📢 Общее собрание</strong></p>
+            <p style="color: #555; font-size: 14px;">Приглашаем на общее собрание собственников 25 января в 19:00</p>
+        </div>
+        <div class="notification-item" style="background: #f3e5f5; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #9c27b0;">
+            <div class="complaint-date">15 января, 11:30</div>
+            <p style="margin: 5px 0;"><strong>📄 Новый документ</strong></p>
+            <p style="color: #555; font-size: 14px;">Опубликован новый тариф на коммунальные услуги с 1 февраля 2025</p>
+        </div>
+    </div>
+
     <!-- Notification -->
     <div class="notification" id="notification">
         <span id="notificationText"></span>
@@ -925,6 +1007,20 @@
         // Close panel
         function closePanel(panelId) {
             document.getElementById(panelId).style.display = 'none';
+        }
+
+        // Toggle notifications panel
+        function toggleNotificationsPanel() {
+            const panel = document.getElementById('notificationsPanel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                // Close all other panels first
+                document.querySelectorAll('.section-panel').forEach(p => {
+                    p.style.display = 'none';
+                });
+                panel.style.display = 'block';
+            }
         }
 
         // Close modal
