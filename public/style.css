@@ -262,6 +262,8 @@ body, html {
         width: calc(100% - 30px) !important;
         max-height: 60vh;
         overflow-y: auto;
+        transform-origin: top left;
+        transform: scale(0.5);
     }
     
     .company-header {
@@ -371,7 +373,12 @@ body, html {
 
 /* 📱 МОБИЛКА: Открывается ТОЛЬКО по клику (через класс .open) */
 @media (max-width: 768px) {
-  #eco-panel-root { top: 15px !important; right: 15px !important; width: calc(100% - 30px) !important; }
+  #eco-panel-root { 
+    top: 15px !important; 
+    right: 15px !important; 
+    width: calc(100% - 100px) !important;
+    max-width: 200px !important;
+  }
   #eco-panel-root.open .eco-content { opacity: 1; max-height: 500px; }
 }
 
@@ -921,7 +928,7 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         height: 100vh !important; 
     }
     
-    /* Общие модалки */
+    /* Общие модалки - уменьшаем в 2 раза */
     .modal-overlay {
         padding: 10px;
         align-items: flex-start;
@@ -937,6 +944,8 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         margin: 60px auto !important;
         max-height: calc(100vh - 40px) !important;
         overflow-y: auto !important;
+        transform-origin: top center;
+        transform: scale(0.5);
     }
     
     .close-icon {
@@ -961,9 +970,11 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         width: calc(100% - 32px) !important; 
         bottom: 100px !important; 
         padding: 20px !important;
+        transform-origin: bottom left;
+        transform: scale(0.5);
     }
     
-    /* 🏢 ПАНЕЛЬ УК */
+    /* 🏢 ПАНЕЛЬ УК - уменьшаем в 2 раза */
     .uk-toggle-btn {
         top: 15px !important;
         left: 15px !important;
@@ -980,6 +991,8 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         max-height: calc(100vh - 30px) !important;
         overflow-y: auto !important;
         border-radius: 20px !important;
+        transform-origin: top left;
+        transform: scale(0.5);
     }
     
     .company-header {
@@ -1035,12 +1048,14 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         padding: 6px 12px !important;
     }
     
-    /* 🗺️ ЭКО-ПАНЕЛЬ */
+    /* 🗺️ ЭКО-ПАНЕЛЬ - уменьшаем в 2 раза */
     #eco-panel-root { 
         top: 15px !important; 
         right: 15px !important; 
         width: calc(100% - 100px) !important;
         max-width: 200px !important;
+        transform-origin: top right;
+        transform: scale(0.5);
     }
     #eco-panel-root:hover .eco-content { opacity: 0; max-height: 0; }
     #eco-panel-root.open .eco-content { opacity: 1; max-height: 500px; }
@@ -1068,12 +1083,14 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         align-self: flex-end;
     }
     
-    /* 🏠 КАРТОЧКА ДОМА */
+    /* 🏠 КАРТОЧКА ДОМА - уменьшаем в 2 раза */
     .house-card-pro {
         width: calc(100% - 40px) !important;
         max-width: 380px !important;
         padding: 15px !important;
         max-height: calc(100vh - 80px) !important;
+        transform-origin: top center;
+        transform: scale(0.5);
     }
     
     .house-img-pro {
@@ -1163,10 +1180,12 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         font-size: 15px !important;
     }
     
-    /* 🎓 ДИПЛОМНОЕ ОКНО */
+    /* 🎓 ДИПЛОМНОЕ ОКНО - уменьшаем в 2 раза */
     .diploma-modal {
         max-width: calc(100% - 20px) !important;
         padding: 30px 20px !important;
+        transform-origin: top center;
+        transform: scale(0.5);
     }
     
     .diploma-header {
