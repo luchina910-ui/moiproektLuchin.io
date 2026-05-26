@@ -444,17 +444,192 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         const login = document.getElementById('lk-login').value;
         const password = document.getElementById('lk-password').value;
         
+        // Открываем главный экран личного кабинета с функциями для жильцов
+        openResidentDashboard(login);
+    };
+    
+    // Главная панель жильца после входа
+    window.openResidentDashboard = (userName) => {
+        const content = document.getElementById('m-content');
+        content.innerHTML = `
+            <div class="resident-dashboard" style="padding:20px;">
+                <h1 style="color:#3498db; font-weight:900; font-size:45px; margin-bottom:15px; text-align:center;">👤 ЛИЧНЫЙ КАБИНЕТ ЖИЛЬЦА</h1>
+                <p style="font-size:18px; color:#666; margin-bottom:30px; text-align:center;">Пользователь: <strong>${userName || 'Гость'}</strong></p>
+                
+                <!-- Информационный блок -->
+                <div style="background:linear-gradient(135deg, #f0f7ff, #ffffff); border-radius:20px; padding:25px; margin-bottom:25px; border-left:5px solid #3498db; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                    <h2 style="color:#3498db; font-size:24px; margin:0 0 15px 0;">📋 Важная информация</h2>
+                    <div style="font-size:16px; line-height:1.8; color:#333;">
+                        <div style="margin-bottom:12px;">
+                            <strong>📊 Как подавать показания счётчиков:</strong><br>
+                            Нажмите кнопку "Подать показания" ниже, заполните все поля (адрес, квартиру, ФИО, телефон) и укажите текущие показания по холодной воде, горячей воде и электроэнергии. После нажмите "Передать показания".
+                        </div>
+                        <div style="margin-bottom:12px;">
+                            <strong>💧 Плановые отключения воды:</strong><br>
+                            Информация о плановых отключениях публикуется заблаговременно в этом разделе. Следите за обновлениями. В данный момент плановые отключения не запланированы.
+                        </div>
+                        <div style="margin-bottom:12px;">
+                            <strong>📞 Экстренные контакты:</strong><br>
+                            Аварийная служба: +7 (921) 482-85-50 (круглосуточно)<br>
+                            Диспетчерская: +7 (921) 482-85-50 (Пн-Пт: 8:00–20:00)
+                        </div>
+                        <div style="margin-bottom:12px;">
+                            <strong>🗑️ Вывоз мусора:</strong><br>
+                            Контейнеры вывозятся ежедневно в 08:00. При переполнении баков используйте кнопку "Жалоба" на карте.
+                        </div>
+                        <div style="margin-bottom:12px;">
+                            <strong>📮 Приём показаний:</strong><br>
+                            Показания принимаются с 20 по 25 число каждого месяца.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Кнопки действий -->
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-bottom:25px;">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #008000, #00aa44); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openMeterSubmissionForm()">
+                        📊 ПОДАТЬ ПОКАЗАНИЯ СЧЁТЧИКОВ
+                    </button>
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openSub('📝 История обращений', 'Здесь будет история ваших обращений и жалоб.<br><br>В данный момент у вас нет активных обращений.')">
+                        📋 ИСТОРИЯ ОБРАЩЕНИЙ
+                    </button>
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #f39c12, #e67e22); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openSub('💳 Оплата счетов', 'Функция онлайн-оплаты счетов находится в разработке.<br><br>Ожидайте обновления!')">
+                        💳 ОПЛАТА СЧЕТОВ
+                    </button>
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #9b59b6, #8e44ad); color:#fff; font-size:16px; padding:20px; height:auto;" onclick="window.openSub('🔔 Уведомления', 'Здесь будут отображаться уведомления от управляющей компании.<br><br>Новых уведомлений нет.')">
+                        🔔 УВЕДОМЛЕНИЯ
+                    </button>
+                </div>
+                
+                <!-- Дополнительные функции -->
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
+                    <button class="ui-btn" style="background:#f4f7f4; color:#333; font-size:14px;" onclick="window.openSub('📅 Запись на приём', 'Функция записи на приём к специалисту.<br><br>Доступно время:<br>• Пн-Пт: 8:00–20:00<br>• Сб-Вс: 9:00–18:00<br><br>Запись открывается за 3 дня.')">
+                        📅 ЗАПИСЬ НА ПРИЁМ
+                    </button>
+                    <button class="ui-btn" style="background:#f4f7f4; color:#333; font-size:14px;" onclick="window.openSub('❓ Часто задаваемые вопросы', '<div style=\'text-align:left; font-size:15px; line-height:1.8;\'><strong>В: Как передать показания?</strong><br>О: Через кнопку \'Подать показания счётчиков\' в личном кабинете.<br><br><strong>В: Когда вывозят мусор?</strong><br>О: Ежедневно в 08:00.<br><br><strong>В: Куда звонить при аварии?</strong><br>О: +7 (921) 482-85-50 (круглосуточно).</div>')">
+                        ❓ FAQ
+                    </button>
+                    <button class="ui-btn" style="background:#e74c3c; color:#fff; font-size:14px;" onclick="window.openPersonalCabinet()">
+                        🚪 ВЫЙТИ ИЗ КАБИНЕТА
+                    </button>
+                </div>
+            </div>
+        `;
+        modal.style.display = "flex";
+    };
+    
+    // Форма подачи показаний счётчиков
+    window.openMeterSubmissionForm = () => {
+        const content = document.getElementById('m-content');
+        content.innerHTML = `
+            <div class="meter-submission-form" style="padding:20px;">
+                <h1 style="color:#008000; font-weight:900; font-size:40px; margin-bottom:15px; text-align:center;">📊 ПОДАЧА ПОКАЗАНИЙ СЧЁТЧИКОВ</h1>
+                <p style="font-size:16px; color:#666; margin-bottom:30px; text-align:center;">Заполните все поля для передачи показаний</p>
+                
+                <div style="max-width:600px; margin:0 auto; background:#f8f9fa; padding:30px; border-radius:20px; box-shadow:0 4px 15px rgba(0,0,0,0.1);">
+                    <!-- Основные данные -->
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">📍 Адрес дома:</label>
+                        <input type="text" id="meter-address" placeholder="Улица, дом" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;" value="г. Северодвинск, ">
+                    </div>
+                    
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">🏠 Номер квартиры:</label>
+                        <input type="text" id="meter-apartment" placeholder="№ квартиры" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    </div>
+                    
+                    <div style="margin-bottom:20px;">
+                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">👤 ФИО собственника:</label>
+                        <input type="text" id="meter-fio" placeholder="Фамилия Имя Отчество" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    </div>
+                    
+                    <div style="margin-bottom:25px;">
+                        <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">📞 Номер телефона:</label>
+                        <input type="tel" id="meter-phone" placeholder="+7 (___) ___-__-__" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #ddd; border-radius:10px; font-size:16px;">
+                    </div>
+                    
+                    <div style="border-top:2px solid #ddd; padding-top:25px; margin-top:25px;">
+                        <h3 style="color:#008000; font-size:20px; margin-bottom:20px; text-align:center;">💧 Показания счётчиков</h3>
+                        
+                        <div style="margin-bottom:20px;">
+                            <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">❄️ Холодная вода (м³):</label>
+                            <input type="number" id="meter-cold" placeholder="0.000" step="0.001" min="0" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #3498db; border-radius:10px; font-size:16px; background:#f0f7ff;">
+                        </div>
+                        
+                        <div style="margin-bottom:20px;">
+                            <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">🔥 Горячая вода (м³):</label>
+                            <input type="number" id="meter-hot" placeholder="0.000" step="0.001" min="0" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #e74c3c; border-radius:10px; font-size:16px; background:#fff5f5;">
+                        </div>
+                        
+                        <div style="margin-bottom:25px;">
+                            <label style="display:block; font-size:16px; font-weight:700; color:#333; margin-bottom:8px;">⚡ Электроэнергия (кВт·ч):</label>
+                            <input type="number" id="meter-electro" placeholder="0" step="1" min="0" class="premium-input" style="width:100%; outline:none; padding:15px; border:2px solid #f39c12; border-radius:10px; font-size:16px; background:#fffaf0;">
+                        </div>
+                    </div>
+                    
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #008000, #00aa44); color:#fff; width:100%; padding:18px; font-size:18px; border:none; border-radius:10px; cursor:pointer; margin-top:10px;" onclick="window.submitMeterReadings()">
+                        📤 ПЕРЕДАТЬ ПОКАЗАНИЯ
+                    </button>
+                    
+                    <button class="ui-btn" style="background:#f4f7f4; color:#333; width:100%; padding:15px; font-size:16px; border:none; border-radius:10px; cursor:pointer; margin-top:10px;" onclick="window.openResidentDashboard('${userName}')">
+                        ← НАЗАД В КАБИНЕТ
+                    </button>
+                </div>
+            </div>
+        `;
+        modal.style.display = "flex";
+    };
+    
+    // Отправка показаний счётчиков
+    window.submitMeterReadings = () => {
+        const address = document.getElementById('meter-address').value;
+        const apartment = document.getElementById('meter-apartment').value;
+        const fio = document.getElementById('meter-fio').value;
+        const phone = document.getElementById('meter-phone').value;
+        const cold = document.getElementById('meter-cold').value;
+        const hot = document.getElementById('meter-hot').value;
+        const electro = document.getElementById('meter-electro').value;
+        
+        // Проверка заполнения всех полей
+        if (!address || !apartment || !fio || !phone || !cold || !hot || !electro) {
+            const sub = document.getElementById('sub-modal-body');
+            sub.innerHTML = `
+                <div class="error-popup" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding:40px;">
+                    <span class="error-icon" style="font-size:80px;">⚠️</span>
+                    <h1 class="error-title" style="color:#e74c3c; font-size:35px; margin:20px 0;">ОШИБКА!</h1>
+                    <p class="error-message" style="font-size:18px; color:#666; text-align:center;">Заполните все поля формы</p>
+                    <button class="success-ok-btn" style="background:linear-gradient(135deg, #e74c3c, #c0392b); color:#fff; padding:15px 40px; border:none; border-radius:10px; font-size:18px; cursor:pointer; margin-top:20px;" onclick="document.getElementById('sub-modal-body').style.display='none'">ПОНЯТНО</button>
+                </div>
+            `;
+            sub.style.display = "block";
+            return;
+        }
+        
+        // Показываем окно об успешной отправке на 5 секунд
         const sub = document.getElementById('sub-modal-body');
         sub.innerHTML = `
             <div class="success-popup" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding:40px;">
-                <span class="success-icon" style="font-size:80px;">🎉</span>
-                <h1 class="success-title" style="color:#3498db; font-size:40px; margin:20px 0;">ДОБРО ПОЖАЛОВАТЬ!</h1>
-                <p class="success-message" style="font-size:20px; color:#666;">Вы успешно вошли в личный кабинет</p>
-                <p style="font-size:16px; color:#888; margin-top:10px;">Пользователь: <strong>${login || 'Гость'}</strong></p>
-                <button class="success-ok-btn" style="background:linear-gradient(135deg, #3498db, #2980b9); color:#fff; padding:15px 40px; border:none; border-radius:10px; font-size:18px; cursor:pointer; margin-top:30px;" onclick="window.closeEverything()">ПРОДОЛЖИТЬ</button>
+                <span class="success-icon" style="font-size:80px;">✅</span>
+                <h1 class="success-title" style="color:#008000; font-size:40px; margin:20px 0;">ПОКАЗАНИЯ ОТПРАВЛЕНЫ!</h1>
+                <p class="success-message" style="font-size:20px; color:#666; text-align:center;">Благодарим за предоставленную информацию</p>
+                <div style="background:#f0fdf0; padding:20px; border-radius:15px; margin-top:20px; text-align:left; font-size:14px; line-height:1.6;">
+                    <strong>📍 Адрес:</strong> ${address}<br>
+                    <strong>🏠 Квартира:</strong> ${apartment}<br>
+                    <strong>👤 ФИО:</strong> ${fio}<br>
+                    <strong>❄️ Холодная вода:</strong> ${cold} м³<br>
+                    <strong>🔥 Горячая вода:</strong> ${hot} м³<br>
+                    <strong>⚡ Электроэнергия:</strong> ${electro} кВт·ч
+                </div>
             </div>
         `;
         sub.style.display = "block";
+        
+        // Автоматическое закрытие через 5 секунд
+        setTimeout(() => {
+            sub.style.display = "none";
+            // Возвращаем в главный кабинет
+            const currentLogin = document.getElementById('lk-login')?.value || 'Гость';
+            window.openResidentDashboard(currentLogin);
+        }, 5000);
     };
     
     window.openModal = (t, h) => { 
