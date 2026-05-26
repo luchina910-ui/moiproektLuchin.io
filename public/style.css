@@ -64,9 +64,39 @@ body, html {
     box-shadow: 0 12px 35px rgba(0, 128, 0, 0.4);
 }
 
+/* 👤 КНОПКА ЛИЧНОГО КАБИНЕТА (справа сверху) */
+.lk-toggle-btn {
+    position: absolute !important;
+    top: 20px;
+    right: 20px;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10001;
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    animation: pulse-blue 2s infinite;
+}
+
+.lk-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(52, 152, 219, 0.4);
+}
+
 @keyframes pulse {
     0%, 100% { box-shadow: 0 8px 25px rgba(0, 128, 0, 0.3); }
     50% { box-shadow: 0 8px 35px rgba(0, 128, 0, 0.5); }
+}
+
+@keyframes pulse-blue {
+    0%, 100% { box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3); }
+    50% { box-shadow: 0 8px 35px rgba(52, 152, 219, 0.5); }
 }
 
 .company-panel {
@@ -989,6 +1019,15 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
         font-size: 32px !important;
     }
     
+    /* 👤 КНОПКА ЛИЧНОГО КАБИНЕТА - мобильная версия */
+    .lk-toggle-btn {
+        top: 15px !important;
+        right: 15px !important;
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 32px !important;
+    }
+    
     .company-panel {
         top: 15px !important;
         left: 15px !important;
@@ -1275,6 +1314,12 @@ body.interface-dark input:checked + .slider::before { background-color: #0a140a 
 /* 📱 ОСОБО МАЛЕНЬКИЕ ЭКРАНЫ (iPhone SE и т.д.) */
 @media (max-width: 380px) {
     .uk-toggle-btn {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 26px !important;
+    }
+    
+    .lk-toggle-btn {
         width: 50px !important;
         height: 50px !important;
         font-size: 26px !important;
