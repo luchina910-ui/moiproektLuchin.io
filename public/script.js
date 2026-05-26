@@ -827,8 +827,19 @@ ecoHeader.addEventListener('click', (e) => {
     e.stopPropagation();
     // Закрываем другие панели при открытии эко-панели
     window.closeAllPanels();
-    gui.classList.toggle('open');
+    
+    // Переключаем состояние только на мобильных устройствах
+    if (window.innerWidth <= 768) {
+        gui.classList.toggle('open');
+    }
 });
+
+// На ПК закрываем панель при уходе мыши
+if (window.innerWidth > 768) {
+    gui.addEventListener('mouseleave', () => {
+        gui.classList.remove('open');
+    });
+}
 
 // ❌ УДАЛЕНО: Дублирующий обработчик клика для закрытия панелей
 // Теперь эта логика находится в window.handleOutsideClick
