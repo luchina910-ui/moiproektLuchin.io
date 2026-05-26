@@ -278,7 +278,9 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
 
     window.closeEverything = () => { 
         document.getElementById('sub-modal-body').style.display = "none"; 
-        modal.style.display = "none"; 
+        modal.style.display = "none";
+        // Также закрываем все панели
+        window.closeAllPanels();
     };
     
     // Функция для переключения панели УК
@@ -327,10 +329,10 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
             if (settingsBtn) settingsBtn.classList.remove('active');
         }
         
-        // Скрываем дополнительную кнопку
+        // Скрываем дополнительную кнопку ДОП (не удаляем, а просто скрываем)
         const secretBtn = document.querySelector('.secret-trigger');
         if (secretBtn) {
-            secretBtn.style.display = 'none';
+            // Не меняем display, чтобы кнопка могла появиться снова при активации чекбокса
             secretBtn.classList.remove('active-mode');
         }
     };
@@ -338,10 +340,20 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     // Глобальная функция закрытия всего при клике вне элементов
     window.handleOutsideClick = (e) => {
         const gui = document.getElementById('eco-panel-root');
+        const settingsPanel = document.getElementById('settings-panel-root');
         const settingsBtn = document.querySelector('.settings-trigger');
         const secretBtn = document.querySelector('.secret-trigger');
         const companyPanel = document.getElementById('company-panel-root');
         const ukBtn = document.getElementById('uk-toggle-btn');
+        
+        // Закрытие панели УК при клике вне её (для ПК и мобильных)
+        if (companyPanel && companyPanel.classList.contains('company-panel-visible') &&
+            !companyPanel.contains(e.target) && 
+            !ukBtn?.contains(e.target)) {
+            companyPanel.classList.remove('company-panel-visible');
+            companyPanel.classList.add('company-panel-hidden');
+            if (ukBtn) ukBtn.style.display = 'flex';
+        }
         
         // Если клик не по эко-панели и не по кнопкам настроек - закрываем эко-панель
         if (gui && !gui.contains(e.target) && 
@@ -349,7 +361,18 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
             !secretBtn?.contains(e.target)) {
             gui.classList.remove('open');
         }
+        
+        // Закрываем панель настроек если клик вне её
+        if (settingsPanel && settingsPanel.style.display === 'block' &&
+            !settingsPanel.contains(e.target) && 
+            !settingsBtn?.contains(e.target)) {
+            settingsPanel.style.display = 'none';
+            settingsBtn?.classList.remove('active');
+        }
     };
+    
+    // Добавляем глобальный обработчик кликов для закрытия панелей
+    document.addEventListener('click', window.handleOutsideClick);
     
     // Клик по кнопке УК
     document.getElementById('uk-toggle-btn').addEventListener('click', () => {
@@ -570,27 +593,8 @@ ecoHeader.addEventListener('click', (e) => {
     gui.classList.toggle('open');
 });
 
-// Авто-закрытие при клике в любое другое место (актуально для телефона)
-document.addEventListener('click', (e) => {
-    const settingsPanel = document.getElementById('settings-panel-root');
-    const settingsBtn = document.querySelector('.settings-trigger');
-    
-    // Если клик не по эко-панели, не по настройкам и не по кнопке настроек
-    if (!gui.contains(e.target) && 
-        !settingsPanel?.contains(e.target) &&
-        !settingsBtn?.contains(e.target) && 
-        !e.target.closest('.secret-trigger')) {
-        gui.classList.remove('open');
-    }
-    
-    // Закрываем панель настроек если клик вне её
-    if (settingsPanel && settingsPanel.style.display === 'block' &&
-        !settingsPanel.contains(e.target) && 
-        !settingsBtn?.contains(e.target)) {
-        settingsPanel.style.display = 'none';
-        settingsBtn?.classList.remove('active');
-    }
-});
+// ❌ УДАЛЕНО: Дублирующий обработчик клика для закрытия панелей
+// Теперь эта логика находится в window.handleOutsideClick
 
     const sBtn = document.createElement('button'); 
     sBtn.className = "settings-trigger"; 
@@ -637,6 +641,8 @@ document.addEventListener('click', (e) => {
         e.stopPropagation();
         // Закрываем другие панели при открытии доп. настроек
         window.closeAllPanels();
+        // Скрываем кнопку ДОП после нажатия (она появится снова при закрытии модалки)
+        secBtn.style.display = 'none';
         secBtn.classList.toggle('active-mode');
         document.getElementById('m-content').innerHTML = `
         <h1 style="color:#00ff88; text-align:center; font-size:65px;">ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ</h1>
@@ -654,6 +660,24 @@ document.addEventListener('click', (e) => {
                 <button class="ui-btn" style="background:#d9534f; color:#fff; grid-column: span 2;" onclick="window.closeEverything()">❌ ВЫХОД</button>
             </div>`;
         modal.style.display = "flex";
+    };
+    
+    // Показываем кнопку ДОП только когда чекбокс активирован
+    const settingsCheckbox = tBox.querySelector('input[type="checkbox"]');
+    if (settingsCheckbox) {
+        settingsCheckbox.addEventListener('change', function() {
+            secBtn.style.display = this.checked ? 'flex' : 'none';
+        });
+    }
+    
+    // Показываем кнопку ДОП при закрытии модального окна
+    const originalCloseEverything = window.closeEverything;
+    window.closeEverything = () => {
+        originalCloseEverything();
+        // Возвращаем кнопку ДОП если чекбокс активен
+        if (settingsCheckbox && settingsCheckbox.checked) {
+            secBtn.style.display = 'flex';
+        }
     };
     
     refreshL();
