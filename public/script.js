@@ -315,6 +315,15 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
             if (ukBtn) ukBtn.style.display = 'flex';
         }
         
+        // Закрываем панель аккаунта
+        const accountPanel = document.getElementById('account-panel-root');
+        if (accountPanel && accountPanel.classList.contains('account-panel-visible')) {
+            accountPanel.classList.remove('account-panel-visible');
+            accountPanel.classList.add('account-panel-hidden');
+            const accountBtn = document.getElementById('account-toggle-btn');
+            if (accountBtn) accountBtn.style.display = 'flex';
+        }
+        
         // Закрываем эко-панель
         const ecoPanel = document.getElementById('eco-panel-root');
         if (ecoPanel) {
@@ -345,6 +354,8 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         const secretBtn = document.querySelector('.secret-trigger');
         const companyPanel = document.getElementById('company-panel-root');
         const ukBtn = document.getElementById('uk-toggle-btn');
+        const accountPanel = document.getElementById('account-panel-root');
+        const accountBtn = document.getElementById('account-toggle-btn');
         
         // Закрытие панели УК при клике вне её (для ПК и мобильных)
         if (companyPanel && companyPanel.classList.contains('company-panel-visible') &&
@@ -353,6 +364,15 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
             companyPanel.classList.remove('company-panel-visible');
             companyPanel.classList.add('company-panel-hidden');
             if (ukBtn) ukBtn.style.display = 'flex';
+        }
+        
+        // Закрытие панели аккаунта при клике вне её
+        if (accountPanel && accountPanel.classList.contains('account-panel-visible') &&
+            !accountPanel.contains(e.target) && 
+            !accountBtn?.contains(e.target)) {
+            accountPanel.classList.remove('account-panel-visible');
+            accountPanel.classList.add('account-panel-hidden');
+            if (accountBtn) accountBtn.style.display = 'flex';
         }
         
         // Если клик не по эко-панели и не по кнопкам настроек - закрываем эко-панель
@@ -678,6 +698,484 @@ ecoHeader.addEventListener('click', (e) => {
         if (settingsCheckbox && settingsCheckbox.checked) {
             secBtn.style.display = 'flex';
         }
+    };
+    
+    // Показываем кнопку ДОП при закрытии модального окна
+    const originalCloseEverything = window.closeEverything;
+    window.closeEverything = () => {
+        originalCloseEverything();
+        // Возвращаем кнопку ДОП если чекбокс активен
+        if (settingsCheckbox && settingsCheckbox.checked) {
+            secBtn.style.display = 'flex';
+        }
+    };
+    
+    // ==================== ЛИЧНЫЙ КАБИНЕТ ====================
+    
+    // Глобальное хранилище пользователей (localStorage)
+    const AUTH_CODE = '1234'; // Общий код для всех жителей
+    
+    window.getUserData = () => {
+        const data = localStorage.getItem('uk_user_data');
+        return data ? JSON.parse(data) : null;
+    };
+    
+    window.saveUserData = (data) => {
+        localStorage.setItem('uk_user_data', JSON.stringify(data));
+    };
+    
+    window.getAllUsers = () => {
+        const users = localStorage.getItem('uk_all_users');
+        return users ? JSON.parse(users) : {};
+    };
+    
+    window.saveAllUsers = (users) => {
+        localStorage.setItem('uk_all_users', JSON.stringify(users));
+    };
+    
+    // Открытие панели аккаунта
+    window.openAccountPanel = () => {
+        const panel = document.getElementById('account-panel-root');
+        const btn = document.getElementById('account-toggle-btn');
+        
+        if (panel.classList.contains('account-panel-visible')) {
+            window.toggleAccountPanel();
+        } else {
+            window.closeAllPanels();
+            btn.style.display = 'none';
+            panel.classList.remove('account-panel-hidden');
+            setTimeout(() => {
+                panel.classList.add('account-panel-visible');
+            }, 10);
+            
+            // Рендерим контент в зависимости от статуса авторизации
+            const user = window.getUserData();
+            if (user) {
+                window.renderAccountMenu();
+            } else {
+                window.renderAuthForm();
+            }
+        }
+    };
+    
+    // Переключение панели аккаунта
+    window.toggleAccountPanel = () => {
+        const panel = document.getElementById('account-panel-root');
+        const btn = document.getElementById('account-toggle-btn');
+        
+        if (panel.classList.contains('account-panel-visible')) {
+            panel.classList.remove('account-panel-visible');
+            panel.classList.add('account-panel-hidden');
+            setTimeout(() => {
+                btn.style.display = 'flex';
+            }, 400);
+        } else {
+            window.openAccountPanel();
+        }
+    };
+    
+    // Рендер формы авторизации
+    window.renderAuthForm = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div class="auth-form-container">
+                <h3>🔐 Вход в систему</h3>
+                <input type="text" id="auth-login" class="auth-input" placeholder="Логин">
+                <input type="password" id="auth-password" class="auth-input" placeholder="Пароль">
+                <button class="auth-btn" onclick="window.loginUser()">ВОЙТИ</button>
+                <div class="auth-switch">
+                    Нет аккаунта? <span onclick="window.renderRegistrationForm()">Зарегистрироваться</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // Рендер формы регистрации
+    window.renderRegistrationForm = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div class="auth-form-container">
+                <h3>📝 Регистрация</h3>
+                <p style="font-size:12px; color:#666; margin-bottom:15px;">Введите номер квартиры и общий код для доступа</p>
+                <input type="text" id="reg-apartment" class="auth-input" placeholder="Номер квартиры">
+                <input type="password" id="reg-code" class="auth-input" placeholder="Общий код доступа">
+                <hr style="border:none; border-top:1px solid #e0e0e0; margin:15px 0;">
+                <input type="text" id="reg-login" class="auth-input" placeholder="Придумайте логин">
+                <input type="password" id="reg-password" class="auth-input" placeholder="Придумайте пароль">
+                <button class="auth-btn" onclick="window.registerUser()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+                <div class="auth-switch">
+                    Уже есть аккаунт? <span onclick="window.renderAuthForm()">Войти</span>
+                </div>
+            </div>
+        `;
+    };
+    
+    // Регистрация пользователя
+    window.registerUser = () => {
+        const apartment = document.getElementById('reg-apartment').value.trim();
+        const code = document.getElementById('reg-code').value.trim();
+        const login = document.getElementById('reg-login').value.trim();
+        const password = document.getElementById('reg-password').value.trim();
+        
+        if (!apartment || !code || !login || !password) {
+            alert('⚠️ Заполните все поля!');
+            return;
+        }
+        
+        if (code !== AUTH_CODE) {
+            alert('❌ Неверный код доступа!');
+            return;
+        }
+        
+        const allUsers = window.getAllUsers();
+        if (allUsers[login]) {
+            alert('⚠️ Такой логин уже занят!');
+            return;
+        }
+        
+        // Сохраняем пользователя
+        allUsers[login] = {
+            password: password,
+            apartment: apartment,
+            registeredAt: new Date().toISOString()
+        };
+        window.saveAllUsers(allUsers);
+        
+        // Автоматический вход
+        window.saveUserData({ login, apartment });
+        window.renderAccountMenu();
+        alert('✅ Регистрация успешна! Добро пожаловать!');
+    };
+    
+    // Вход пользователя
+    window.loginUser = () => {
+        const login = document.getElementById('auth-login').value.trim();
+        const password = document.getElementById('auth-password').value.trim();
+        
+        if (!login || !password) {
+            alert('⚠️ Введите логин и пароль!');
+            return;
+        }
+        
+        const allUsers = window.getAllUsers();
+        if (!allUsers[login] || allUsers[login].password !== password) {
+            alert('❌ Неверный логин или пароль!');
+            return;
+        }
+        
+        window.saveUserData({ login, apartment: allUsers[login].apartment });
+        window.renderAccountMenu();
+    };
+    
+    // Выход
+    window.logoutUser = () => {
+        localStorage.removeItem('uk_user_data');
+        window.renderAuthForm();
+    };
+    
+    // Рендер главного меню личного кабинета
+    window.renderAccountMenu = () => {
+        const user = window.getUserData();
+        if (!user) {
+            window.renderAuthForm();
+            return;
+        }
+        
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div class="account-user-info">
+                <p><strong>👤 Логин:</strong> ${user.login}</p>
+                <p><strong>🏠 Квартира:</strong> №${user.apartment}</p>
+            </div>
+            <div class="account-menu-grid">
+                <div class="account-menu-item" onclick="window.showMyComplaints()">
+                    <div class="account-menu-icon">📋</div>
+                    <div class="account-menu-text">Мои жалобы</div>
+                </div>
+                <div class="account-menu-item" onclick="window.submitMeterReading()">
+                    <div class="account-menu-icon">⚡</div>
+                    <div class="account-menu-text">Передать показания</div>
+                </div>
+                <div class="account-menu-item" onclick="window.showPaymentGuide()">
+                    <div class="account-menu-icon">💳</div>
+                    <div class="account-menu-text">Оплата ЖКУ</div>
+                </div>
+                <div class="account-menu-item" onclick="window.createComplaint()">
+                    <div class="account-menu-icon">🚨</div>
+                    <div class="account-menu-text">Новая жалоба</div>
+                </div>
+                <div class="account-menu-item" onclick="window.showNews()">
+                    <div class="account-menu-icon">📢</div>
+                    <div class="account-menu-text">Новости УК</div>
+                </div>
+                <div class="account-menu-item" onclick="window.showContacts()">
+                    <div class="account-menu-icon">📞</div>
+                    <div class="account-menu-text">Контакты</div>
+                </div>
+                <div class="account-menu-item" onclick="window.showFAQ()">
+                    <div class="account-menu-icon">❓</div>
+                    <div class="account-menu-text">Вопросы</div>
+                </div>
+                <div class="account-menu-item" onclick="window.showSettings()">
+                    <div class="account-menu-icon">⚙️</div>
+                    <div class="account-menu-text">Настройки</div>
+                </div>
+            </div>
+            <button class="account-logout-btn" onclick="window.logoutUser()">ВЫЙТИ</button>
+        `;
+    };
+    
+    // Показать мои жалобы
+    window.showMyComplaints = () => {
+        const complaints = JSON.parse(localStorage.getItem('uk_complaints') || '[]');
+        const user = window.getUserData();
+        const myComplaints = complaints.filter(c => c.login === user.login);
+        
+        const content = document.getElementById('account-panel-content');
+        if (myComplaints.length === 0) {
+            content.innerHTML = `
+                <div style="text-align:center; padding:20px;">
+                    <div style="font-size:48px; margin-bottom:10px;">📋</div>
+                    <p>У вас пока нет жалоб</p>
+                    <button class="auth-btn" onclick="window.createComplaint()" style="margin-top:15px;">СОЗДАТЬ ЖАЛОБУ</button>
+                    <button class="auth-btn" onclick="window.renderAccountMenu()" style="margin-top:10px; background:#95a5a6;">НАЗАД</button>
+                </div>
+            `;
+        } else {
+            let html = `<div style="padding:10px;"><h3 style="color:#3498db; margin-bottom:15px;">📋 Мои жалобы</h3>`;
+            myComplaints.forEach((c, i) => {
+                html += `
+                    <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px; border-left:4px solid ${c.status === 'resolved' ? '#008000' : '#ffa600'};">
+                        <p><strong>№${c.ticketNum}</strong> - ${c.date}</p>
+                        <p>${c.reason || 'Без категории'}</p>
+                        <p style="font-size:13px; color:#666;">${c.description}</p>
+                        <p style="font-size:12px; color:#888; margin-top:8px;">Статус: <strong style="color:${c.status === 'resolved' ? '#008000' : '#ffa600'};">${c.status === 'resolved' ? '✅ Решено' : '⏳ В работе'}</strong></p>
+                    </div>
+                `;
+            });
+            html += `<button class="auth-btn" onclick="window.renderAccountMenu()" style="margin-top:15px;">НАЗАД</button></div>`;
+            content.innerHTML = html;
+        }
+    };
+    
+    // Создание новой жалобы
+    window.createComplaint = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">🚨 Новая жалоба</h3>
+                <select id="complaint-reason" class="auth-input" style="outline:none;">
+                    <option value="" disabled selected>-- Выберите причину --</option>
+                    <option value="Мусор">📦 Мусор / Переполнение баков</option>
+                    <option value="Поломка">🛠️ Поломка оборудования</option>
+                    <option value="Парковка">🚗 Проблемы с парковкой</option>
+                    <option value="Освещение">💡 Не работает освещение</option>
+                    <option value="Грязь">🧹 Грязь или наледь</option>
+                    <option value="Шум">🔊 Шумные соседи</option>
+                    <option value="Другое">🔍 Другое</option>
+                </select>
+                <textarea id="complaint-desc" class="auth-input" placeholder="Опишите проблему подробно..." style="outline:none; min-height:120px; resize:vertical;"></textarea>
+                <button class="auth-btn" onclick="window.sendComplaint()">ОТПРАВИТЬ</button>
+                <button class="auth-btn" onclick="window.renderAccountMenu()" style="margin-top:10px; background:#95a5a6;">НАЗАД</button>
+            </div>
+        `;
+    };
+    
+    // Отправка жалобы
+    window.sendComplaint = () => {
+        const reason = document.getElementById('complaint-reason').value;
+        const description = document.getElementById('complaint-desc').value.trim();
+        const user = window.getUserData();
+        
+        if (!reason || !description) {
+            alert('⚠️ Заполните все поля!');
+            return;
+        }
+        
+        const ticketNum = 'Ж-' + (Math.floor(Math.random() * 9000) + 1000);
+        const complaint = {
+            ticketNum,
+            login: user.login,
+            apartment: user.apartment,
+            reason,
+            description,
+            date: new Date().toLocaleDateString('ru-RU'),
+            status: 'pending'
+        };
+        
+        const complaints = JSON.parse(localStorage.getItem('uk_complaints') || '[]');
+        complaints.push(complaint);
+        localStorage.setItem('uk_complaints', JSON.stringify(complaints));
+        
+        alert(`✅ Жалоба принята!\nНомер: ${ticketNum}\nОжидайте звонка в течение 30 минут.`);
+        window.showMyComplaints();
+    };
+    
+    // Передать показания счётчика
+    window.submitMeterReading = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">⚡ Показания счётчиков</h3>
+                <p style="font-size:12px; color:#666; margin-bottom:15px;">Передавайте показания до 25 числа каждого месяца</p>
+                <input type="number" id="meter-electric" class="auth-input" placeholder="Электроэнергия (кВт·ч)">
+                <input type="number" id="meter-water-cold" class="auth-input" placeholder="Холодная вода (м³)">
+                <input type="number" id="meter-water-hot" class="auth-input" placeholder="Горячая вода (м³)">
+                <input type="number" id="meter-heating" class="auth-input" placeholder="Отопление (Гкал)">
+                <button class="auth-btn" onclick="window.sendMeterReading()">ОТПРАВИТЬ ПОКАЗАНИЯ</button>
+                <button class="auth-btn" onclick="window.renderAccountMenu()" style="margin-top:10px; background:#95a5a6;">НАЗАД</button>
+            </div>
+        `;
+    };
+    
+    // Отправка показаний
+    window.sendMeterReading = () => {
+        const electric = document.getElementById('meter-electric').value;
+        const waterCold = document.getElementById('meter-water-cold').value;
+        const waterHot = document.getElementById('meter-water-hot').value;
+        const heating = document.getElementById('meter-heating').value;
+        const user = window.getUserData();
+        
+        if (!electric && !waterCold && !waterHot && !heating) {
+            alert('⚠️ Введите хотя бы одно показание!');
+            return;
+        }
+        
+        const reading = {
+            login: user.login,
+            apartment: user.apartment,
+            electric,
+            waterCold,
+            waterHot,
+            heating,
+            date: new Date().toLocaleDateString('ru-RU')
+        };
+        
+        const readings = JSON.parse(localStorage.getItem('uk_meter_readings') || '[]');
+        readings.push(reading);
+        localStorage.setItem('uk_meter_readings', JSON.stringify(readings));
+        
+        alert('✅ Показания успешно переданы в УК!');
+        window.renderAccountMenu();
+    };
+    
+    // Руководство по оплате
+    window.showPaymentGuide = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">💳 Как оплачивать ЖКУ</h3>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>1. Через Сбербанк Онлайн</strong></p>
+                    <p style="font-size:13px; color:#666;">Перевод по реквизитам УК «ВСЕ СВОИ»</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>2. Через Госуслуги</strong></p>
+                    <p style="font-size:13px; color:#666;">Раздел «Оплата ЖКХ» → Северодвинск</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>3. В офисе УК</strong></p>
+                    <p style="font-size:13px; color:#666;">ул. Советская, д. 1 (Пн-Пт 8:00-20:00)</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>4. Через терминалы</strong></p>
+                    <p style="font-size:13px; color:#666;">Терминалы оплаты в магазинах города</p>
+                </div>
+                <button class="auth-btn" onclick="window.renderAccountMenu()">НАЗАД</button>
+            </div>
+        `;
+    };
+    
+    // Новости УК
+    window.showNews = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">📢 Новости УК</h3>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p style="font-size:12px; color:#888;">25 Мая 2025</p>
+                    <p><strong>График отключения воды</strong></p>
+                    <p style="font-size:13px; color:#666;">27-28 мая плановое отключение горячей воды в домах 56, 2, 6</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p style="font-size:12px; color:#888;">20 Мая 2025</p>
+                    <p><strong>Субботник во дворах</strong></p>
+                    <p style="font-size:13px; color:#666;">Приглашаем всех жильцов на весенний субботник!</p>
+                </div>
+                <button class="auth-btn" onclick="window.renderAccountMenu()">НАЗАД</button>
+            </div>
+        `;
+    };
+    
+    // Контакты
+    window.showContacts = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">📞 Контакты</h3>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>📍 Адрес:</strong></p>
+                    <p style="font-size:13px; color:#666;">г. Северодвинск, ул. Советская, д. 1</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>📞 Диспетчерская (24/7):</strong></p>
+                    <p style="font-size:13px; color:#666;">+7 (921) 482-85-50</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>✉️ Email:</strong></p>
+                    <p style="font-size:13px; color:#666;">info@ukvsesvoi.ru</p>
+                </div>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>🕐 Режим работы:</strong></p>
+                    <p style="font-size:13px; color:#666;">Пн-Пт: 8:00-20:00, Сб-Вс: 9:00-18:00</p>
+                </div>
+                <button class="auth-btn" onclick="window.renderAccountMenu()">НАЗАД</button>
+            </div>
+        `;
+    };
+    
+    // FAQ
+    window.showFAQ = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">❓ Часто задаваемые вопросы</h3>
+                <details style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <summary style="font-weight:600; cursor:pointer;">Как передать показания?</summary>
+                    <p style="font-size:13px; color:#666; margin-top:10px;">Через личный кабинет или по телефону диспетчерской</p>
+                </details>
+                <details style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <summary style="font-weight:600; cursor:pointer;">Когда вывозят мусор?</summary>
+                    <p style="font-size:13px; color:#666; margin-top:10px;">Ежедневно в 8:00 и 18:00</p>
+                </details>
+                <details style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <summary style="font-weight:600; cursor:pointer;">Как вызвать сантехника?</summary>
+                    <p style="font-size:13px; color:#666; margin-top:10px;">Позвоните в диспетчерскую +7 (921) 482-85-50</p>
+                </details>
+                <button class="auth-btn" onclick="window.renderAccountMenu()">НАЗАД</button>
+            </div>
+        `;
+    };
+    
+    // Настройки
+    window.showSettings = () => {
+        const content = document.getElementById('account-panel-content');
+        content.innerHTML = `
+            <div style="padding:10px;">
+                <h3 style="color:#3498db; margin-bottom:15px;">⚙️ Настройки</h3>
+                <div style="background:#f8f9fa; border-radius:12px; padding:15px; margin-bottom:10px;">
+                    <p><strong>Уведомления</strong></p>
+                    <label style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+                        <input type="checkbox" checked> SMS о новых начислениях
+                    </label>
+                    <label style="display:flex; align-items:center; gap:10px; margin-top:10px;">
+                        <input type="checkbox" checked> Push о статусе жалоб
+                    </label>
+                </div>
+                <button class="auth-btn" onclick="alert('✅ Настройки сохранены!')">СОХРАНИТЬ</button>
+                <button class="auth-btn" onclick="window.renderAccountMenu()" style="margin-top:10px; background:#95a5a6;">НАЗАД</button>
+            </div>
+        `;
     };
     
     refreshL();

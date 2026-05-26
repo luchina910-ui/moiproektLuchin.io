@@ -23,6 +23,9 @@
     <!-- Кнопка УК (слева сверху) -->
     <div id="uk-toggle-btn" class="uk-toggle-btn">🏢</div>
     
+    <!-- Кнопка Личного кабинета (слева сверху, рядом с УК) -->
+    <div id="account-toggle-btn" class="account-toggle-btn" onclick="openAccountPanel()">👤</div>
+    
     <!-- Панель управляющей компании (скрыта по умолчанию) -->
     <div id="company-panel-root" class="company-panel company-panel-hidden">
         <button class="company-close-btn" onclick="window.toggleCompanyPanel()">&times;</button>
@@ -86,6 +89,21 @@
                 <div class="value-badge">✅ Оперативность</div>
                 <div class="value-badge">✅ Качество</div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Панель Личного кабинета -->
+    <div id="account-panel-root" class="account-panel account-panel-hidden">
+        <button class="account-close-btn" onclick="window.toggleAccountPanel()">&times;</button>
+        <div class="account-header">
+            <div class="account-logo">👤</div>
+            <div class="account-title">
+                <h2>Личный кабинет</h2>
+                <p>Управление вашим жильём</p>
+            </div>
+        </div>
+        <div class="account-content" id="account-panel-content">
+            <!-- Контент загружается через JS -->
         </div>
     </div>
     
