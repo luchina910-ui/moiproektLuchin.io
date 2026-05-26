@@ -127,5 +127,15 @@
     
     <!-- Скрипт приложения -->
     <script src="script.js"></script>
+    
+    <!-- ✅ Обработка кликов вне элементов для закрытия панелей на мобильных -->
+    <script>
+    // Закрытие модального окна диплома при клике на overlay (кроме самого окна)
+    document.getElementById('diploma-modal-overlay')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDiplomaModal();
+        }
+    });
+    </script>
 </body>
 </html>
