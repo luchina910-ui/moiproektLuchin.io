@@ -461,7 +461,7 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                     <h1 class="error-title" style="color: #e74c3c; font-size: 28px; margin-bottom: 15px;">ОШИБКА АВТОРИЗАЦИИ!</h1>
                     <p class="error-message" style="font-size: 16px; color: #666; text-align: center;">Неверный логин или пароль.</p>
                     <p class="error-note" style="font-size: 14px; color: #999; margin-top: 10px;">Пожалуйста, проверьте введенные данные и попробуйте снова.</p>
-                    <button class="error-ok-btn" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; border: none; padding: 12px 30px; font-size: 14px; border-radius: 10px; cursor: pointer; margin-top: 20px;" onclick="document.getElementById('sub-modal').style.display='none'">ПОНЯТНО</button>
+                    <button class="error-ok-btn" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; border: none; padding: 12px 30px; font-size: 14px; border-radius: 10px; cursor: pointer; margin-top: 20px;" onclick="window.closeSubModal()">ПОНЯТНО</button>
                 </div>
             `;
             sub.style.display = "block";
@@ -470,6 +470,15 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         
         // Открываем главный экран личного кабинета с функциями для жильцов
         openResidentDashboard(login);
+    };
+    
+    // Функция закрытия подмодального окна
+    window.closeSubModal = () => {
+        const sub = document.getElementById('sub-modal-body');
+        if (sub) {
+            sub.style.display = "none";
+            sub.innerHTML = "";
+        }
     };
     
     // Главная панель жильца после входа
@@ -676,7 +685,7 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
     window.openNotificationsPanel = () => {
         const sub = document.getElementById('sub-modal-body');
         sub.innerHTML = `
-            <button class="close-icon" onclick="this.parentElement.style.display='none'">&times;</button>
+            <button class="close-icon" onclick="window.closeSubModal()">&times;</button>
             <h1 style="color:#9b59b6; font-weight:900; font-size:45px; margin-bottom:25px; text-align:center;">🔔 УВЕДОМЛЕНИЯ</h1>
             <div style="max-height: 500px; overflow-y: auto; padding: 10px;">
                 <div style="background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #e74c3c; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
@@ -753,7 +762,7 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                     </p>
                 </div>
             </div>
-            <button class="ui-btn" style="background:#9b59b6; color:#fff; width:100%; padding:15px; font-size:14px; border:none; border-radius:10px; cursor:pointer; margin-top:15px;" onclick="this.parentElement.parentElement.style.display='none'">ЗАКРЫТЬ</button>
+            <button class="ui-btn" style="background:#9b59b6; color:#fff; width:100%; padding:15px; font-size:14px; border:none; border-radius:10px; cursor:pointer; margin-top:15px;" onclick="window.closeSubModal()">ЗАКРЫТЬ</button>
         `;
         sub.style.display = "block";
     };
