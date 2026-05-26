@@ -187,7 +187,7 @@ const objects = [
     },
     {
         id: "h8", address: "пр-кт Ленинградский, 105", coords: [64.5100, 40.6358], floors: 12, year: 2023,
-        photo: "/img/h8.jpg", developer: "ЛенСтрой", series: "Высотка комфорт", material: "Монолитный каркас", area: "8500 м²", apartments: 120, elevator: "4 лифта Kone",
+        photo: "/h8.jpg", developer: "ЛенСтрой", series: "Высотка комфорт", material: "Монолитный каркас", area: "8500 м²", apartments: 120, elevator: "4 лифта Kone",
         boundary: [],
         infra: [
             { type: "trash_bin", title: "№1", coords: [64.5102, 40.6360], load: 30, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:30", photo: "neTKO1.jpg" },
@@ -199,7 +199,7 @@ const objects = [
     },
     {
         id: "h9", address: "ул. Ломоносова, 171", coords: [64.5421, 40.5217], floors: 9, year: 1976,
-        photo: "/img/h9.jpg", developer: "Горстрой", series: "Хрущевка", material: "Панель 1-335", area: "3200 м²", apartments: 54, elevator: "Нет",
+        photo: "/h9.jpg", developer: "Горстрой", series: "Хрущевка", material: "Панель 1-335", area: "3200 м²", apartments: 54, elevator: "Нет",
         boundary: [],
         infra: [
             { type: "trash_bin", title: "№1", coords: [64.5422, 40.5218], load: 65, volume: "1.1 м³", material: "Сталь", lastEmpty: "07:50", photo: "neTKO1.jpg" },
@@ -211,7 +211,7 @@ const objects = [
     },
     {
         id: "h10", address: "ул. Октябрят, 30", coords: [64.5314, 40.5991], floors: 9, year: 2020,
-        photo: "/img/h10.jpg", developer: "ОктябрьСтрой", series: "Новая комфорт", material: "Кирпич-монолит", area: "4100 м²", apartments: 64, elevator: "2 лифта",
+        photo: "/h10.jpg", developer: "ОктябрьСтрой", series: "Новая комфорт", material: "Кирпич-монолит", area: "4100 м²", apartments: 64, elevator: "2 лифта",
         boundary: [],
         infra: [
             { type: "trash_bin", title: "№1", coords: [64.5315, 40.5992], load: 40, volume: "1.1 м³", material: "Пластик", lastEmpty: "08:10", photo: "neTKO1.jpg" },
@@ -223,7 +223,7 @@ const objects = [
     },
     {
         id: "h11", address: "ул. Северная, 1", coords: [64.5962, 39.8011], floors: 9, year: 2025,
-        photo: "/img/h11.jpg", developer: "СеверИнвест", series: "Бизнес-Лайт", material: "Монолит", area: "5900 м²", apartments: 92, elevator: "3 лифта Schindler",
+        photo: "/h11.jpg", developer: "СеверИнвест", series: "Бизнес-Лайт", material: "Монолит", area: "5900 м²", apartments: 92, elevator: "3 лифта Schindler",
         boundary: [[64.59598,39.80088], [64.59589,39.80111], [64.59612,39.80153], [64.59625,39.80153], [64.59658,39.80056], [64.59647,39.80038], [64.59634,39.80039], [64.59616,39.80097], [64.59611,39.80088], [64.59598,39.80088]],
         infra: [
             { type: "trash_bin", title: "№1", coords: [64.59625, 39.79989], load: 5, volume: "1.1 м³", material: "Пластик", lastEmpty: "06:10", photo: "neTKO1.jpg" },
