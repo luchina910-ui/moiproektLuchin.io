@@ -446,10 +446,27 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
         modal.style.display = "flex";
     };
     
-    // Функция входа в личный кабинет (демо)
+    // Функция входа в личный кабинет с проверкой логина и пароля
     window.loginToPersonalCabinet = () => {
-        const login = document.getElementById('lk-login').value;
+        const login = document.getElementById('lk-login').value.trim();
         const password = document.getElementById('lk-password').value;
+        
+        // Проверка логина и пароля
+        if (login !== 'Ivan' || password !== '1234') {
+            const sub = document.getElementById('sub-modal-body');
+            if (!sub) return;
+            sub.innerHTML = `
+                <div class="error-popup" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px;">
+                    <span class="error-icon" style="font-size: 60px; margin-bottom: 20px;">❌</span>
+                    <h1 class="error-title" style="color: #e74c3c; font-size: 28px; margin-bottom: 15px;">ОШИБКА АВТОРИЗАЦИИ!</h1>
+                    <p class="error-message" style="font-size: 16px; color: #666; text-align: center;">Неверный логин или пароль.</p>
+                    <p class="error-note" style="font-size: 14px; color: #999; margin-top: 10px;">Пожалуйста, проверьте введенные данные и попробуйте снова.</p>
+                    <button class="error-ok-btn" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; border: none; padding: 12px 30px; font-size: 14px; border-radius: 10px; cursor: pointer; margin-top: 20px;" onclick="document.getElementById('sub-modal').style.display='none'">ПОНЯТНО</button>
+                </div>
+            `;
+            sub.style.display = "block";
+            return;
+        }
         
         // Открываем главный экран личного кабинета с функциями для жильцов
         openResidentDashboard(login);
@@ -502,7 +519,7 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
                     <button class="ui-btn" style="background:linear-gradient(135deg, #f39c12, #e67e22); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openSub('💳 Оплата счетов', 'Функция онлайн-оплаты счетов находится в разработке.<br><br>Ожидайте обновления!')">
                         💳 ОПЛАТА СЧЕТОВ
                     </button>
-                    <button class="ui-btn" style="background:linear-gradient(135deg, #9b59b6, #8e44ad); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openSub('🔔 Уведомления', 'Здесь будут отображаться уведомления от управляющей компании.<br><br>Новых уведомлений нет.')">
+                    <button class="ui-btn" style="background:linear-gradient(135deg, #9b59b6, #8e44ad); color:#fff; font-size:13px; padding:15px; max-height:85vh; overflow-y:auto; height:auto;" onclick="window.openNotificationsPanel()">
                         🔔 УВЕДОМЛЕНИЯ
                     </button>
                 </div>
@@ -651,6 +668,92 @@ const color = item.load < 33 ? '#00cc00' : (item.load < 66 ? '#ffa600' : '#ff330
             <h1 style="color:#008000; font-weight:900; font-size:50px; margin-bottom:20px;">${title}</h1>
             <div style="font-size:26px; line-height:1.7; text-align:justify;">${text}</div>
             <button class="ui-btn" style="background:#008000; color:#fff; width:350px; height:100px; margin-top:50px;" onclick="this.parentElement.style.display='none'">ВЕРНУТЬСЯ</button>
+        `;
+        sub.style.display = "block";
+    };
+    
+    // Панель уведомлений для жильцов
+    window.openNotificationsPanel = () => {
+        const sub = document.getElementById('sub-modal-body');
+        sub.innerHTML = `
+            <button class="close-icon" onclick="this.parentElement.style.display='none'">&times;</button>
+            <h1 style="color:#9b59b6; font-weight:900; font-size:45px; margin-bottom:25px; text-align:center;">🔔 УВЕДОМЛЕНИЯ</h1>
+            <div style="max-height: 500px; overflow-y: auto; padding: 10px;">
+                <div style="background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #e74c3c; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="font-size: 30px;">⚠️</span>
+                        <div>
+                            <h3 style="margin: 0; color: #e74c3c; font-size: 18px; font-weight: 700;">ВАЖНО: Плановые отключения воды</h3>
+                            <span style="font-size: 12px; color: #999;">25 декабря 2024, 09:00</span>
+                        </div>
+                    </div>
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #333;">
+                        <strong>Уважаемые жильцы!</strong><br>
+                        28 декабря с 09:00 до 17:00 будет проводиться профилактический ремонт водопровода по адресу: ул. Советская, д. 1.<br>
+                        Просим заранее сделать запас воды. Приносим извинения за временные неудобства.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #3498db; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="font-size: 30px;">📢</span>
+                        <div>
+                            <h3 style="margin: 0; color: #3498db; font-size: 18px; font-weight: 700;">Объявление: Общее собрание</h3>
+                            <span style="font-size: 12px; color: #999;">24 декабря 2024, 14:30</span>
+                        </div>
+                    </div>
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #333;">
+                        <strong>Уважаемые собственники!</strong><br>
+                        30 декабря в 18:00 состоится общее собрание жильцов в холле первого этажа.<br>
+                        Повестка: утверждение тарифов на 2025 год, обсуждение установки новых камер видеонаблюдения.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #008000; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="font-size: 30px;">✅</span>
+                        <div>
+                            <h3 style="margin: 0; color: #008000; font-size: 18px; font-weight: 700;">Работы завершены</h3>
+                            <span style="font-size: 12px; color: #999;">23 декабря 2024, 16:45</span>
+                        </div>
+                    </div>
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #333;">
+                        <strong>Хорошие новости!</strong><br>
+                        Завершён ремонт освещения в подъезде №2. Теперь все лампы заменены на светодиодные, что обеспечит экономию электроэнергии.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #f39c12; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="font-size: 30px;">📅</span>
+                        <div>
+                            <h3 style="margin: 0; color: #f39c12; font-size: 18px; font-weight: 700;">Напоминание: Передача показаний</h3>
+                            <span style="font-size: 12px; color: #999;">20 декабря 2024, 08:00</span>
+                        </div>
+                    </div>
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #333;">
+                        <strong>Уважаемые жильцы!</strong><br>
+                        Напоминаем, что с 20 по 25 число текущего месяца необходимо передать показания счётчиков воды и электроэнергии.<br>
+                        Сделать это можно через личный кабинет или по телефону диспетчерской.
+                    </p>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #9b59b6; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                        <span style="font-size: 30px;">🎄</span>
+                        <div>
+                            <h3 style="margin: 0; color: #9b59b6; font-size: 18px; font-weight: 700;">Поздравление с Новым годом!</h3>
+                            <span style="font-size: 12px; color: #999;">15 декабря 2024, 10:00</span>
+                        </div>
+                    </div>
+                    <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #333;">
+                        <strong>Дорогие жители!</strong><br>
+                        Коллектив УК «ВСЕ СВОИ» поздравляет вас с наступающим Новым годом!<br>
+                        Желаем вам тепла, уюта и благополучия в ваших домах. Праздничный режим работы диспетчерской: 31 дек. - 1 янв. - круглосуточно.
+                    </p>
+                </div>
+            </div>
+            <button class="ui-btn" style="background:#9b59b6; color:#fff; width:100%; padding:15px; font-size:14px; border:none; border-radius:10px; cursor:pointer; margin-top:15px;" onclick="this.parentElement.parentElement.style.display='none'">ЗАКРЫТЬ</button>
         `;
         sub.style.display = "block";
     };
