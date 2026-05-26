@@ -113,7 +113,7 @@ async function initIndustrialGis() {
                 preset: 'islands#greenHomeCircleIcon',
                 iconScale: 1.8,
                 balloonMinWidth: isMobile ? 320 : 520,
-                balloonMinHeight: isMobile ? 180 : 860,
+                balloonMinHeight: isMobile ? 180 : 700,
                 balloonPanelMaxMapArea: 0
             });
             layers.hM.push(m);
