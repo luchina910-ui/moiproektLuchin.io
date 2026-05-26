@@ -81,8 +81,12 @@ async function initIndustrialGis() {
 
     db.forEach(obj => {
         if (obj.id?.startsWith('h')) {
+            const isMobile = window.innerWidth <= 768;
+            
+            // Для мобильных - только кнопки, для ПК - полная информация
             const hHtml = `
                 <div class="house-card-pro">
+                    ${!isMobile ? `
                     <img src="${obj.photo || ''}" class="house-img-pro">
                     <b style="font-size:20px; color:#008000; display:block; margin-bottom:10px; text-align:center;">🏠 ${obj.address}</b>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
@@ -94,6 +98,9 @@ async function initIndustrialGis() {
                         <div class="info-row" style="grid-column: span 2;">📐 ${obj.area || 'N/A'} / ${obj.apartments || 'N/A'} кв.</div>
                         <div class="info-row" style="grid-column: span 2;">🏘️ Серия: ${obj.series || 'Типовая'}</div>
                     </div>
+                    ` : `
+                    <b style="font-size:18px; color:#008000; display:block; margin-bottom:15px; text-align:center;">🏠 ${obj.address}</b>
+                    `}
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:12px;">
                         <button class="ui-btn" style="background:#3498db; color:#fff;" onclick="window.openCamera()">КАМЕРА</button>
                         <button class="ui-btn" style="background:#d9534f; color:#fff;" onclick="window.openComplaintAction('${obj.address}')">ЖАЛОБА</button>
@@ -105,8 +112,8 @@ async function initIndustrialGis() {
             }, {
                 preset: 'islands#greenHomeCircleIcon',
                 iconScale: 1.8,
-                balloonMinWidth: 430,
-                balloonMinHeight: 720,
+                balloonMinWidth: isMobile ? 320 : 520,
+                balloonMinHeight: isMobile ? 180 : 860,
                 balloonPanelMaxMapArea: 0
             });
             layers.hM.push(m);
